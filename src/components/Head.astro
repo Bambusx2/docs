@@ -1,0 +1,30 @@
+---
+/**
+ * Head override — enables Astro client-side routing (view transitions).
+ *
+ * Starlight is a multi-page app by default, so every link does a full browser
+ * reload: the stylesheet and web font are re-applied from scratch, which the
+ * eye sees as the whole page "blinking" / re-styling on each navigation.
+ *
+ * <ClientRouter /> turns navigations into in-place DOM swaps — CSS and fonts
+ * stay loaded, so there's no flash. The inline script below re-applies the
+ * saved Starlight theme immediately after each swap (and before paint) so the
+ * theme never flickers back to the default mid-transition.
+ */
+import Default from '@astrojs/starlight/components/Head.astro';
+import { ClientRouter } from 'astro:transitions';
+---
+
+<Default><slot /></Default>
+<ClientRouter />
+
+<script is:inline>
+  document.addEventListener('astro:after-swap', () => {
+    const stored =
+      typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+    const theme =
+      stored ||
+      (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+  });
+</script>

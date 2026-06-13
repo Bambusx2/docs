@@ -1,0 +1,18 @@
+# Netlify configuration for the Ingsoftware customer documentation portal.
+#
+# The auth edge function (netlify/edge-functions/auth.mjs) declares its own
+# route (path = "/*") inline, so every request — pages and static assets —
+# passes through the authentication gate.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Local development (`npm start` → `netlify dev`). Pin a stable port so the
+# dev URL is always http://localhost:8888 — open THIS, not the raw `astro dev`
+# port, or function routes like /api/comments return 404.
+[dev]
+  port = 8888

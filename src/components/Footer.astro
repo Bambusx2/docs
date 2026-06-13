@@ -1,0 +1,322 @@
+---
+// Starlight Footer override: renders the default footer (pagination,
+// last-updated, etc.) and then a comments section on every doc page.
+// Comments are loaded/saved via /api/comments, gated by the portal session.
+import Default from '@astrojs/starlight/components/Footer.astro';
+---
+
+<Default><slot /></Default>
+
+<section class="docs-comments" aria-labelledby="comments-heading">
+  <h2 id="comments-heading">Comments</h2>
+  <p class="docs-comments__intro">
+    Have a question or feedback about this page? Leave a note for the Ingsoftware team.
+  </p>
+
+  <ul class="docs-comments__list" data-comments-list>
+    <li class="docs-comments__status" data-comments-status>Loading comments…</li>
+  </ul>
+
+  <form class="docs-comments__form" data-comments-form>
+    <div class="docs-comments__row">
+      <label for="comment-name">Your name <span>(optional)</span></label>
+      <input id="comment-name" name="name" type="text" maxlength="80" autocomplete="name" />
+    </div>
+    <div class="docs-comments__row">
+      <label for="comment-body">Comment</label>
+      <textarea id="comment-body" name="body" rows="4" maxlength="4000" required></textarea>
+    </div>
+    <div class="docs-comments__actions">
+      <button type="submit">Post comment</button>
+      <span class="docs-comments__error" role="alert" data-comments-error hidden></span>
+    </div>
+  </form>
+</section>
+
+<!--
+  Styles are global (not scoped) on purpose: comment items are created at
+  runtime by the script below via createElement, so Astro's scoped-style
+  attribute is never applied to them. Every selector is namespaced under
+  .docs-comments, so nothing leaks into the rest of the site.
+-->
+<style is:global>
+  .docs-comments {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--sl-color-gray-5);
+    max-width: 48rem;
+  }
+  .docs-comments *,
+  .docs-comments *::before,
+  .docs-comments *::after {
+    box-sizing: border-box;
+  }
+  .docs-comments h2 {
+    font-size: var(--sl-text-xl);
+    margin: 0 0 0.25rem;
+  }
+  .docs-comments__intro {
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-sm);
+    margin: 0 0 1.5rem;
+  }
+  .docs-comments__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .docs-comments__status {
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-sm);
+    font-style: italic;
+  }
+  .docs-comments__item {
+    background: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.6rem;
+    padding: 0.9rem 1.1rem;
+  }
+  .docs-comments__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.6rem;
+    align-items: baseline;
+    margin-bottom: 0.4rem;
+  }
+  .docs-comments__author {
+    font-weight: 600;
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-sm);
+  }
+  .docs-comments__time {
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-xs);
+  }
+  /* Separator dot between author and timestamp. */
+  .docs-comments__time::before {
+    content: "·";
+    margin-right: 0.6rem;
+    color: var(--sl-color-gray-4);
+  }
+  .docs-comments__body {
+    margin: 0;
+    color: var(--sl-color-gray-1);
+    font-size: var(--sl-text-sm);
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .docs-comments__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--sl-color-gray-7, var(--sl-color-gray-6));
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.6rem;
+    padding: 1.25rem;
+  }
+  .docs-comments__row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .docs-comments__row label {
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    color: var(--sl-color-white);
+  }
+  .docs-comments__row label span {
+    font-weight: 400;
+    color: var(--sl-color-gray-3);
+  }
+  .docs-comments input,
+  .docs-comments textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.45rem;
+    border: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-black);
+    color: var(--sl-color-white);
+    font: inherit;
+    font-size: var(--sl-text-sm);
+  }
+  .docs-comments input:focus,
+  .docs-comments textarea:focus {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 0;
+    border-color: transparent;
+  }
+  .docs-comments textarea {
+    resize: vertical;
+    min-height: 6rem;
+  }
+  .docs-comments__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .docs-comments button {
+    padding: 0.6rem 1.35rem;
+    border: 0;
+    border-radius: 999px;
+    /* Always light text on the indigo fill — never the theme-inverted
+       --sl-color-white token, which is navy in light mode (unreadable). */
+    background: var(--sl-color-accent);
+    color: var(--ing-on-accent, #fff);
+    font-weight: 700;
+    font-size: var(--sl-text-sm);
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .docs-comments button:hover:not(:disabled) {
+    background: var(--ing-indigo-bright, #6a5bff);
+    transform: translateY(-1px);
+  }
+  .docs-comments button:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+  .docs-comments__error {
+    color: var(--sl-color-red);
+    font-size: var(--sl-text-sm);
+  }
+</style>
+
+<script>
+  // Self-contained comment widget. Renders user content via textContent only
+  // (never innerHTML) so comment text can never inject markup.
+  const NAME_STORAGE_KEY = 'docs-comment-name';
+
+  function init() {
+    const section = document.querySelector<HTMLElement>('.docs-comments');
+    if (!section) return;
+
+    const list = section.querySelector<HTMLElement>('[data-comments-list]');
+    const status = section.querySelector<HTMLElement>('[data-comments-status]');
+    const form = section.querySelector<HTMLFormElement>('[data-comments-form]');
+    const nameInput = section.querySelector<HTMLInputElement>('#comment-name');
+    const bodyInput = section.querySelector<HTMLTextAreaElement>('#comment-body');
+    const errorEl = section.querySelector<HTMLElement>('[data-comments-error]');
+    const submitBtn = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (!list || !form || !nameInput || !bodyInput || !errorEl || !submitBtn) return;
+
+    const page = window.location.pathname;
+
+    // Remember the commenter's name across pages/visits.
+    try {
+      const saved = localStorage.getItem(NAME_STORAGE_KEY);
+      if (saved) nameInput.value = saved;
+    } catch {}
+
+    function setStatus(text: string) {
+      list!.replaceChildren();
+      if (status) {
+        status.textContent = text;
+        list!.append(status);
+      }
+    }
+
+    function showError(message: string) {
+      errorEl!.textContent = message;
+      errorEl!.hidden = !message;
+    }
+
+    function formatTime(iso: string): string {
+      const d = new Date(iso);
+      return Number.isNaN(d.getTime()) ? '' : d.toLocaleString();
+    }
+
+    function renderComments(comments: Array<{ name: string; body: string; created_at: string }>) {
+      list!.replaceChildren();
+      if (!comments.length) {
+        if (status) {
+          status.textContent = 'No comments yet. Be the first to leave one.';
+          list!.append(status);
+        }
+        return;
+      }
+      // Newest first.
+      for (const c of [...comments].reverse()) {
+        const item = document.createElement('li');
+        item.className = 'docs-comments__item';
+
+        const meta = document.createElement('div');
+        meta.className = 'docs-comments__meta';
+
+        const author = document.createElement('span');
+        author.className = 'docs-comments__author';
+        author.textContent = c.name || 'Anonymous';
+
+        const time = document.createElement('time');
+        time.className = 'docs-comments__time';
+        time.dateTime = c.created_at;
+        time.textContent = formatTime(c.created_at);
+
+        meta.append(author, time);
+
+        const body = document.createElement('p');
+        body.className = 'docs-comments__body';
+        body.textContent = c.body;
+
+        item.append(meta, body);
+        list!.append(item);
+      }
+    }
+
+    async function load() {
+      try {
+        const res = await fetch(`/api/comments?page=${encodeURIComponent(page)}`, {
+          headers: { accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error(`Failed to load (${res.status})`);
+        const data = await res.json();
+        renderComments(data.comments ?? []);
+      } catch {
+        setStatus('Could not load comments. Please refresh the page.');
+      }
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      showError('');
+      const name = nameInput!.value.trim();
+      const body = bodyInput!.value.trim();
+      if (!body) {
+        showError('Please write a comment first.');
+        return;
+      }
+
+      submitBtn!.disabled = true;
+      try {
+        const res = await fetch('/api/comments', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ page, name, body }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Request failed (${res.status})`);
+        }
+        try {
+          if (name) localStorage.setItem(NAME_STORAGE_KEY, name);
+        } catch {}
+        bodyInput!.value = '';
+        await load();
+      } catch (err) {
+        showError(err instanceof Error ? err.message : 'Could not post your comment.');
+      } finally {
+        submitBtn!.disabled = false;
+      }
+    });
+
+    load();
+  }
+
+  init();
+  // Re-init on Starlight's client-side view transitions.
+  document.addEventListener('astro:page-load', init);
+</script>

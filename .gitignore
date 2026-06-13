@@ -1,0 +1,21 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# environment & secrets
+.env
+.env.*
+!.env.example
+
+# netlify local state
+.netlify/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# knowledge graph artifacts (regenerable)
+graphify-out/

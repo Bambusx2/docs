@@ -1,0 +1,412 @@
+/* ============================================================================
+   Ingsoftware documentation portal — design system
+   Brand (ing.dev): navy #050c27 · indigo #3412de · lavender #cdcbff
+                    · teal #8eebd9 · red #eb062e
+   Dark mode is the primary, intended experience. Neutrals are tinted toward
+   the brand navy for subconscious cohesion. Indigo is brightened on dark
+   backgrounds so links and accents stay legible (raw #3412de is too dark on
+   navy). Font: Manrope (closest open substitute for the commercial PP-Mori).
+   ============================================================================ */
+
+:root {
+  /* ---- Brand anchors (raw, for reference / accents) ---- */
+  --ing-navy: #050c27;
+  --ing-indigo: #3412de;
+  --ing-indigo-bright: #6a5bff;
+  --ing-lavender: #cdcbff;
+  --ing-teal: #8eebd9;
+
+  /* Text that sits ON an accent-filled surface (buttons, badges).
+     Accent fills are dark indigo in both themes, so this stays light. */
+  --ing-on-accent: #ffffff;
+
+  /* ---- Typography ---- */
+  --sl-font: 'Manrope Variable', 'Manrope', ui-sans-serif, system-ui,
+    -apple-system, 'Segoe UI', sans-serif;
+
+  /* Fluid, modular type scale */
+  --sl-text-h1: clamp(2rem, 1.55rem + 1.9vw, 2.7rem);
+  --sl-text-h2: clamp(1.5rem, 1.28rem + 0.95vw, 1.9rem);
+  --sl-text-h3: clamp(1.2rem, 1.08rem + 0.5vw, 1.4rem);
+  --sl-text-h4: 1.125rem;
+  --sl-line-height: 1.7;
+  --sl-line-height-headings: 1.18;
+
+  /* ---- Layout ---- */
+  --sl-content-width: 47rem;
+  --sl-nav-height: 4rem;
+}
+
+/* ===========================  DARK THEME (primary)  ======================== */
+:root,
+:root[data-theme='dark'] {
+  /* Text ramp — lightest (white) to faint */
+  --sl-color-white: #f3f6fe;
+  --sl-color-gray-1: #dde3f4;
+  --sl-color-gray-2: #b4bdda;
+  --sl-color-gray-3: #8a93b6;
+  --sl-color-gray-4: #5b6488;
+  --sl-color-gray-5: #2a3258; /* default border */
+  --sl-color-gray-6: #141c3f; /* elevated surface (cards, code) */
+  --sl-color-gray-7: #0e1533; /* deeper surface (form wells) */
+  --sl-color-black: #060d28; /* base near-bg */
+
+  /* Accent (indigo, brightened for dark) */
+  --sl-color-accent-low: #1b1d5e;
+  --sl-color-accent: #5b4cff;
+  --sl-color-accent-high: #d4d2ff;
+
+  /* Surfaces */
+  --sl-color-bg: #050c27;
+  --sl-color-bg-nav: #070f2eee;
+  --sl-color-bg-sidebar: #070e2c;
+  --sl-color-bg-inline-code: #18204a;
+  --sl-color-bg-accent: var(--sl-color-accent);
+
+  /* Hairlines */
+  --sl-color-hairline: #1a2249;
+  --sl-color-hairline-light: #232c54;
+  --sl-color-hairline-shade: #0b1230;
+
+  /* Text roles */
+  --sl-color-text: var(--sl-color-gray-2);
+  --sl-color-text-accent: #a9a3ff; /* links — AA on navy */
+  --sl-color-text-invert: var(--ing-navy);
+
+  /* Semantic — tuned for navy backgrounds */
+  --sl-color-red: #ff6378;
+  --sl-color-red-low: #2a0a13;
+  --sl-color-red-high: #ffc2cc;
+  --sl-color-orange: #f7b24b;
+  --sl-color-orange-low: #2c1d05;
+  --sl-color-orange-high: #ffdca6;
+  --sl-color-green: #57d6b4; /* teal-leaning, on-brand */
+  --sl-color-green-low: #082420;
+  --sl-color-green-high: #b6f3e3;
+  --sl-color-blue: #6f9bff;
+  --sl-color-blue-low: #0c1840;
+  --sl-color-blue-high: #c2d4ff;
+  --sl-color-purple: #b69bff;
+  --sl-color-purple-low: #1a1147;
+  --sl-color-purple-high: #ddd1ff;
+
+  --sl-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(2, 6, 23, 0.45);
+  --sl-shadow-lg: 0 8px 28px rgba(2, 6, 23, 0.55);
+}
+
+/* ==============================  LIGHT THEME  ============================== */
+:root[data-theme='light'] {
+  --sl-color-white: #0a1130; /* primary text */
+  --sl-color-gray-1: #18204a;
+  --sl-color-gray-2: #2d3760;
+  --sl-color-gray-3: #586186;
+  --sl-color-gray-4: #8089ab;
+  --sl-color-gray-5: #d6dcec; /* border */
+  --sl-color-gray-6: #eef2fb; /* elevated surface */
+  --sl-color-gray-7: #f6f8fd; /* deeper surface */
+  --sl-color-black: #ffffff;
+
+  --sl-color-accent-low: #dcd9ff;
+  --sl-color-accent: #3412de;
+  --sl-color-accent-high: #1c0f6e;
+
+  --sl-color-bg: #ffffff;
+  --sl-color-bg-nav: #ffffffee;
+  --sl-color-bg-sidebar: #fafbff;
+  --sl-color-bg-inline-code: #eef1fb;
+  --sl-color-bg-accent: var(--sl-color-accent);
+
+  --sl-color-hairline: #e4e8f4;
+  --sl-color-hairline-light: #eef1f8;
+  --sl-color-hairline-shade: #d9deec;
+
+  --sl-color-text: var(--sl-color-gray-2);
+  --sl-color-text-accent: #3412de;
+  --sl-color-text-invert: #ffffff;
+
+  --sl-color-red: #cf0a2c;
+  --sl-color-red-low: #ffe5ea;
+  --sl-color-red-high: #80061a;
+  --sl-color-orange: #b3680a;
+  --sl-color-orange-low: #fdeed5;
+  --sl-color-orange-high: #6e3f04;
+  --sl-color-green: #0f9c7c;
+  --sl-color-green-low: #d6f5ec;
+  --sl-color-green-high: #075744;
+  --sl-color-blue: #2360df;
+  --sl-color-blue-low: #dde8ff;
+  --sl-color-blue-high: #123a8c;
+  --sl-color-purple: #6b3fd4;
+  --sl-color-purple-low: #e7defb;
+  --sl-color-purple-high: #3a1f80;
+
+  --sl-shadow-md: 0 1px 2px rgba(10, 17, 48, 0.06), 0 6px 20px rgba(10, 17, 48, 0.08);
+  --sl-shadow-lg: 0 10px 30px rgba(10, 17, 48, 0.12);
+}
+
+/* ============================  GLOBAL POLISH  ============================= */
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+::selection {
+  background: color-mix(in srgb, var(--sl-color-accent) 35%, transparent);
+  color: var(--sl-color-white);
+}
+
+/* Brand-tinted, slim scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sl-color-gray-5) transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+  background: var(--sl-color-gray-5);
+  border-radius: 99px;
+  border: 2px solid var(--sl-color-bg);
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--sl-color-gray-4); }
+
+/* Consistent, visible focus for keyboard users (WCAG) */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--sl-color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ============================  HEADER / NAV  ============================== */
+
+.header {
+  background: var(--sl-color-bg-nav);
+  backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid var(--sl-color-hairline);
+}
+header .site-title { font-weight: 700; }
+/* Keep the brand mark crisp and appropriately sized */
+header .site-title :is(img, svg) { height: 1.6rem; width: auto; }
+
+/* ===============================  SIDEBAR  ================================ */
+
+.sidebar { border-inline-end: 1px solid var(--sl-color-hairline); }
+
+.sidebar-content { padding-top: 1.25rem; }
+
+/* Group titles: small, uppercase, quiet — Linear/Stripe style */
+.sidebar-content .sl-flex.group-label,
+nav.sidebar summary .group-label {
+  font-size: var(--sl-text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-3);
+  font-weight: 600;
+}
+
+.sidebar a {
+  border-radius: 0.45rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.sidebar a:hover {
+  background: color-mix(in srgb, var(--sl-color-gray-5) 45%, transparent);
+  color: var(--sl-color-white);
+}
+.sidebar a[aria-current='page'] {
+  background: color-mix(in srgb, var(--sl-color-accent) 16%, transparent);
+  color: var(--sl-color-white);
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--sl-color-accent);
+}
+
+/* ===============================  SEARCH  ================================= */
+
+button[data-open-modal] {
+  border: 1px solid var(--sl-color-hairline-light);
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--sl-color-gray-6) 60%, transparent);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+button[data-open-modal]:hover {
+  border-color: var(--sl-color-accent);
+  background: var(--sl-color-gray-6);
+}
+button[data-open-modal] kbd {
+  background: var(--sl-color-gray-5);
+  border-radius: 0.3rem;
+  color: var(--sl-color-gray-2);
+}
+
+/* =============================  BREADCRUMBS  ============================== */
+/* Starlight has no breadcrumbs by default; the content top hairline plus the
+   page-title block carries hierarchy. Tighten the title block. */
+.content-panel + .content-panel { border-top: 1px solid var(--sl-color-hairline); }
+
+/* ============================  CONTENT TYPE  ============================== */
+
+.sl-markdown-content {
+  font-size: 1rem;
+  line-height: var(--sl-line-height);
+}
+.sl-markdown-content :is(h1, h2, h3, h4) {
+  letter-spacing: -0.018em;
+  color: var(--sl-color-white);
+}
+/* Generous, rhythmic spacing above headings; subtle rule under h2 */
+.sl-markdown-content :is(h2) {
+  margin-top: 2.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--sl-color-hairline);
+}
+.sl-markdown-content :is(h3) { margin-top: 2rem; }
+
+/* In-content links: clear but not loud */
+.sl-markdown-content a:not(:where(.sl-link-card, .pagination-links a)) {
+  color: var(--sl-color-text-accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--sl-color-text-accent) 40%, transparent);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.15s ease;
+}
+.sl-markdown-content a:hover { text-decoration-color: currentColor; }
+
+/* Inline code */
+.sl-markdown-content :not(pre) > code {
+  border: 1px solid var(--sl-color-hairline-light);
+  border-radius: 0.35rem;
+  font-size: 0.85em;
+  padding: 0.12em 0.4em;
+  color: var(--sl-color-accent-high);
+}
+
+/* ============================  CODE BLOCKS  ============================== */
+
+.expressive-code .frame {
+  border-radius: 0.65rem;
+  border: 1px solid var(--sl-color-hairline-light);
+  box-shadow: var(--sl-shadow-md);
+}
+.expressive-code .frame pre { border: none; }
+.expressive-code .copy button {
+  border-radius: 0.4rem;
+}
+
+/* ===============================  TABLES  ================================= */
+
+.sl-markdown-content table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 0.6rem;
+  overflow: hidden;
+}
+.sl-markdown-content thead th {
+  background: var(--sl-color-gray-6);
+  font-size: var(--sl-text-sm);
+  letter-spacing: 0.01em;
+  color: var(--sl-color-white);
+  text-align: start;
+}
+.sl-markdown-content :is(th, td) {
+  border: none;
+  border-bottom: 1px solid var(--sl-color-hairline);
+  padding: 0.65rem 0.9rem;
+}
+.sl-markdown-content tbody tr:last-child :is(th, td) { border-bottom: none; }
+.sl-markdown-content tbody tr:hover td {
+  background: color-mix(in srgb, var(--sl-color-gray-6) 50%, transparent);
+}
+
+/* ===========================  ASIDES / ALERTS  =========================== */
+
+.starlight-aside {
+  border-radius: 0.65rem;
+  border-inline-start-width: 3px;
+  padding-block: 1rem;
+}
+.starlight-aside__title { letter-spacing: -0.01em; }
+
+/* ==============================  CARDS  ================================== */
+
+.card,
+.sl-link-card {
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 0.75rem;
+  background: var(--sl-color-gray-6);
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.sl-link-card:hover {
+  border-color: var(--sl-color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--sl-shadow-md);
+}
+.card .icon {
+  background: color-mix(in srgb, var(--sl-color-accent) 16%, transparent);
+  color: var(--sl-color-accent-high);
+  border-radius: 0.55rem;
+}
+
+/* ==============================  BUTTONS  =============================== */
+
+/* Primary call-to-action: accent fill, guaranteed-readable light text */
+.sl-markdown-content .action.primary,
+a.action.primary {
+  background: var(--sl-color-accent);
+  color: var(--ing-on-accent);
+  border-radius: 999px;
+  font-weight: 700;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.sl-markdown-content .action.primary:hover,
+a.action.primary:hover {
+  background: var(--ing-indigo-bright);
+  transform: translateY(-1px);
+}
+/* Secondary / minimal actions */
+.action.secondary,
+.action.minimal {
+  border-radius: 999px;
+  border: 1px solid var(--sl-color-hairline-light);
+}
+
+/* ============================  PAGINATION  ============================== */
+
+.pagination-links a {
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 0.75rem;
+  background: var(--sl-color-gray-6);
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pagination-links a:hover {
+  border-color: var(--sl-color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--sl-shadow-md);
+}
+.pagination-links a span:last-child {
+  color: var(--sl-color-white);
+  font-weight: 600;
+}
+
+/* ===============================  FOOTER  =============================== */
+
+footer .meta,
+footer .pagination-links + * {
+  color: var(--sl-color-gray-3);
+  font-size: var(--sl-text-sm);
+}
+.right-sidebar { border-inline-start: 1px solid var(--sl-color-hairline); }
+
+/* ===========================  HERO (landing)  ========================== */
+
+.hero h1 {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.hero .tagline { color: var(--sl-color-gray-2); }
