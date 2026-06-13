@@ -26,15 +26,30 @@ test('token signed with a different secret is rejected', async () => {
 
 test('tampered expiry is rejected', async () => {
   const token = await createSessionToken(SECRET, 60);
-  const [v, exp, sig] = token.split('.');
-  const tampered = `${v}.${Number(exp) + 999999}.${sig}`;
+  const [v, exp, gen, sig] = token.split('.');
+  const tampered = `${v}.${Number(exp) + 999999}.${gen}.${sig}`;
   assert.equal(await verifySessionToken(SECRET, tampered), false);
 });
 
 test('garbage tokens are rejected', async () => {
-  for (const bad of [undefined, null, '', 'v1', 'v1.123', 'v2.123.abc', 'a.b.c.d', 42]) {
+  // Includes the old 3-segment v1 format, which must no longer verify.
+  for (const bad of [undefined, null, '', 'v1', 'v1.123', 'v1.9999999999.abc', 'a.b.c.d', 42]) {
     assert.equal(await verifySessionToken(SECRET, bad), false, `should reject: ${bad}`);
   }
+});
+
+test('token from a newer generation is rejected after a SESSION_VERSION bump', async () => {
+  const token = await createSessionToken(SECRET, 3600, Date.now(), '1');
+  assert.equal(await verifySessionToken(SECRET, token, Date.now(), '1'), true);
+  // Operator bumps SESSION_VERSION to "2" → every "1" token is now invalid.
+  assert.equal(await verifySessionToken(SECRET, token, Date.now(), '2'), false);
+});
+
+test('tampered generation is rejected', async () => {
+  const token = await createSessionToken(SECRET, 3600, Date.now(), '1');
+  const [v, exp, , sig] = token.split('.');
+  const forged = `${v}.${exp}.2.${sig}`; // claim generation 2 with a gen-1 signature
+  assert.equal(await verifySessionToken(SECRET, forged, Date.now(), '2'), false);
 });
 
 test('correct password verifies', async () => {

@@ -22,7 +22,15 @@ main ──────────────►  the template / shared baseli
 4. Set the base environment variables (**Site settings → Environment variables**,
    scope must include *Functions* and *Edge Functions*):
    - `SESSION_SECRET` — a long random string (used to sign login sessions).
+     Set a **per-branch** value too (see below) so each client's sessions are
+     signed independently.
    - `PORTAL_PASSWORD` — a default password (each client branch overrides this).
+   - `SESSION_VERSION` *(optional)* — defaults to `1`. Bump it for a branch to
+     force every logged-in user of that client back to the login screen
+     (no secret rotation needed).
+   - `ADMIN_PASSWORD` *(optional)* — enables comment moderation. When set, staff
+     can delete comments via the **Moderate** button in the comments widget.
+     Use a value different from `PORTAL_PASSWORD`.
 
 ---
 
@@ -83,6 +91,7 @@ context / branch" → claude**):
 | Variable | Value | Why |
 | --- | --- | --- |
 | `PORTAL_PASSWORD` | a password just for this client | So each client logs in separately. |
+| `SESSION_SECRET` | a fresh long random string per client | Signs this client's sessions independently — rotating one client never logs the others out. |
 | `CLIENT_ID` | `claude` | **Keeps this client's comments separate** from every other client. |
 
 > ⚠️ **Always set `CLIENT_ID` on a client branch.** Without it, comments fall

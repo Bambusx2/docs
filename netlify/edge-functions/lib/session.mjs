@@ -2,11 +2,17 @@
  * Session token + password verification using only the Web Crypto API,
  * so the same code runs on Netlify Edge (Deno) and in Node tests.
  *
- * Token format: "v1.<expiryEpochSeconds>.<hmacSha256Hex>"
- * The HMAC covers the version + expiry, keyed by SESSION_SECRET.
+ * Token format: "v1.<expiryEpochSeconds>.<generation>.<hmacSha256Hex>"
+ * The HMAC covers the version + expiry + generation, keyed by SESSION_SECRET.
+ *
+ * `generation` is a server-side revocation knob (the SESSION_VERSION env var).
+ * Bumping it makes every previously issued token fail verification — a clean
+ * "log everyone on this site out now" switch that does NOT require rotating
+ * the signing secret. Defaults to "1".
  */
 
 const VERSION = 'v1';
+const DEFAULT_GENERATION = '1';
 const encoder = new TextEncoder();
 
 async function hmacHex(secret, message) {
@@ -32,24 +38,40 @@ function timingSafeEqual(a, b) {
 }
 
 /** Create a signed session token valid for ttlSeconds from now. */
-export async function createSessionToken(secret, ttlSeconds, nowMs = Date.now()) {
+export async function createSessionToken(
+  secret,
+  ttlSeconds,
+  nowMs = Date.now(),
+  generation = DEFAULT_GENERATION
+) {
   const expiry = Math.floor(nowMs / 1000) + ttlSeconds;
-  const payload = `${VERSION}.${expiry}`;
+  const gen = String(generation ?? DEFAULT_GENERATION);
+  const payload = `${VERSION}.${expiry}.${gen}`;
   const sig = await hmacHex(secret, payload);
   return `${payload}.${sig}`;
 }
 
-/** Verify a session token: correct format, unexpired, valid signature. */
-export async function verifySessionToken(secret, token, nowMs = Date.now()) {
+/**
+ * Verify a session token: correct format, unexpired, current generation, and a
+ * valid signature. `expectedGeneration` is compared against the token's baked-in
+ * generation so a bumped SESSION_VERSION invalidates older tokens.
+ */
+export async function verifySessionToken(
+  secret,
+  token,
+  nowMs = Date.now(),
+  expectedGeneration = DEFAULT_GENERATION
+) {
   if (typeof token !== 'string') return false;
   const parts = token.split('.');
-  if (parts.length !== 3) return false;
-  const [version, expiryStr, sig] = parts;
+  if (parts.length !== 4) return false;
+  const [version, expiryStr, genStr, sig] = parts;
   if (version !== VERSION) return false;
+  if (genStr !== String(expectedGeneration ?? DEFAULT_GENERATION)) return false;
   const expiry = Number.parseInt(expiryStr, 10);
   if (!Number.isFinite(expiry)) return false;
   if (expiry * 1000 <= nowMs) return false;
-  const expected = await hmacHex(secret, `${version}.${expiryStr}`);
+  const expected = await hmacHex(secret, `${version}.${expiryStr}.${genStr}`);
   return timingSafeEqual(sig, expected);
 }
 

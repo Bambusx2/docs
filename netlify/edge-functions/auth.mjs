@@ -9,19 +9,61 @@
  *   PORTAL_PASSWORD — shared access password for customers
  *   SESSION_SECRET  — long random string used to sign session cookies
  */
+import { getStore } from '@netlify/blobs';
 import {
   createSessionToken,
   verifySessionToken,
   verifyPassword,
 } from './lib/session.mjs';
+import { makeKey, check, record, reset } from './lib/ratelimit.mjs';
 
 const COOKIE_NAME = '__docs_session';
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
 const FAILED_LOGIN_DELAY_MS = 400; // slow down brute-force attempts
 
+// IP lockout: after MAX_FAILED bad passwords inside the window, that IP is
+// blocked (HTTP 429) until the window elapses. A successful login clears it.
+const MAX_FAILED_LOGINS = 10;
+const LOGIN_WINDOW_SECONDS = 15 * 60; // 15 minutes
+const THROTTLE_STORE = 'auth-throttle';
+
+// Content-Security-Policy. Two flavours:
+//  - PAGE: our own login / error HTML. No scripts at all, so lock everything
+//    down to nothing except the single inline <style> block.
+//  - APP: proxied Starlight pages. Starlight ships an inline theme script
+//    (FOUC guard) and inline styles, so 'unsafe-inline' is required there;
+//    everything else is pinned to same-origin. The high-value clickjacking /
+//    base-tag / object / form protections still apply.
+const CSP_PAGE =
+  "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; " +
+  "form-action 'self'; base-uri 'none'; frame-ancestors 'none'";
+const CSP_APP =
+  "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; " +
+  "script-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self'; " +
+  "base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'";
+
 function env(name) {
   // Netlify Edge exposes Netlify.env; Node (tests) uses process.env.
   return globalThis.Netlify?.env?.get(name) ?? globalThis.process?.env?.[name];
+}
+
+/** Best-effort client IP for rate limiting (Netlify edge context + headers). */
+function clientIp(request, context) {
+  return (
+    context?.ip ??
+    request.headers.get('x-nf-client-connection-ip') ??
+    (request.headers.get('x-forwarded-for') ?? '').split(',')[0].trim() ??
+    'unknown'
+  );
+}
+
+/** Structured one-line log for auth events (visible in Netlify function logs). */
+function logAuth(event, fields = {}) {
+  try {
+    console.log(JSON.stringify({ at: 'auth', event, ts: new Date().toISOString(), ...fields }));
+  } catch {
+    /* logging must never break a request */
+  }
 }
 
 function getCookie(request, name) {
@@ -51,7 +93,8 @@ function safeNext(raw) {
   return raw;
 }
 
-function securityHeaders(headers) {
+function securityHeaders(headers, csp = CSP_PAGE) {
+  headers.set('Content-Security-Policy', csp);
   headers.set('X-Robots-Tag', 'noindex, nofollow');
   headers.set('X-Frame-Options', 'DENY');
   headers.set('X-Content-Type-Options', 'nosniff');
@@ -157,10 +200,20 @@ function redirect(location, extraHeaders = {}) {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/** Open the throttle store. Returns null if Blobs is unavailable (fail-open). */
+function throttleStore() {
+  try {
+    return getStore(THROTTLE_STORE);
+  } catch {
+    return null;
+  }
+}
+
 export default async function handler(request, context) {
   const url = new URL(request.url);
   const password = env('PORTAL_PASSWORD');
   const secret = env('SESSION_SECRET');
+  const generation = env('SESSION_VERSION') || '1';
 
   // Fail closed: never serve content if auth is not configured.
   if (!password || !secret || secret.length < 16) {
@@ -176,21 +229,61 @@ export default async function handler(request, context) {
 
   if (url.pathname === '/login') {
     if (request.method === 'POST') {
+      const ip = clientIp(request, context);
+      const store = throttleStore();
+      const key = makeKey('login', ip);
+      const opts = { max: MAX_FAILED_LOGINS, windowSec: LOGIN_WINDOW_SECONDS };
+
+      // Locked out? Reject before even reading the password (fail-open if the
+      // throttle store is unavailable — auth itself still requires the secret).
+      if (store) {
+        try {
+          const gate = await check(store, key, opts);
+          if (gate.blocked) {
+            logAuth('login_locked', { ip, retryAfterSec: gate.retryAfterSec });
+            return htmlResponse(
+              loginPage({ error: 'Too many attempts. Please wait a few minutes and try again.' }),
+              429,
+              { 'retry-after': String(gate.retryAfterSec) }
+            );
+          }
+        } catch {
+          /* fail-open on throttle read errors */
+        }
+      }
+
       const form = await request.formData();
       const supplied = form.get('password');
       const next = safeNext(form.get('next'));
       if (await verifyPassword(secret, supplied, password)) {
-        const token = await createSessionToken(secret, SESSION_TTL_SECONDS);
+        if (store) {
+          try {
+            await reset(store, key);
+          } catch {
+            /* ignore */
+          }
+        }
+        logAuth('login_success', { ip });
+        const token = await createSessionToken(secret, SESSION_TTL_SECONDS, Date.now(), generation);
         return redirect(next, {
           'set-cookie': sessionCookie(token, SESSION_TTL_SECONDS),
         });
       }
+
+      if (store) {
+        try {
+          await record(store, key, opts);
+        } catch {
+          /* ignore */
+        }
+      }
+      logAuth('login_failure', { ip });
       await sleep(FAILED_LOGIN_DELAY_MS);
       return htmlResponse(loginPage({ error: 'Incorrect password. Please try again.', next }), 401);
     }
     // Already signed in? Go straight to the docs.
     const existing = getCookie(request, COOKIE_NAME);
-    if (existing && (await verifySessionToken(secret, existing))) {
+    if (existing && (await verifySessionToken(secret, existing, Date.now(), generation))) {
       return redirect('/');
     }
     return htmlResponse(loginPage({ next: safeNext(url.searchParams.get('next')) }), 200);
@@ -198,10 +291,10 @@ export default async function handler(request, context) {
 
   // Gate everything else, static assets included.
   const token = getCookie(request, COOKIE_NAME);
-  if (token && (await verifySessionToken(secret, token))) {
+  if (token && (await verifySessionToken(secret, token, Date.now(), generation))) {
     const response = await context.next();
     const out = new Response(response.body, response);
-    securityHeaders(out.headers);
+    securityHeaders(out.headers, CSP_APP);
     return out;
   }
 
