@@ -1,6 +1,6 @@
 ---
-title: Installation
-description: Requirements and step-by-step instructions for getting the platform running in your environment.
+title: Vlatkoooo
+description: Vlatkoooo.
 sidebar:
   order: 1
 ---
@@ -8,7 +8,7 @@ sidebar:
 This guide walks you through a first-time installation. It should take about
 15 minutes for a standard setup.
 
-## Requirements
+## Vlatkoooo
 
 Before you begin, make sure your environment meets the following:
 

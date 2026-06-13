@@ -1,14 +1,14 @@
 ---
-title: Configuration
-description: How to configure your workspace using the configuration file and environment variables.
+title: Ratkooooooo
+description: Ratkooooo
 sidebar:
-  order: 2
+  order: 1
 ---
 
 The platform is configured through a single `ing.config.json` file at the root
 of your project, with sensitive values supplied via environment variables.
 
-## The configuration file
+## The Ratko file
 
 A minimal configuration looks like this:
 
