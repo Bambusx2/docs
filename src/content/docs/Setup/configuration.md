@@ -1,8 +1,8 @@
 ---
-title: Configuration
+title: Ratko
 description: How to configure your workspace using the configuration file and environment variables.
 sidebar:
-  order: 2
+  order: 1
 ---
 
 The platform is configured through a single `ing.config.json` file at the root

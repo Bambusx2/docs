@@ -1,8 +1,8 @@
 ---
-title: Installation
+title: Vlatko
 description: Requirements and step-by-step instructions for getting the platform running in your environment.
 sidebar:
-  order: 1
+  order: 2
 ---
 
 This guide walks you through a first-time installation. It should take about
