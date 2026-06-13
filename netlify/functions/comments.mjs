@@ -13,11 +13,14 @@
  * Authorship is self-declared: the `name` field is whatever the commenter
  * typed and is NOT verified (the portal uses a single shared password).
  *
- * Moderation: if ADMIN_PASSWORD is configured, a DELETE carrying that password
- * removes a comment by id. Without ADMIN_PASSWORD set, deletion is disabled.
+ * Moderation: deletion is authorized by the SESSION, not by a password in the
+ * request. A session is "admin" when the user logged in with ADMIN_PASSWORD
+ * (see the auth edge function). Admins can DELETE any comment; everyone else
+ * gets 403. GET reports `canModerate` so the UI can show delete controls only
+ * to admins.
  */
 import { getStore } from '@netlify/blobs';
-import { verifySessionToken, verifyPassword } from '../edge-functions/lib/session.mjs';
+import { verifySession } from '../edge-functions/lib/session.mjs';
 import { makeKey, check, record } from '../edge-functions/lib/ratelimit.mjs';
 
 const COOKIE_NAME = '__docs_session';
@@ -29,13 +32,9 @@ const MAX_COMMENTS_PER_PAGE = 500; // hard cap to keep a blob from growing unbou
 const MAX_POSTS = 20;
 const POST_WINDOW_SECONDS = 60;
 
-const FAILED_ADMIN_DELAY_MS = 400; // slow down admin-password guessing
-
 function env(name) {
   return globalThis.Netlify?.env?.get(name) ?? globalThis.process?.env?.[name];
 }
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function clientIp(request) {
   return (
@@ -129,11 +128,14 @@ export default async function handler(request) {
   if (!secret) return json({ error: 'Comments are not configured.' }, 503);
   const generation = env('SESSION_VERSION') || '1';
 
-  // Reuse the portal session: no valid cookie, no access.
+  // Reuse the portal session: no valid cookie, no access. The session's role
+  // (set at login) decides whether this user can moderate.
   const token = getCookie(request.headers.get('cookie'), COOKIE_NAME);
-  if (!token || !(await verifySessionToken(secret, token, Date.now(), generation))) {
+  const session = await verifySession(secret, token, Date.now(), generation);
+  if (!session.valid) {
     return json({ error: 'Not authenticated.' }, 401);
   }
+  const isAdmin = session.role === 'admin';
 
   const store = commentStore();
   const url = new URL(request.url);
@@ -142,7 +144,7 @@ export default async function handler(request) {
     const page = url.searchParams.get('page');
     if (!page) return json({ error: 'Missing "page" parameter.' }, 400);
     const comments = (await store.get(pageKey(page), { type: 'json' })) ?? [];
-    return json({ comments });
+    return json({ comments, canModerate: isAdmin });
   }
 
   if (request.method === 'POST') {
@@ -195,9 +197,9 @@ export default async function handler(request) {
   }
 
   if (request.method === 'DELETE') {
-    const adminPassword = env('ADMIN_PASSWORD');
-    if (!adminPassword) {
-      return json({ error: 'Moderation is not enabled.' }, 403);
+    // Only an admin session may delete. Customers never get here.
+    if (!isAdmin) {
+      return json({ error: 'Not allowed.' }, 403);
     }
 
     const payload = await request.json().catch(() => null);
@@ -208,11 +210,6 @@ export default async function handler(request) {
     const page = typeof payload.page === 'string' ? payload.page : '';
     const id = typeof payload.id === 'string' ? payload.id : '';
     if (!page || !id) return json({ error: 'Missing page or id.' }, 400);
-
-    if (!(await verifyPassword(secret, payload.adminPassword, adminPassword))) {
-      await sleep(FAILED_ADMIN_DELAY_MS);
-      return json({ error: 'Invalid moderation password.' }, 403);
-    }
 
     const key = pageKey(page);
     const existing = (await store.get(key, { type: 'json' })) ?? [];

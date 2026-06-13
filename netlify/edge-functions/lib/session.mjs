@@ -2,17 +2,24 @@
  * Session token + password verification using only the Web Crypto API,
  * so the same code runs on Netlify Edge (Deno) and in Node tests.
  *
- * Token format: "v1.<expiryEpochSeconds>.<generation>.<hmacSha256Hex>"
- * The HMAC covers the version + expiry + generation, keyed by SESSION_SECRET.
+ * Token format: "v1.<expiryEpochSeconds>.<generation>.<role>.<hmacSha256Hex>"
+ * The HMAC covers version + expiry + generation + role, keyed by SESSION_SECRET.
  *
  * `generation` is a server-side revocation knob (the SESSION_VERSION env var).
  * Bumping it makes every previously issued token fail verification — a clean
  * "log everyone on this site out now" switch that does NOT require rotating
  * the signing secret. Defaults to "1".
+ *
+ * `role` is "u" (customer) or "a" (admin). An admin session is issued when
+ * someone logs in with ADMIN_PASSWORD instead of PORTAL_PASSWORD; it unlocks
+ * comment moderation. Because the role lives inside the signed payload, it
+ * cannot be forged or upgraded client-side.
  */
 
 const VERSION = 'v1';
 const DEFAULT_GENERATION = '1';
+const ROLE_ADMIN = 'a';
+const ROLE_USER = 'u';
 const encoder = new TextEncoder();
 
 async function hmacHex(secret, message) {
@@ -37,42 +44,55 @@ function timingSafeEqual(a, b) {
   return diff === 0;
 }
 
-/** Create a signed session token valid for ttlSeconds from now. */
+/**
+ * Create a signed session token valid for ttlSeconds from now.
+ * `role` is 'admin' or 'user' (anything else is treated as 'user').
+ */
 export async function createSessionToken(
   secret,
   ttlSeconds,
   nowMs = Date.now(),
-  generation = DEFAULT_GENERATION
+  generation = DEFAULT_GENERATION,
+  role = 'user'
 ) {
   const expiry = Math.floor(nowMs / 1000) + ttlSeconds;
   const gen = String(generation ?? DEFAULT_GENERATION);
-  const payload = `${VERSION}.${expiry}.${gen}`;
+  const r = role === 'admin' ? ROLE_ADMIN : ROLE_USER;
+  const payload = `${VERSION}.${expiry}.${gen}.${r}`;
   const sig = await hmacHex(secret, payload);
   return `${payload}.${sig}`;
 }
 
 /**
- * Verify a session token: correct format, unexpired, current generation, and a
- * valid signature. `expectedGeneration` is compared against the token's baked-in
- * generation so a bumped SESSION_VERSION invalidates older tokens.
+ * Verify a session token and return its role.
+ * Returns { valid, role } where role is 'admin' | 'user' | null.
+ * Checks format, expiry, current generation, and signature.
  */
-export async function verifySessionToken(
+export async function verifySession(
   secret,
   token,
   nowMs = Date.now(),
   expectedGeneration = DEFAULT_GENERATION
 ) {
-  if (typeof token !== 'string') return false;
+  const fail = { valid: false, role: null };
+  if (typeof token !== 'string') return fail;
   const parts = token.split('.');
-  if (parts.length !== 4) return false;
-  const [version, expiryStr, genStr, sig] = parts;
-  if (version !== VERSION) return false;
-  if (genStr !== String(expectedGeneration ?? DEFAULT_GENERATION)) return false;
+  if (parts.length !== 5) return fail;
+  const [version, expiryStr, genStr, roleStr, sig] = parts;
+  if (version !== VERSION) return fail;
+  if (genStr !== String(expectedGeneration ?? DEFAULT_GENERATION)) return fail;
+  if (roleStr !== ROLE_ADMIN && roleStr !== ROLE_USER) return fail;
   const expiry = Number.parseInt(expiryStr, 10);
-  if (!Number.isFinite(expiry)) return false;
-  if (expiry * 1000 <= nowMs) return false;
-  const expected = await hmacHex(secret, `${version}.${expiryStr}.${genStr}`);
-  return timingSafeEqual(sig, expected);
+  if (!Number.isFinite(expiry)) return fail;
+  if (expiry * 1000 <= nowMs) return fail;
+  const expected = await hmacHex(secret, `${version}.${expiryStr}.${genStr}.${roleStr}`);
+  if (!timingSafeEqual(sig, expected)) return fail;
+  return { valid: true, role: roleStr === ROLE_ADMIN ? 'admin' : 'user' };
+}
+
+/** Boolean convenience wrapper used by the auth gate (role-agnostic). */
+export async function verifySessionToken(secret, token, nowMs = Date.now(), expectedGeneration = DEFAULT_GENERATION) {
+  return (await verifySession(secret, token, nowMs, expectedGeneration)).valid;
 }
 
 /**
