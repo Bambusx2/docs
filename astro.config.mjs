@@ -1,9 +1,15 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import remarkMermaid from './src/plugins/remark-mermaid.mjs';
 
 // https://astro.build/config
 export default defineConfig({
+  // Convert ```mermaid blocks to `.mermaid` elements before Expressive Code
+  // sees them; the client script in Head.astro renders them into SVG.
+  markdown: {
+    remarkPlugins: [remarkMermaid],
+  },
   integrations: [
     starlight({
       title: 'Ingsoftware Docs',

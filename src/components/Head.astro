@@ -18,6 +18,38 @@ import { ClientRouter } from 'astro:transitions';
 <Default><slot /></Default>
 <ClientRouter />
 
+<script>
+  // Render Mermaid diagrams client-side. The remark plugin emits each diagram
+  // as <pre class="mermaid" data-mermaid-source="…">; here we turn those into
+  // SVG. Runs on initial load and after every view transition. securityLevel
+  // 'strict' disables any HTML/JS embedded in diagram text.
+  import mermaid from 'mermaid';
+
+  function currentTheme() {
+    return document.documentElement.dataset.theme === 'light' ? 'default' : 'dark';
+  }
+
+  async function renderMermaid() {
+    const nodes = document.querySelectorAll('pre.mermaid:not([data-rendered])');
+    if (!nodes.length) return;
+    mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: currentTheme() });
+    let n = 0;
+    for (const el of nodes) {
+      const source = el.getAttribute('data-mermaid-source') || el.textContent || '';
+      el.setAttribute('data-rendered', 'true');
+      try {
+        const { svg } = await mermaid.render(`mmd-${Date.now()}-${n++}`, source);
+        el.innerHTML = svg;
+      } catch {
+        el.removeAttribute('data-rendered'); // leave the source visible on error
+      }
+    }
+  }
+
+  renderMermaid();
+  document.addEventListener('astro:page-load', renderMermaid);
+</script>
+
 <script is:inline>
   document.addEventListener('astro:after-swap', () => {
     const stored =

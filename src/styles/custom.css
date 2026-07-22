@@ -410,3 +410,29 @@ footer .pagination-links + * {
   line-height: 1.05;
 }
 .hero .tagline { color: var(--sl-color-gray-2); }
+
+/* ===========================  Mermaid diagrams  =========================== */
+/* Rendered client-side from ```mermaid blocks (see remark-mermaid + Head).
+   Strip the code-block chrome and center the resulting SVG. */
+pre.mermaid {
+  background: none;
+  border: 0;
+  padding: 0.5rem 0;
+  margin: 1.5rem 0;
+  text-align: center;
+  overflow-x: auto;
+  /* Hide the raw source text until the SVG replaces it (avoids a flash of
+     unrendered diagram definition). */
+  color: transparent;
+  font-size: 0;
+  line-height: 0;
+}
+pre.mermaid[data-rendered] {
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+pre.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
