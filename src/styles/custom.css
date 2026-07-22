@@ -484,24 +484,30 @@ pre.mermaid.mermaid-error {
   height: 1.05rem;
 }
 
-/* Left nav exists from 50rem up.
-   Zeroing --sl-sidebar-width makes ALL of Starlight's layout math (the content
-   inset, main-pane width, TOC width) reflow as if there were no sidebar, so the
-   content reclaims the space instead of leaving a gap. */
+/* Left nav (≥50rem): drop the sidebar + its reserved inset, and widen the
+   reading column into the freed space (centered). Starlight otherwise caps the
+   content at --sl-content-width regardless, so hiding a panel just left a gap. */
 @media (min-width: 50rem) {
   .neopix-panel-toggle[data-target='nav'] { display: inline-flex; }
-  :root[data-hide-nav] { --sl-sidebar-width: 0rem; }
   :root[data-hide-nav] .sidebar-pane { display: none; }
-  :root[data-hide-nav] .main-pane { --sl-content-margin-inline: auto; }
+  :root[data-hide-nav] .main-frame { padding-inline-start: 0; }
+  :root[data-hide-nav] .content-panel > .sl-container {
+    --sl-content-margin-inline: auto;
+    max-width: min(60rem, 100% - 5rem);
+  }
 }
-/* Right TOC only exists from 72rem up. Hide its column, let the main pane take
-   the full width, and re-center the content (Starlight otherwise pins it with
-   margin-inline: auto 0). */
+/* Right TOC (≥72rem): drop its column, let the main pane fill the row, and
+   widen the reading column further. */
 @media (min-width: 72rem) {
   .neopix-panel-toggle[data-target='toc'] { display: inline-flex; }
   :root[data-hide-toc] .right-sidebar-container { display: none; }
-  :root[data-hide-toc] .main-pane {
-    width: 100%;
+  :root[data-hide-toc] .main-pane { width: 100%; }
+  :root[data-hide-toc] .content-panel > .sl-container {
     --sl-content-margin-inline: auto;
+    max-width: min(66rem, 100% - 6rem);
+  }
+  /* Both hidden → widest, edge-to-edge reading with comfortable gutters. */
+  :root[data-hide-nav][data-hide-toc] .content-panel > .sl-container {
+    max-width: min(88rem, 100% - 8rem);
   }
 }
