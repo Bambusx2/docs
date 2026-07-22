@@ -1,4 +1,4 @@
-# Netlify configuration for the Ingsoftware customer documentation portal.
+# Netlify configuration for the Neopix customer documentation portal.
 #
 # The auth edge function (netlify/edge-functions/auth.mjs) declares its own
 # route (path = "/*") inline, so every request — pages and static assets —

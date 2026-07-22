@@ -45,7 +45,7 @@ If the site is connected to Netlify (one-time setup by a developer):
 ## What link do I send the client?
 
 The site address, e.g. `https://<site-name>.netlify.app` (or
-`docs.ingsoftware.com` if a custom domain was set up) **plus the portal
+`docs.weareneopix.com` if a custom domain was set up) **plus the portal
 password**. The client opens the link, types the password, and can read
 everything for 7 days before being asked to sign in again.
 

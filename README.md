@@ -1,4 +1,4 @@
-# Ingsoftware Customer Documentation Portal
+# Neopix Customer Documentation Portal
 
 A private, password-protected documentation site for customers. Markdown in,
 polished docs out — with **every page and static asset gated behind
@@ -53,7 +53,7 @@ Key properties:
 │   └── lib/session.mjs         # Pure Web-Crypto token + password logic (unit-tested)
 ├── src/
 │   ├── content/docs/           # ← write your Markdown here
-│   ├── styles/custom.css       # Ingsoftware-inspired theme (orange / dark navy)
+│   ├── styles/custom.css       # Neopix-inspired theme (orange / dark navy)
 │   └── assets/logo.svg
 ├── test/                       # node --test suite for the auth layer
 └── .env.example                # Documents required environment variables
@@ -90,7 +90,7 @@ netlify dev                   # runs the site WITH the edge function
      `node -e "console.log(crypto.randomBytes(32).toString('hex'))"`
 4. Deploy. Every push to the default branch now builds and deploys
    automatically — that *is* the CI/CD pipeline; no extra workflow files needed.
-5. Optional: add a custom domain (e.g. `docs.ingsoftware.com`) in
+5. Optional: add a custom domain (e.g. `docs.weareneopix.com`) in
    **Domain management**. Netlify provisions TLS automatically.
 
 ### Verifying the deployment
@@ -144,7 +144,7 @@ for a 3-step guide that works entirely from the GitHub web interface.
 | Item | Cost |
 |---|---|
 | Netlify free tier (100 GB bandwidth, 300 build min, 1M edge invocations / month) | **$0** |
-| Custom domain (optional, e.g. docs.ingsoftware.com subdomain of an owned domain) | $0 |
+| Custom domain (optional, e.g. docs.weareneopix.com subdomain of an owned domain) | $0 |
 | External services | $0 |
 | **Total** | **$0/month** for typical docs traffic |
 

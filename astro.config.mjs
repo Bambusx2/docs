@@ -12,7 +12,7 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: 'Ingsoftware Docs',
+      title: 'Neopix Docs',
       description: 'Customer documentation portal',
       customCss: ['@fontsource-variable/manrope', './src/styles/custom.css'],
       // Code blocks: dark-primary theme paired with a light one. The frame
@@ -36,7 +36,7 @@ export default defineConfig({
         Footer: './src/components/Footer.astro',
       },
       social: [
-        { icon: 'external', label: 'Ingsoftware', href: 'https://www.ingsoftware.com' },
+        { icon: 'external', label: 'Neopix', href: 'https://www.weareneopix.com' },
       ],
       // Explicit sidebar: clean section labels (no "01-"/"04-" folder-name
       // prefixes) and a fixed top-level order. Each section still autogenerates

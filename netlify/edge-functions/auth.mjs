@@ -109,7 +109,7 @@ function loginPage({ error = '', next = '/' } = {}) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Sign in — Ingsoftware Docs</title>
+<title>Sign in — Neopix Docs</title>
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; margin: 0; }
@@ -163,9 +163,9 @@ function loginPage({ error = '', next = '/' } = {}) {
 </head>
 <body>
   <main class="card">
-    <div class="mark" aria-hidden="true">in</div>
+    <div class="mark" aria-hidden="true">n</div>
     <h1>Customer documentation</h1>
-    <p class="sub">This portal is private. Enter the access password provided by your Ingsoftware team.</p>
+    <p class="sub">This portal is private. Enter the access password provided by your Neopix team.</p>
     ${error ? `<div class="error" role="alert">${error}</div>` : ''}
     <form method="post" action="/login">
       <input type="hidden" name="next" value="${next.replaceAll('"', '&quot;')}">
@@ -173,7 +173,7 @@ function loginPage({ error = '', next = '/' } = {}) {
       <input id="password" name="password" type="password" autocomplete="current-password" autofocus required>
       <button type="submit">Sign in</button>
     </form>
-    <footer>© Ingsoftware</footer>
+    <footer>© Neopix</footer>
   </main>
 </body>
 </html>`;
