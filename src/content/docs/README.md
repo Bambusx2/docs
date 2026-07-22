@@ -1,5 +1,7 @@
 ---
 title: "OnePoint — Discovery Spec Bundle"
+sidebar:
+  order: 1
 ---
 
 > Phase 1 discovery package for client sign-off and engineering handoff.  

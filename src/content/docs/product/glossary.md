@@ -1,5 +1,7 @@
 ---
 title: "OnePoint — Glossary"
+sidebar:
+  order: 3
 ---
 
 > Shared vocabulary for client stakeholders and engineers.  

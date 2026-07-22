@@ -1,5 +1,7 @@
 ---
 title: "Engineering (discovery proposal → Phase B SoT)"
+sidebar:
+  order: 1
 ---
 
 > Discovery delivers: a tech-spec proposal so the build team has a shared guideline.  

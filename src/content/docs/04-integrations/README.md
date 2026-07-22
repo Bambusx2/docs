@@ -1,5 +1,7 @@
 ---
 title: "OnePoint — Integration Specs"
+sidebar:
+  order: 1
 ---
 
 > Purpose: Normative contracts for how systems connect — auth, sync, ownership, failure modes, Done checklists.  

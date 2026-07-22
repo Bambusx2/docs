@@ -1,5 +1,7 @@
 ---
 title: "OnePoint — Feature Specs (Discovery Packages)"
+sidebar:
+  order: 1
 ---
 
 > Purpose: Phase 1 feature specs for engineering handoff.  

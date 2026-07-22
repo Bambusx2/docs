@@ -1,5 +1,7 @@
 ---
 title: "OnePoint Client Portal — Product Brief (PRD)"
+sidebar:
+  order: 2
 ---
 
 > Purpose: Signed product narrative — what we are building, for whom, and what Phase 1 success looks like.  
