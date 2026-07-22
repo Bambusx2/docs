@@ -67,7 +67,7 @@ Neopix shares storage/cache model with OnePoint for security review before pilot
 
 ```mermaid
 flowchart TB
-    subgraph azure ["OnePoint Azure"]
+    subgraph azure["OnePoint Azure"]
         MW[Middleware API]
         Prev[Preview web host]
         Job[SF sync job]

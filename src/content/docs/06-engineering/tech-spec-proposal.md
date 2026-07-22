@@ -94,13 +94,13 @@ OpenTelemetry (traces, metrics, logs) to OnePoint’s sink; architecture §9.7 s
 
 ```mermaid
 flowchart TB
-  subgraph client ["Client"]
+  subgraph client["Client"]
     RN[React Native]
   end
-  subgraph sf ["Salesforce"]
+  subgraph sf["Salesforce"]
     LWC[Advisor LWC]
   end
-  subgraph azure ["OnePoint Azure"]
+  subgraph azure["OnePoint Azure"]
     API[Middleware API]
     Prev[Preview web host]
     Job[Sync worker]

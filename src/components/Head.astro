@@ -35,7 +35,14 @@ import { ClientRouter } from 'astro:transitions';
     const nodes = document.querySelectorAll('pre.mermaid:not([data-rendered])');
     if (!nodes.length) return;
     const { default: mermaid } = await import('mermaid');
-    mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: currentTheme() });
+    // suppressErrorRendering: don't let Mermaid inject its "Syntax error" graphic
+    // into the page; we handle failures ourselves below.
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: 'strict',
+      suppressErrorRendering: true,
+      theme: currentTheme(),
+    });
     let n = 0;
     for (const el of nodes) {
       const source = el.getAttribute('data-mermaid-source') || el.textContent || '';
@@ -44,7 +51,9 @@ import { ClientRouter } from 'astro:transitions';
         const { svg } = await mermaid.render(`mmd-${Date.now()}-${n++}`, source);
         el.innerHTML = svg;
       } catch {
-        el.removeAttribute('data-rendered'); // leave the source visible on error
+        // Fall back to the raw source in a code block rather than an error graphic.
+        el.classList.add('mermaid-error');
+        el.textContent = source;
       }
     }
   }
