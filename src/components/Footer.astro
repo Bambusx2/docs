@@ -224,6 +224,13 @@ import Default from '@astrojs/starlight/components/Footer.astro';
     const submitBtn = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
     if (!list || !form || !nameInput || !bodyInput || !errorEl || !submitBtn) return;
 
+    // Idempotency guard: `init()` runs on the direct call AND on the
+    // `astro:page-load` event, which also fires on the first load — so without
+    // this, the submit handler binds twice and every comment posts twice.
+    // A fresh DOM after a view transition has no flag, so it re-binds correctly.
+    if (form.dataset.commentsBound === '1') return;
+    form.dataset.commentsBound = '1';
+
     const page = window.location.pathname;
     // Whether THIS session may moderate. Set by the server (GET /api/comments),
     // never trusted from the client — only admin logins get true.
