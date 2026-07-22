@@ -23,7 +23,9 @@ import { ClientRouter } from 'astro:transitions';
   // as <pre class="mermaid" data-mermaid-source="…">; here we turn those into
   // SVG. Runs on initial load and after every view transition. securityLevel
   // 'strict' disables any HTML/JS embedded in diagram text.
-  import mermaid from 'mermaid';
+  //
+  // Mermaid (~1MB) is dynamically imported ONLY on pages that actually contain
+  // a diagram, so diagram-free pages never download it.
 
   function currentTheme() {
     return document.documentElement.dataset.theme === 'light' ? 'default' : 'dark';
@@ -32,6 +34,7 @@ import { ClientRouter } from 'astro:transitions';
   async function renderMermaid() {
     const nodes = document.querySelectorAll('pre.mermaid:not([data-rendered])');
     if (!nodes.length) return;
+    const { default: mermaid } = await import('mermaid');
     mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: currentTheme() });
     let n = 0;
     for (const el of nodes) {
