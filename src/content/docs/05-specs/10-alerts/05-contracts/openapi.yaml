@@ -1,0 +1,139 @@
+openapi: 3.1.0
+info:
+  title: OnePoint Alerts API
+  version: 1.0.0
+  description: |
+    Action Required alerts and notification badge for the authenticated client.
+    Alerts are middleware-computed from synced upstream data.
+servers:
+  - url: https://{host}
+    variables:
+      host:
+        default: api.example.onepoint.com
+paths:
+  /api/v1/alerts:
+    get:
+      tags: [Alerts]
+      summary: List open alerts
+      description: |
+        AR-02. Returns open alerts for the authenticated client household.
+        Same item set as Home actionRequired and bell badge count.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Open alert list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/alerts/{alertId}/dismiss:
+    post:
+      tags: [Alerts]
+      summary: Dismiss informational alert
+      description: |
+        AR-10. Dismisses dismissible alerts (e.g. planning_update).
+        Must-type alerts resolve only when upstream condition clears.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: alertId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Alert dismissed.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Alert type is not dismissible.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+    NotFound:
+      description: Unknown alert for this client.
+  schemas:
+    AlertType:
+      type: string
+      enum:
+        - document_signature_pending
+        - linked_account_broken
+        - missing_required_field
+        - profile_proposal_decided
+        - planning_update
+    AlertSeverity:
+      type: string
+      enum: [info, warning, critical]
+    Alert:
+      type: object
+      required:
+        - id
+        - alertType
+        - severity
+        - title
+        - actionDeepLink
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        alertType:
+          $ref: '#/components/schemas/AlertType'
+        severity:
+          $ref: '#/components/schemas/AlertSeverity'
+        title:
+          type: string
+        message:
+          type: string
+        actionLabel:
+          type: string
+        actionDeepLink:
+          type: string
+        relatedEntityType:
+          type: string
+          enum: [document, linked_account, profile, planning]
+        relatedEntityId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+    AlertListResponse:
+      type: object
+      required: [alerts, notificationSummary]
+      properties:
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alert'
+        notificationSummary:
+          $ref: '#/components/schemas/NotificationSummary'
+    NotificationSummary:
+      type: object
+      required: [totalOpenCount, computedAt]
+      properties:
+        totalOpenCount:
+          type: integer
+          minimum: 0
+        pendingSignatureCount:
+          type: integer
+          minimum: 0
+        brokenLinkedAccountCount:
+          type: integer
+          minimum: 0
+        computedAt:
+          type: string
+          format: date-time

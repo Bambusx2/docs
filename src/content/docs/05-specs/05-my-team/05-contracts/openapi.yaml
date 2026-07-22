@@ -1,0 +1,225 @@
+openapi: 3.1.0
+info:
+  title: OnePoint Team & Scheduling API
+  version: 1.0.0
+  description: |
+    Advisory team for the authenticated client's household. Team membership is
+    sourced from Salesforce AccountTeamMember. Meeting offers come from the
+    configured SchedulingProvider adapter (this delivery: Calendly — see scheduling.md).
+    Client endpoints require an Okta-issued JWT for the client (or admin
+    impersonation session). Scheduling fields are provider-agnostic; mobile
+    must not depend on Calendly SDKs or Calendly-specific field names.
+servers:
+  - url: https://{host}
+    description: Placeholder middleware endpoint
+    variables:
+      host:
+        default: api.example.onepoint.com
+paths:
+  /api/v1/team:
+    get:
+      tags: [Team]
+      summary: List client-facing advisory team members
+      description: |
+        MT-01. Returns only active, client-facing members for the client's
+        parent Client Account. Ordered by sortOrder, then isPrimary, then
+        displayName. When team_enabled is false, return 403.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Team list (may be empty).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/UpstreamError'
+  /api/v1/team/{memberId}/meeting-types:
+    get:
+      tags: [Scheduling]
+      summary: List bookable meeting offers for a team member
+      description: |
+        MT-03. Returns active meeting offers for the member. Empty array means
+        hide Schedule on that card. When team_scheduling is false, return 403.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Meeting offers (may be empty).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeetingTypeListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/UpstreamError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Feature flag off or member not in client's team.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Unknown memberId for this client.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UpstreamError:
+      description: Salesforce or scheduling provider unavailable.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      required: [message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          description: Opaque, client-safe message.
+    TeamListResponse:
+      type: object
+      required: [members, dataAsOf]
+      properties:
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMember'
+        dataAsOf:
+          type: string
+          format: date-time
+          description: Salesforce sync timestamp for team domain.
+    TeamMember:
+      type: object
+      required:
+        - id
+        - sfUserId
+        - displayName
+        - firstName
+        - lastName
+        - role
+        - email
+        - initials
+        - isPrimary
+        - sortOrder
+        - isActive
+        - schedulingAvailable
+      properties:
+        id:
+          type: string
+          format: uuid
+        sfUserId:
+          type: string
+          description: Salesforce User Id (18-char).
+        displayName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          description: Display role label (e.g. Wealth Advisor).
+        roleType:
+          type: string
+          enum: [advisor, associate, cpa, estate, other]
+          description: Client-facing classification only. operations never appears.
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          description: Present only when known; omit when missing.
+        photoUrl:
+          type: string
+          format: uri
+        initials:
+          type: string
+          maxLength: 4
+        isPrimary:
+          type: boolean
+        sortOrder:
+          type: integer
+        isActive:
+          type: boolean
+        schedulingAvailable:
+          type: boolean
+          description: |
+            True when team_scheduling is on for the household AND this member
+            has at least one active meeting offer.
+    MeetingTypeListResponse:
+      type: object
+      required: [memberId, meetingTypes, providerAttribution]
+      properties:
+        memberId:
+          type: string
+          format: uuid
+        meetingTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeetingType'
+        providerAttribution:
+          type: string
+          description: |
+            UI footer copy only (e.g. Powered by Calendly / Zoom). Not a
+            technical provider id — change copy when the adapter changes.
+    MeetingType:
+      type: object
+      required: [id, name, durationMinutes, schedulingUrl, isActive]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Portfolio Review
+        durationMinutes:
+          type: integer
+          minimum: 1
+          example: 30
+        description:
+          type: string
+        schedulingUrl:
+          type: string
+          format: uri
+          description: |
+            HTTPS URL opened in system browser or in-app WebView. Opaque to
+            mobile — must not require provider-specific SDKs.
+        isActive:
+          type: boolean
+        sortOrder:
+          type: integer

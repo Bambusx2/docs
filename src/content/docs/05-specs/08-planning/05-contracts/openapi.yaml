@@ -1,0 +1,340 @@
+openapi: 3.1.0
+info:
+  title: OnePoint Planning API
+  version: 1.0.0
+  description: |
+    eMoney-backed financial planning for the authenticated client household.
+    Read data from Salesforce (eMoney sync). Link and relink via eMoney WebView.
+servers:
+  - url: https://{host}
+    variables:
+      host:
+        default: api.example.onepoint.com
+paths:
+  /api/v1/planning/overview:
+    get:
+      tags: [Planning]
+      summary: Planning overview
+      description: |
+        PL-02, PL-03, PL-04, PL-05. Net worth, planning_combined allocation,
+        plan probability, Monte Carlo. Respects planning_overview and
+        planning_monte_carlo flags. 403 when planning_enabled is false.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Overview payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanningOverviewResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/planning/expenses:
+    get:
+      tags: [Planning]
+      summary: Plan expenses
+      description: PL-06. Simple or itemized. 403 when planning_expenses false.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Expenses payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanningExpensesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/planning/goals:
+    get:
+      tags: [Planning]
+      summary: Financial goals
+      description: PL-07. 403 when planning_goals false.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Goals list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanningGoalsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/planning/linked-accounts:
+    get:
+      tags: [Planning]
+      summary: Linked external accounts
+      description: PL-08. Client-linked accounts only. 403 when planning_linked_accounts false.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Linked account list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkedAccountListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/planning/link-institution:
+    post:
+      tags: [Planning]
+      summary: Start institution link flow
+      description: PL-10. Returns eMoney WebView URL.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: WebView handoff.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebViewHandoff'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+    Forbidden:
+      description: planning_enabled or section flag false.
+  schemas:
+    Money:
+      type: object
+      required: [amount, currency]
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+          default: USD
+    NetWorth:
+      type: object
+      required: [netWorth, totalAssets, totalLiabilities, dataAsOf]
+      properties:
+        netWorth:
+          $ref: '#/components/schemas/Money'
+        totalAssets:
+          $ref: '#/components/schemas/Money'
+        totalLiabilities:
+          $ref: '#/components/schemas/Money'
+        netWorthYtdChange:
+          $ref: '#/components/schemas/Money'
+        netWorthYtdChangePct:
+          type: number
+        dataAsOf:
+          type: string
+          format: date-time
+    AllocationSlice:
+      type: object
+      required: [code, label, marketValue, weightPct]
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+        marketValue:
+          $ref: '#/components/schemas/Money'
+        weightPct:
+          type: number
+    PlanningAllocation:
+      type: object
+      required: [scope, status, dataAsOf]
+      properties:
+        scope:
+          type: string
+          enum: [planning_combined]
+        status:
+          type: string
+          enum: [ready, unavailable]
+        dataAsOf:
+          type: string
+          format: date-time
+        slices:
+          type: array
+          items:
+            $ref: '#/components/schemas/AllocationSlice'
+    PlanProbability:
+      type: object
+      properties:
+        planProbabilityPct:
+          type: number
+        dataAsOf:
+          type: string
+          format: date-time
+    MonteCarlo:
+      type: object
+      properties:
+        upsidePct:
+          type: number
+        medianPct:
+          type: number
+        downsidePct:
+          type: number
+        dataAsOf:
+          type: string
+          format: date-time
+    PlanningOverviewResponse:
+      type: object
+      required: [dataAsOf]
+      properties:
+        netWorth:
+          $ref: '#/components/schemas/NetWorth'
+        allocation:
+          $ref: '#/components/schemas/PlanningAllocation'
+        planProbability:
+          $ref: '#/components/schemas/PlanProbability'
+        monteCarlo:
+          $ref: '#/components/schemas/MonteCarlo'
+        dataAsOf:
+          type: string
+          format: date-time
+    ExpenseCategorySummary:
+      type: object
+      required: [categoryType, label, annualTotal]
+      properties:
+        categoryType:
+          type: string
+          enum: [essential, discretionary, goal_based]
+        label:
+          type: string
+        annualTotal:
+          $ref: '#/components/schemas/Money'
+        percentOfTotal:
+          type: number
+    ExpenseLineItem:
+      type: object
+      required: [name, categoryType, amount]
+      properties:
+        name:
+          type: string
+        categoryType:
+          type: string
+          enum: [essential, discretionary, goal_based]
+        amount:
+          $ref: '#/components/schemas/Money'
+        frequency:
+          type: string
+          enum: [monthly, annual, one_time]
+    PlanningExpensesResponse:
+      type: object
+      required: [dataAsOf]
+      properties:
+        mode:
+          type: string
+          enum: [simple, itemized]
+        annualLivingExpense:
+          $ref: '#/components/schemas/Money'
+        monthlyAverage:
+          $ref: '#/components/schemas/Money'
+        annualTotal:
+          $ref: '#/components/schemas/Money'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseCategorySummary'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseLineItem'
+        dataAsOf:
+          type: string
+          format: date-time
+    FinancialGoal:
+      type: object
+      required: [id, name, fundedPct, probabilityPct, targetYear, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        fundedPct:
+          type: number
+        probabilityPct:
+          type: number
+        targetYear:
+          type: integer
+        status:
+          type: string
+          enum: [on_track, at_risk, off_track]
+        dataAsOf:
+          type: string
+          format: date-time
+    PlanningGoalsResponse:
+      type: object
+      required: [goals, dataAsOf]
+      properties:
+        goals:
+          type: array
+          items:
+            $ref: '#/components/schemas/FinancialGoal'
+        dataAsOf:
+          type: string
+          format: date-time
+    LinkedAccount:
+      type: object
+      required: [id, institutionName, accountType, connectionStatus, isManual]
+      properties:
+        id:
+          type: string
+          format: uuid
+        institutionName:
+          type: string
+        accountName:
+          type: string
+        nickname:
+          type: string
+        accountType:
+          type: string
+        connectionStatus:
+          type: string
+          enum: [connected, broken, pending, disconnected]
+        balance:
+          $ref: '#/components/schemas/Money'
+        isManual:
+          type: boolean
+        relinkUrl:
+          type: string
+          format: uri
+        lastSyncAt:
+          type: string
+          format: date-time
+        dataAsOf:
+          type: string
+          format: date-time
+    LinkedAccountListResponse:
+      type: object
+      required: [accounts, dataAsOf]
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/LinkedAccount'
+        dataAsOf:
+          type: string
+          format: date-time
+    WebViewHandoff:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
