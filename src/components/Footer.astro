@@ -235,6 +235,8 @@ import Default from '@astrojs/starlight/components/Footer.astro';
     // Whether THIS session may moderate. Set by the server (GET /api/comments),
     // never trusted from the client — only admin logins get true.
     let canModerate = false;
+    // Most recent comments rendered — lets delete update the UI optimistically.
+    let lastComments: Array<{ id: string; name: string; body: string; created_at: string }> = [];
 
     // Remember the commenter's name across pages/visits.
     try {
@@ -263,6 +265,7 @@ import Default from '@astrojs/starlight/components/Footer.astro';
     function renderComments(
       comments: Array<{ id: string; name: string; body: string; created_at: string }>
     ) {
+      lastComments = comments;
       list!.replaceChildren();
       if (!comments.length) {
         if (status) {
