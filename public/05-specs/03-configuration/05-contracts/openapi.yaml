@@ -1,0 +1,214 @@
+openapi: 3.1.0
+info:
+  title: OnePoint Configuration API
+  version: 1.0.0
+  description: |
+    Effective feature flags for the authenticated client household, plus an
+    optional advisor preview session. Mobile consumes effective flags only —
+    it must not re-merge firm/book/household/platform layers (see resolution.md).
+servers:
+  - url: https://{host}
+    variables:
+      host:
+        default: api.example.onepoint.com
+paths:
+  /api/v1/me:
+    get:
+      tags: [Identity, Configuration]
+      summary: Session identity including effective feature flags
+      description: |
+        CFG-01. When the household is ready, response includes `flags` (effective).
+        Identity fields are owned by the Users package; this contract defines the
+        flags object shape for Configuration.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Me payload including effective flags.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeWithFlags'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/config:
+    get:
+      tags: [Configuration]
+      summary: Effective feature flags only
+      description: |
+        CFG-01. Convenience endpoint returning the same effective map as /me.flags.
+        Useful for refresh without re-fetching the full identity tree.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Effective flags.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EffectiveFlagsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/config/preview-session:
+    post:
+      tags: [Configuration, Salesforce]
+      summary: Create a short-lived advisor preview session
+      description: |
+        CFG-02 / ADR-047. Called from Salesforce service auth. Returns a
+        short-lived, household-scoped token and previewUrl pointing at the
+        Neopix-hosted **web** client surface (iframe target in Lightning).
+        This is not the native mobile binary. The web client must use the same
+        /api/v1 APIs and effective-flag computation as the real app. Must not
+        grant access outside the advisor's eligible book. Prefer read-only
+        AuthZ for preview sessions.
+      security:
+        - sfServiceAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreviewSessionRequest'
+      responses:
+        '201':
+          description: Preview session created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviewSessionResponse'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    sfServiceAuth:
+      type: http
+      scheme: bearer
+      description: Salesforce named-credential service bearer.
+  responses:
+    Unauthorized:
+      description: Missing or invalid client token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Caller not allowed for household or role.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Household not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      required: [message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    EffectiveFlags:
+      type: object
+      description: |
+        Boolean (and enum) effective options after resolution.md merge.
+        Unknown keys must be ignored by clients.
+      additionalProperties: true
+      properties:
+        portfolio_enabled:
+          type: boolean
+        portfolio_provider:
+          type: string
+          enum: [orion, investnet, none]
+        portfolio_ytd_realized_gl:
+          type: boolean
+        planning_enabled:
+          type: boolean
+        planning_overview:
+          type: boolean
+        planning_expenses:
+          type: boolean
+        planning_goals:
+          type: boolean
+        planning_linked_accounts:
+          type: boolean
+        planning_monte_carlo:
+          type: boolean
+        documents_enabled:
+          type: boolean
+        documents_upload:
+          type: boolean
+        documents_docusign:
+          type: boolean
+        insights_enabled:
+          type: boolean
+        team_enabled:
+          type: boolean
+        team_scheduling:
+          type: boolean
+        profile_enabled:
+          type: boolean
+    EffectiveFlagsResponse:
+      type: object
+      required: [flags, resolvedAt, householdId]
+      properties:
+        householdId:
+          type: string
+          format: uuid
+        flags:
+          $ref: '#/components/schemas/EffectiveFlags'
+        resolvedAt:
+          type: string
+          format: date-time
+        dataAsOf:
+          type: string
+          format: date-time
+          description: Salesforce sync timestamp used for SF layers.
+    MeWithFlags:
+      type: object
+      required: [flags]
+      description: Identity payload (Users package) plus effective flags.
+      properties:
+        flags:
+          $ref: '#/components/schemas/EffectiveFlags'
+      additionalProperties: true
+    PreviewSessionRequest:
+      type: object
+      required: [sfHouseholdAccountId, actorSfUserId]
+      properties:
+        sfHouseholdAccountId:
+          type: string
+          description: Orion child household Account Id.
+        actorSfUserId:
+          type: string
+        ttlSeconds:
+          type: integer
+          minimum: 60
+          maximum: 3600
+          default: 900
+    PreviewSessionResponse:
+      type: object
+      required: [previewUrl, expiresAt]
+      properties:
+        previewUrl:
+          type: string
+          format: uri
+          description: |
+            Absolute HTTPS URL of the Neopix-hosted web preview client
+            (ADR-047). Loaded in the Salesforce LWC iframe.
+        expiresAt:
+          type: string
+          format: date-time
+        previewToken:
+          type: string
+          description: Opaque token embedded in previewUrl or set as cookie by MW.

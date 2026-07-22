@@ -1,0 +1,165 @@
+openapi: 3.1.0
+info:
+  title: OnePoint Documents API
+  version: 1.0.0
+  description: |
+    Household documents via eMoney Vault (middleware proxy).
+    Feature flags from Salesforce.
+servers:
+  - url: https://{host}
+    variables:
+      host:
+        default: api.example.onepoint.com
+paths:
+  /api/v1/documents:
+    get:
+      tags: [Documents]
+      summary: List documents
+      description: |
+        DOC-02, DOC-03, DOC-04. Filter all (non-archived),
+        needs_signature, or archive. 403 when documents_enabled false.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: filter
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [all, needs_signature, archive]
+      responses:
+        '200':
+          description: Document list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags: [Documents]
+      summary: Upload document
+      description: DOC-06. 403 when documents_upload false.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Uploaded document metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/documents/{documentId}/download:
+    get:
+      tags: [Documents]
+      summary: Get download URL
+      description: DOC-05. Short-lived signed vault URL.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Download handoff.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentDownloadResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+    Forbidden:
+      description: documents_enabled or documents_upload false.
+    NotFound:
+      description: Unknown document for this household.
+  schemas:
+    Document:
+      type: object
+      required:
+        - id
+        - name
+        - uploadedAt
+        - documentType
+        - uploadedBy
+        - requiresSignature
+        - isArchived
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        uploadedAt:
+          type: string
+          format: date-time
+        documentType:
+          type: string
+          enum: [statement, tax, contract, plan, other]
+        uploadedBy:
+          type: string
+          enum: [client, advisor, system]
+        requiresSignature:
+          type: boolean
+        isArchived:
+          type: boolean
+        externalSignUrl:
+          type: string
+          format: uri
+    DocumentListResponse:
+      type: object
+      required: [documents, filter]
+      properties:
+        filter:
+          type: string
+          enum: [all, needs_signature, archive]
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+    DocumentDownloadResponse:
+      type: object
+      required: [documentId, downloadUrl, expiresAt]
+      properties:
+        documentId:
+          type: string
+          format: uuid
+        downloadUrl:
+          type: string
+          format: uri
+        expiresAt:
+          type: string
+          format: date-time

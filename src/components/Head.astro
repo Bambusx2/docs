@@ -27,4 +27,24 @@ import { ClientRouter } from 'astro:transitions';
       (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
     document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
   });
+
+  /*
+   * Keep the left sidebar scrolled to where the reader left it.
+   *
+   * Starlight persists sidebar scroll only on the `pageHide` /
+   * `visibilitychange` events, which never fire during <ClientRouter />
+   * navigations (they are in-place DOM swaps). So we capture the scroll
+   * position ourselves right before each swap and re-apply it right after,
+   * once the new sidebar is in the DOM.
+   */
+  var SIDEBAR_SCROLL_KEY = 'sl-sidebar-scrolltop';
+  document.addEventListener('astro:before-swap', () => {
+    const sb = document.getElementById('starlight__sidebar');
+    if (sb) sessionStorage.setItem(SIDEBAR_SCROLL_KEY, String(sb.scrollTop));
+  });
+  document.addEventListener('astro:after-swap', () => {
+    const sb = document.getElementById('starlight__sidebar');
+    const y = sessionStorage.getItem(SIDEBAR_SCROLL_KEY);
+    if (sb && y !== null) sb.scrollTop = parseInt(y, 10) || 0;
+  });
 </script>

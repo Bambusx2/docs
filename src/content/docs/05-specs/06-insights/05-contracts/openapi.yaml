@@ -1,0 +1,189 @@
+openapi: 3.1.0
+info:
+  title: OnePoint Insights API
+  version: 1.0.0
+  description: |
+    Firm Insights & Commentary for the authenticated client. Articles are
+    sourced from an external feed, normalized to InsightArticle (data-model §6),
+    and are the same for all clients this delivery. See feed.md for the standardized
+    external feed document and adapters (RSS/Atom, JSON Feed, etc.).
+servers:
+  - url: https://{host}
+    description: Placeholder middleware endpoint
+    variables:
+      host:
+        default: api.example.onepoint.com
+paths:
+  /api/v1/insights:
+    get:
+      tags: [Insights]
+      summary: List published insight articles
+      description: |
+        IC-01. Paginated published articles only. When insights_enabled is
+        false, return 403. Order: publishedAt descending (featured boost
+        optional; must not invent filler items).
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Opaque pagination cursor from a previous response.
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 20
+      responses:
+        '200':
+          description: Article page (may be empty).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/UpstreamError'
+  /api/v1/insights/{articleId}:
+    get:
+      tags: [Insights]
+      summary: Get a single published article
+      description: |
+        IC-01 detail. Returns bodyHtml and/or bodyUrl for rendering (prefer bodyHtml when present).
+        Unknown or non-published ids return 404.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: articleId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Article detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightArticle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: insights_enabled is false for the household.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Unknown or unpublished article.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UpstreamError:
+      description: Feed unavailable and no usable cache.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      required: [message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    InsightListResponse:
+      type: object
+      required: [items, dataAsOf]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightArticleSummary'
+        nextCursor:
+          type: string
+          description: Absent when no further pages.
+        dataAsOf:
+          type: string
+          format: date-time
+          description: When middleware last successfully refreshed the feed.
+    InsightArticleSummary:
+      type: object
+      required: [id, title, excerpt, authorName, publishedAt, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        tag:
+          type: string
+          example: Markets
+        title:
+          type: string
+        excerpt:
+          type: string
+        authorName:
+          type: string
+        authorRole:
+          type: string
+          enum:
+            - investment_committee
+            - planning
+            - advisor
+            - technology
+            - cio
+            - other
+        publishedAt:
+          type: string
+          format: date-time
+        thumbnailUrl:
+          type: string
+          format: uri
+        isFeatured:
+          type: boolean
+        status:
+          type: string
+          enum: [published]
+    InsightArticle:
+      allOf:
+        - $ref: '#/components/schemas/InsightArticleSummary'
+        - type: object
+          properties:
+            bodyHtml:
+              type: string
+              description: Sanitized HTML for in-app render when present.
+            bodyUrl:
+              type: string
+              format: uri
+              description: Canonical article URL for WebView when bodyHtml absent.
+            externalId:
+              type: string
+              description: Stable id from the external feed (guid / id).
