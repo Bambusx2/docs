@@ -255,7 +255,15 @@ export default async function handler(request, context) {
       const form = await request.formData();
       const supplied = form.get('password');
       const next = safeNext(form.get('next'));
-      if (await verifyPassword(secret, supplied, password)) {
+
+      // The portal password grants a normal session; the (optional) admin
+      // password grants the same session plus comment-moderation rights.
+      const adminPassword = env('ADMIN_PASSWORD');
+      let role = null;
+      if (await verifyPassword(secret, supplied, password)) role = 'user';
+      else if (adminPassword && (await verifyPassword(secret, supplied, adminPassword))) role = 'admin';
+
+      if (role) {
         if (store) {
           try {
             await reset(store, key);
@@ -263,8 +271,14 @@ export default async function handler(request, context) {
             /* ignore */
           }
         }
-        logAuth('login_success', { ip });
-        const token = await createSessionToken(secret, SESSION_TTL_SECONDS, Date.now(), generation);
+        logAuth('login_success', { ip, role });
+        const token = await createSessionToken(
+          secret,
+          SESSION_TTL_SECONDS,
+          Date.now(),
+          generation,
+          role
+        );
         return redirect(next, {
           'set-cookie': sessionCookie(token, SESSION_TTL_SECONDS),
         });

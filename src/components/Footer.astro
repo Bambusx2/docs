@@ -8,10 +8,7 @@ import Default from '@astrojs/starlight/components/Footer.astro';
 <Default><slot /></Default>
 
 <section class="docs-comments" aria-labelledby="comments-heading">
-  <div class="docs-comments__head">
-    <h2 id="comments-heading">Comments</h2>
-    <button type="button" class="docs-comments__mod-toggle" data-comments-mod hidden></button>
-  </div>
+  <h2 id="comments-heading">Comments</h2>
   <p class="docs-comments__intro">
     Have a question or feedback about this page? Leave a note for the Ingsoftware team.
   </p>
@@ -54,36 +51,11 @@ import Default from '@astrojs/starlight/components/Footer.astro';
   .docs-comments *::after {
     box-sizing: border-box;
   }
-  .docs-comments__head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
   .docs-comments h2 {
     font-size: var(--sl-text-xl);
     margin: 0 0 0.25rem;
   }
-  /* Moderation toggle: deliberately understated — only staff who know the
-     admin password ever activate it. */
-  .docs-comments__mod-toggle {
-    background: none;
-    border: 1px solid var(--sl-color-gray-5);
-    color: var(--sl-color-gray-3);
-    border-radius: 999px;
-    padding: 0.3rem 0.85rem;
-    font-size: var(--sl-text-xs);
-    font-weight: 600;
-    cursor: pointer;
-    flex: none;
-  }
-  .docs-comments__mod-toggle:hover {
-    color: var(--sl-color-white);
-    border-color: var(--sl-color-gray-4);
-  }
-  .docs-comments__item.is-moderating {
-    border-color: var(--sl-color-accent);
-  }
+  /* Delete button: only ever rendered for admin sessions. */
   .docs-comments__delete {
     margin-left: auto;
     background: none;
@@ -238,23 +210,6 @@ import Default from '@astrojs/starlight/components/Footer.astro';
   // Self-contained comment widget. Renders user content via textContent only
   // (never innerHTML) so comment text can never inject markup.
   const NAME_STORAGE_KEY = 'docs-comment-name';
-  // Admin moderation password, kept only for this tab (sessionStorage). Staff
-  // enter it once to reveal per-comment delete buttons; nobody else is affected.
-  const ADMIN_STORAGE_KEY = 'docs-admin-pw';
-
-  function getAdminPw(): string {
-    try {
-      return sessionStorage.getItem(ADMIN_STORAGE_KEY) ?? '';
-    } catch {
-      return '';
-    }
-  }
-  function setAdminPw(value: string) {
-    try {
-      if (value) sessionStorage.setItem(ADMIN_STORAGE_KEY, value);
-      else sessionStorage.removeItem(ADMIN_STORAGE_KEY);
-    } catch {}
-  }
 
   function init() {
     const section = document.querySelector<HTMLElement>('.docs-comments');
@@ -267,10 +222,20 @@ import Default from '@astrojs/starlight/components/Footer.astro';
     const bodyInput = section.querySelector<HTMLTextAreaElement>('#comment-body');
     const errorEl = section.querySelector<HTMLElement>('[data-comments-error]');
     const submitBtn = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
-    const modToggle = section.querySelector<HTMLButtonElement>('[data-comments-mod]');
     if (!list || !form || !nameInput || !bodyInput || !errorEl || !submitBtn) return;
 
+    // Idempotency guard: `init()` runs on the direct call AND on the
+    // `astro:page-load` event, which also fires on the first load — so without
+    // this, the submit handler binds twice and every comment posts twice.
+    // A fresh DOM after a view transition has no flag, so it re-binds correctly.
+    if (form.dataset.commentsBound === '1') return;
+    form.dataset.commentsBound = '1';
+
     const page = window.location.pathname;
+    // Whether THIS session may moderate. Set by the server (GET /api/comments),
+    // never trusted from the client — only admin logins get true.
+    let canModerate = false;
+    // Most recent comments rendered — lets delete update the UI optimistically.
     let lastComments: Array<{ id: string; name: string; body: string; created_at: string }> = [];
 
     // Remember the commenter's name across pages/visits.
@@ -309,11 +274,10 @@ import Default from '@astrojs/starlight/components/Footer.astro';
         }
         return;
       }
-      const moderating = getAdminPw() !== '';
       // Newest first.
       for (const c of [...comments].reverse()) {
         const item = document.createElement('li');
-        item.className = 'docs-comments__item' + (moderating ? ' is-moderating' : '');
+        item.className = 'docs-comments__item';
 
         const meta = document.createElement('div');
         meta.className = 'docs-comments__meta';
@@ -329,7 +293,8 @@ import Default from '@astrojs/starlight/components/Footer.astro';
 
         meta.append(author, time);
 
-        if (moderating && c.id) {
+        // Delete control appears only for admin sessions.
+        if (canModerate && c.id) {
           const del = document.createElement('button');
           del.type = 'button';
           del.className = 'docs-comments__delete';
@@ -348,54 +313,26 @@ import Default from '@astrojs/starlight/components/Footer.astro';
     }
 
     async function deleteComment(id: string, btn: HTMLButtonElement) {
-      const adminPassword = getAdminPw();
-      if (!adminPassword) return;
       if (!window.confirm('Delete this comment? This cannot be undone.')) return;
       btn.disabled = true;
       try {
         const res = await fetch('/api/comments', {
           method: 'DELETE',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ page, id, adminPassword }),
+          body: JSON.stringify({ page, id }),
         });
-        if (res.status === 403) {
-          setAdminPw('');
-          updateModToggle();
-          showError('Moderation password rejected. Exited moderation mode.');
-          renderComments(lastComments);
-          return;
-        }
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
           throw new Error(data.error || `Delete failed (${res.status})`);
         }
+        // Optimistic: drop it from the UI immediately so it disappears the
+        // instant the server confirms, then reconcile with a fresh load.
+        renderComments(lastComments.filter((c) => c.id !== id));
         await load();
       } catch (err) {
         btn.disabled = false;
         showError(err instanceof Error ? err.message : 'Could not delete the comment.');
       }
-    }
-
-    function updateModToggle() {
-      if (!modToggle) return;
-      modToggle.hidden = false;
-      modToggle.textContent = getAdminPw() ? 'Exit moderation' : 'Moderate';
-    }
-
-    if (modToggle) {
-      updateModToggle();
-      modToggle.addEventListener('click', () => {
-        showError('');
-        if (getAdminPw()) {
-          setAdminPw('');
-        } else {
-          const pw = window.prompt('Enter the moderation password:');
-          if (!pw) return;
-          setAdminPw(pw);
-        }
-        updateModToggle();
-        renderComments(lastComments);
-      });
     }
 
     async function load() {
@@ -405,6 +342,7 @@ import Default from '@astrojs/starlight/components/Footer.astro';
         });
         if (!res.ok) throw new Error(`Failed to load (${res.status})`);
         const data = await res.json();
+        canModerate = data.canModerate === true;
         renderComments(data.comments ?? []);
       } catch {
         setStatus('Could not load comments. Please refresh the page.');

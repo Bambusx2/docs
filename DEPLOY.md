@@ -28,9 +28,10 @@ main ──────────────►  the template / shared baseli
    - `SESSION_VERSION` *(optional)* — defaults to `1`. Bump it for a branch to
      force every logged-in user of that client back to the login screen
      (no secret rotation needed).
-   - `ADMIN_PASSWORD` *(optional)* — enables comment moderation. When set, staff
-     can delete comments via the **Moderate** button in the comments widget.
-     Use a value different from `PORTAL_PASSWORD`.
+   - `ADMIN_PASSWORD` *(optional)* — an admin login. Sign in with this password
+     instead of `PORTAL_PASSWORD` to get **Delete** buttons on every comment.
+     Customers never see any moderation UI. Use a value different from
+     `PORTAL_PASSWORD`.
 
 ---
 
