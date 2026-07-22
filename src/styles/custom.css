@@ -451,3 +451,50 @@ pre.mermaid.mermaid-error {
   padding: 1rem;
   white-space: pre;
 }
+
+/* ==================  Collapsible nav / TOC (desktop only)  ================== */
+/* Header toggle buttons (injected by Head.astro) that hide the left navigation
+   and/or the right "On this page" outline to widen the reading area. State is
+   stored on <html> as data-hide-nav / data-hide-toc. */
+.neopix-panel-toggle {
+  display: none; /* revealed per-breakpoint below */
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--sl-color-gray-2);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.neopix-panel-toggle:hover {
+  color: var(--sl-color-white);
+  border-color: var(--sl-color-gray-4);
+}
+.neopix-panel-toggle[aria-pressed='true'] {
+  color: var(--sl-color-accent);
+  border-color: var(--sl-color-accent);
+  background: color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
+}
+.neopix-panel-toggle svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* Left nav exists from 50rem up */
+@media (min-width: 50rem) {
+  .neopix-panel-toggle[data-target='nav'] { display: inline-flex; }
+  :root[data-hide-nav] .sidebar-pane { display: none; }
+  :root[data-hide-nav] .main-frame { padding-inline-start: 0; }
+  /* Reclaim the sidebar's reserved width so content re-centers in the full area */
+  :root[data-hide-nav] { --sl-content-inline-start: 0rem; }
+}
+/* Right TOC only exists from 72rem up */
+@media (min-width: 72rem) {
+  .neopix-panel-toggle[data-target='toc'] { display: inline-flex; }
+  :root[data-hide-toc] .right-sidebar-container { display: none; }
+  :root[data-hide-toc] .main-pane { width: 100%; }
+}
