@@ -484,17 +484,24 @@ pre.mermaid.mermaid-error {
   height: 1.05rem;
 }
 
-/* Left nav exists from 50rem up */
+/* Left nav exists from 50rem up.
+   Zeroing --sl-sidebar-width makes ALL of Starlight's layout math (the content
+   inset, main-pane width, TOC width) reflow as if there were no sidebar, so the
+   content reclaims the space instead of leaving a gap. */
 @media (min-width: 50rem) {
   .neopix-panel-toggle[data-target='nav'] { display: inline-flex; }
+  :root[data-hide-nav] { --sl-sidebar-width: 0rem; }
   :root[data-hide-nav] .sidebar-pane { display: none; }
-  :root[data-hide-nav] .main-frame { padding-inline-start: 0; }
-  /* Reclaim the sidebar's reserved width so content re-centers in the full area */
-  :root[data-hide-nav] { --sl-content-inline-start: 0rem; }
+  :root[data-hide-nav] .main-pane { --sl-content-margin-inline: auto; }
 }
-/* Right TOC only exists from 72rem up */
+/* Right TOC only exists from 72rem up. Hide its column, let the main pane take
+   the full width, and re-center the content (Starlight otherwise pins it with
+   margin-inline: auto 0). */
 @media (min-width: 72rem) {
   .neopix-panel-toggle[data-target='toc'] { display: inline-flex; }
   :root[data-hide-toc] .right-sidebar-container { display: none; }
-  :root[data-hide-toc] .main-pane { width: 100%; }
+  :root[data-hide-toc] .main-pane {
+    width: 100%;
+    --sl-content-margin-inline: auto;
+  }
 }
