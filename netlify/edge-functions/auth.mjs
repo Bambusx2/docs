@@ -115,8 +115,8 @@ function loginPage({ error = '', next = '/' } = {}) {
   * { box-sizing: border-box; margin: 0; }
   body {
     font-family: "Manrope", "Helvetica Neue", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
-    background: #050c27;
-    color: #e8ecf7;
+    background: #0e142f;
+    color: #eef1fb;
     min-height: 100vh;
     display: grid;
     place-items: center;
@@ -125,40 +125,40 @@ function loginPage({ error = '', next = '/' } = {}) {
   .card {
     width: 100%;
     max-width: 24rem;
-    background: #131a3c;
-    border: 1px solid #2b3155;
+    background: #19224c;
+    border: 1px solid #2b3663;
     border-radius: 1rem;
     padding: 2.25rem 2rem;
   }
   .mark {
     width: 3rem; height: 3rem; border-radius: 0.75rem;
-    background: #3412de; color: #fff;
+    background: #657cff; color: #fff;
     display: grid; place-items: center;
     font-weight: 800; font-size: 1.4rem;
     margin-bottom: 1.25rem;
   }
   h1 { font-size: 1.3rem; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
-  p.sub { color: #8b93b3; font-size: 0.92rem; margin-bottom: 1.5rem; }
+  p.sub { color: #8791b5; font-size: 0.92rem; margin-bottom: 1.5rem; }
   label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; }
   input[type="password"] {
     width: 100%; padding: 0.65rem 0.8rem;
-    border-radius: 0.5rem; border: 1px solid #565e80;
-    background: #050c27; color: #e8ecf7; font-size: 1rem;
+    border-radius: 0.5rem; border: 1px solid #3a4680;
+    background: #0b1026; color: #eef1fb; font-size: 1rem;
   }
-  input[type="password"]:focus { outline: 2px solid #5b4cff; border-color: transparent; }
+  input[type="password"]:focus { outline: 2px solid #657cff; border-color: transparent; }
   button {
     width: 100%; margin-top: 1.1rem; padding: 0.7rem;
     border: 0; border-radius: 999px;
-    background: #3412de; color: #fff;
+    background: #4c5fe6; color: #fff;
     font-size: 1rem; font-weight: 700; cursor: pointer;
   }
-  button:hover { background: #2a0eb5; }
+  button:hover { background: #3f51d6; }
   .error {
-    background: #2d0712; border: 1px solid #eb062e; color: #ffb3c0;
+    background: #2c1013; border: 1px solid #f46b6b; color: #ffc9c9;
     border-radius: 0.5rem; padding: 0.6rem 0.8rem;
     font-size: 0.88rem; margin-bottom: 1.1rem;
   }
-  footer { margin-top: 1.5rem; text-align: center; color: #565e80; font-size: 0.8rem; }
+  footer { margin-top: 1.5rem; text-align: center; color: #6b74a0; font-size: 0.8rem; }
 </style>
 </head>
 <body>

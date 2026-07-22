@@ -186,14 +186,14 @@ import Default from '@astrojs/starlight/components/Footer.astro';
     /* Always light text on the indigo fill — never the theme-inverted
        --sl-color-white token, which is navy in light mode (unreadable). */
     background: var(--sl-color-accent);
-    color: var(--ing-on-accent, #fff);
+    color: var(--neopix-on-accent, #fff);
     font-weight: 700;
     font-size: var(--sl-text-sm);
     cursor: pointer;
     transition: background 0.15s ease, transform 0.15s ease;
   }
   .docs-comments button:hover:not(:disabled) {
-    background: var(--ing-indigo-bright, #6a5bff);
+    background: var(--neopix-indigo-bright, #8394ff);
     transform: translateY(-1px);
   }
   .docs-comments button:disabled {

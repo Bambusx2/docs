@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 32" width="168" height="32" role="img" aria-label="Neopix Docs">
-  <g>
-    <rect x="0" y="4" width="24" height="24" rx="6" fill="#3412de"/>
-    <path d="M9 12h2.5v10H9zM9 9h2.5v2H9z" fill="#ffffff"/>
-    <path d="M13.5 14.5c1.2-1.8 4-2 5.2-.5.5.6.6 1.2.6 2.5V22h-2.5v-5c0-1-.4-1.5-1.3-1.5-.9 0-1.5.6-1.5 1.7V22h-2.5v-9.7h2z" fill="#ffffff"/>
-  </g>
-  <text x="32" y="22.5" font-family="ui-sans-serif, system-ui, 'Segoe UI', sans-serif" font-size="15" font-weight="700" fill="currentColor">neopix<tspan fill="#5b4cff"> docs</tspan></text>
-</svg>

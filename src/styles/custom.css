@@ -1,24 +1,24 @@
 /* ============================================================================
    Neopix documentation portal — design system
-   Brand (weareneopix.com): navy #050c27 · indigo #3412de · lavender #cdcbff
-                    · teal #8eebd9 · red #eb062e
+   Brand (weareneopix.com): navy #19224c · periwinkle #657cff · pale #dee3ff
+                    · green #4cb06c · red #f46b6b · greys #525252–#f6f6f6
    Dark mode is the primary, intended experience. Neutrals are tinted toward
-   the brand navy for subconscious cohesion. Indigo is brightened on dark
-   backgrounds so links and accents stay legible (raw #3412de is too dark on
-   navy). Font: Manrope (closest open substitute for the commercial PP-Mori).
+   the brand navy for cohesion. The periwinkle accent is brightened on dark
+   backgrounds so links and accents stay legible.
+   Font: Manrope (closest open substitute for the commercial brand face).
    ============================================================================ */
 
 :root {
-  /* ---- Brand anchors (raw, for reference / accents) ---- */
-  --ing-navy: #050c27;
-  --ing-indigo: #3412de;
-  --ing-indigo-bright: #6a5bff;
-  --ing-lavender: #cdcbff;
-  --ing-teal: #8eebd9;
+  /* ---- Neopix brand anchors (raw, for reference / accents) ---- */
+  --neopix-navy: #19224c;          /* Neopix navy */
+  --neopix-indigo: #657cff;        /* Neopix periwinkle — primary accent */
+  --neopix-indigo-bright: #8394ff; /* brightened for hover / dark surfaces */
+  --neopix-lavender: #dee3ff;      /* pale periwinkle */
+  --neopix-teal: #4cb06c;          /* Neopix green */
 
   /* Text that sits ON an accent-filled surface (buttons, badges).
-     Accent fills are dark indigo in both themes, so this stays light. */
-  --ing-on-accent: #ffffff;
+     The periwinkle accent is mid-tone, so light text stays legible. */
+  --neopix-on-accent: #ffffff;
 
   /* ---- Typography ---- */
   --sl-font: 'Manrope Variable', 'Manrope', ui-sans-serif, system-ui,
@@ -41,107 +41,107 @@
 :root,
 :root[data-theme='dark'] {
   /* Text ramp — lightest (white) to faint */
-  --sl-color-white: #f3f6fe;
-  --sl-color-gray-1: #dde3f4;
-  --sl-color-gray-2: #b4bdda;
-  --sl-color-gray-3: #8a93b6;
-  --sl-color-gray-4: #5b6488;
-  --sl-color-gray-5: #2a3258; /* default border */
-  --sl-color-gray-6: #141c3f; /* elevated surface (cards, code) */
-  --sl-color-gray-7: #0e1533; /* deeper surface (form wells) */
-  --sl-color-black: #060d28; /* base near-bg */
+  --sl-color-white: #eef1fb;
+  --sl-color-gray-1: #d6dcf1;
+  --sl-color-gray-2: #adb6d7;
+  --sl-color-gray-3: #838db3;
+  --sl-color-gray-4: #545e88;
+  --sl-color-gray-5: #2b3663; /* default border */
+  --sl-color-gray-6: #1b2450; /* elevated surface (cards, code) — Neopix navy */
+  --sl-color-gray-7: #151d40; /* deeper surface (form wells) */
+  --sl-color-black: #0b1026; /* base near-bg */
 
-  /* Accent (indigo, brightened for dark) */
-  --sl-color-accent-low: #1b1d5e;
-  --sl-color-accent: #5b4cff;
-  --sl-color-accent-high: #d4d2ff;
+  /* Accent (Neopix periwinkle) */
+  --sl-color-accent-low: #222c5e;
+  --sl-color-accent: #657cff;
+  --sl-color-accent-high: #cdd3ff;
 
   /* Surfaces */
-  --sl-color-bg: #050c27;
-  --sl-color-bg-nav: #070f2eee;
-  --sl-color-bg-sidebar: #070e2c;
-  --sl-color-bg-inline-code: #18204a;
+  --sl-color-bg: #0e142f;
+  --sl-color-bg-nav: #101638ee;
+  --sl-color-bg-sidebar: #0f1531;
+  --sl-color-bg-inline-code: #1c2552;
   --sl-color-bg-accent: var(--sl-color-accent);
 
   /* Hairlines */
-  --sl-color-hairline: #1a2249;
+  --sl-color-hairline: #1a2247;
   --sl-color-hairline-light: #232c54;
-  --sl-color-hairline-shade: #0b1230;
+  --sl-color-hairline-shade: #0b1130;
 
   /* Text roles */
   --sl-color-text: var(--sl-color-gray-2);
-  --sl-color-text-accent: #a9a3ff; /* links — AA on navy */
-  --sl-color-text-invert: var(--ing-navy);
+  --sl-color-text-accent: #9aa6ff; /* periwinkle links — AA on navy */
+  --sl-color-text-invert: var(--neopix-navy);
 
-  /* Semantic — tuned for navy backgrounds */
-  --sl-color-red: #ff6378;
-  --sl-color-red-low: #2a0a13;
-  --sl-color-red-high: #ffc2cc;
-  --sl-color-orange: #f7b24b;
-  --sl-color-orange-low: #2c1d05;
-  --sl-color-orange-high: #ffdca6;
-  --sl-color-green: #57d6b4; /* teal-leaning, on-brand */
-  --sl-color-green-low: #082420;
-  --sl-color-green-high: #b6f3e3;
-  --sl-color-blue: #6f9bff;
-  --sl-color-blue-low: #0c1840;
-  --sl-color-blue-high: #c2d4ff;
+  /* Semantic — Neopix hues, tuned for navy backgrounds */
+  --sl-color-red: #f46b6b;
+  --sl-color-red-low: #2c1013;
+  --sl-color-red-high: #ffc9c9;
+  --sl-color-orange: #ffbf60;
+  --sl-color-orange-low: #2e2207;
+  --sl-color-orange-high: #ffe4b3;
+  --sl-color-green: #4cb06c;
+  --sl-color-green-low: #0c2417;
+  --sl-color-green-high: #bff0cd;
+  --sl-color-blue: #657cff;
+  --sl-color-blue-low: #14204d;
+  --sl-color-blue-high: #cdd3ff;
   --sl-color-purple: #b69bff;
   --sl-color-purple-low: #1a1147;
   --sl-color-purple-high: #ddd1ff;
 
-  --sl-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(2, 6, 23, 0.45);
-  --sl-shadow-lg: 0 8px 28px rgba(2, 6, 23, 0.55);
+  --sl-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(6, 10, 30, 0.45);
+  --sl-shadow-lg: 0 8px 28px rgba(6, 10, 30, 0.55);
 }
 
 /* ==============================  LIGHT THEME  ============================== */
 :root[data-theme='light'] {
-  --sl-color-white: #0a1130; /* primary text */
-  --sl-color-gray-1: #18204a;
-  --sl-color-gray-2: #2d3760;
-  --sl-color-gray-3: #586186;
-  --sl-color-gray-4: #8089ab;
-  --sl-color-gray-5: #d6dcec; /* border */
-  --sl-color-gray-6: #eef2fb; /* elevated surface */
-  --sl-color-gray-7: #f6f8fd; /* deeper surface */
+  --sl-color-white: #19224c; /* primary text — Neopix navy */
+  --sl-color-gray-1: #232c58;
+  --sl-color-gray-2: #3b4468;
+  --sl-color-gray-3: #656d90;
+  --sl-color-gray-4: #8a92af;
+  --sl-color-gray-5: #d6d6d6; /* border — Neopix grey */
+  --sl-color-gray-6: #f6f6f6; /* elevated surface — Neopix light-grey */
+  --sl-color-gray-7: #fafafa; /* deeper surface */
   --sl-color-black: #ffffff;
 
-  --sl-color-accent-low: #dcd9ff;
-  --sl-color-accent: #3412de;
-  --sl-color-accent-high: #1c0f6e;
+  --sl-color-accent-low: #dee3ff;
+  --sl-color-accent: #4c5fe6;
+  --sl-color-accent-high: #26317a;
 
   --sl-color-bg: #ffffff;
   --sl-color-bg-nav: #ffffffee;
-  --sl-color-bg-sidebar: #fafbff;
-  --sl-color-bg-inline-code: #eef1fb;
+  --sl-color-bg-sidebar: #fafafa;
+  --sl-color-bg-inline-code: #eef0fb;
   --sl-color-bg-accent: var(--sl-color-accent);
 
-  --sl-color-hairline: #e4e8f4;
-  --sl-color-hairline-light: #eef1f8;
-  --sl-color-hairline-shade: #d9deec;
+  --sl-color-hairline: #e7e7e7;
+  --sl-color-hairline-light: #f0f0f0;
+  --sl-color-hairline-shade: #dcdcdc;
 
   --sl-color-text: var(--sl-color-gray-2);
-  --sl-color-text-accent: #3412de;
+  --sl-color-text-accent: #4453d6; /* periwinkle link — AA on white */
   --sl-color-text-invert: #ffffff;
 
-  --sl-color-red: #cf0a2c;
-  --sl-color-red-low: #ffe5ea;
-  --sl-color-red-high: #80061a;
-  --sl-color-orange: #b3680a;
+  --sl-color-red: #d92c47;
+  --sl-color-red-low: #ffe5e9;
+  --sl-color-red-high: #80121f;
+  --sl-color-orange: #b3730a;
   --sl-color-orange-low: #fdeed5;
   --sl-color-orange-high: #6e3f04;
-  --sl-color-green: #0f9c7c;
-  --sl-color-green-low: #d6f5ec;
-  --sl-color-green-high: #075744;
-  --sl-color-blue: #2360df;
-  --sl-color-blue-low: #dde8ff;
-  --sl-color-blue-high: #123a8c;
+  --sl-color-green: #2e7d5a;
+  --sl-color-green-low: #d9f3e6;
+  --sl-color-green-high: #0b5236;
+  --sl-color-blue: #4453d6;
+  --sl-color-blue-low: #dee3ff;
+  --sl-color-blue-high: #1e2a72;
   --sl-color-purple: #6b3fd4;
   --sl-color-purple-low: #e7defb;
   --sl-color-purple-high: #3a1f80;
 
-  --sl-shadow-md: 0 1px 2px rgba(10, 17, 48, 0.06), 0 6px 20px rgba(10, 17, 48, 0.08);
-  --sl-shadow-lg: 0 10px 30px rgba(10, 17, 48, 0.12);
+  --sl-shadow-md: 0 1px 2px rgba(25, 34, 76, 0.06), 0 6px 20px rgba(25, 34, 76, 0.08);
+  --sl-shadow-lg: 0 10px 30px rgba(25, 34, 76, 0.12);
 }
 
 /* ============================  GLOBAL POLISH  ============================= */
@@ -357,7 +357,7 @@ button[data-open-modal] kbd {
 .sl-markdown-content .action.primary,
 a.action.primary {
   background: var(--sl-color-accent);
-  color: var(--ing-on-accent);
+  color: var(--neopix-on-accent);
   border-radius: 999px;
   font-weight: 700;
   border: 1px solid transparent;
@@ -365,7 +365,7 @@ a.action.primary {
 }
 .sl-markdown-content .action.primary:hover,
 a.action.primary:hover {
-  background: var(--ing-indigo-bright);
+  background: var(--neopix-indigo-bright);
   transform: translateY(-1px);
 }
 /* Secondary / minimal actions */
