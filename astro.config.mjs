@@ -38,10 +38,24 @@ export default defineConfig({
       social: [
         { icon: 'external', label: 'Ingsoftware', href: 'https://www.ingsoftware.com' },
       ],
-      // No sidebar config on purpose: Starlight auto-generates the sidebar
-      // from the folder structure in src/content/docs/. Anyone can add a
-      // Markdown file or folder there and it appears automatically —
-      // no config changes ever needed. See HOW-TO-ADD-DOCS.md.
+      // Explicit sidebar: clean section labels (no "01-"/"04-" folder-name
+      // prefixes) and a fixed top-level order. Each section still autogenerates
+      // its own pages from the folder, and README pages lead their section via
+      // `sidebar.order: 1` frontmatter. To add a new top-level section, add a
+      // line here; pages inside existing sections still appear automatically.
+      sidebar: [
+        { label: 'Overview', link: '/readme/' },
+        { label: 'Product', autogenerate: { directory: 'product' } },
+        { label: 'Constitution', autogenerate: { directory: '01-constitution' } },
+        { label: 'Architecture', autogenerate: { directory: '02-architecture' } },
+        { label: 'Data Model', autogenerate: { directory: '03-data' } },
+        { label: 'Integrations', autogenerate: { directory: '04-integrations' } },
+        { label: 'Feature Specs', autogenerate: { directory: '05-specs' } },
+        { label: 'Engineering', autogenerate: { directory: '06-engineering' } },
+        { label: 'Delivery Rules', link: '/agents/' },
+        { label: 'Implementation Readiness', link: '/ready/' },
+        { label: 'Changelog', link: '/changelog/' },
+      ],
       // The portal is private: no need for public sitemap indexing.
       pagefind: true,
     }),
