@@ -315,6 +315,9 @@ import Default from '@astrojs/starlight/components/Footer.astro';
           const data = await res.json().catch(() => ({}));
           throw new Error(data.error || `Delete failed (${res.status})`);
         }
+        // Optimistic: drop it from the UI immediately so it disappears the
+        // instant the server confirms, then reconcile with a fresh load.
+        renderComments(lastComments.filter((c) => c.id !== id));
         await load();
       } catch (err) {
         btn.disabled = false;

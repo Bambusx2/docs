@@ -64,7 +64,11 @@ function clientId() {
  * "default".
  */
 function commentStore() {
-  return getStore(`comments-${clientId()}`);
+  // Strong consistency: a read always reflects the most recent write. Without
+  // this, Netlify Blobs defaults to eventual consistency, so a just-deleted (or
+  // just-posted) comment can still appear on the next GET until the read cache
+  // catches up — which looks like "deleted comments come back".
+  return getStore({ name: `comments-${clientId()}`, consistency: 'strong' });
 }
 
 /** Throttle store (per client), or null if Blobs is unavailable (fail-open). */
