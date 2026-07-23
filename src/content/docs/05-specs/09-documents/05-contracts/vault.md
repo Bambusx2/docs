@@ -4,7 +4,7 @@ title: "E09 Documents — Vault Provider Contract"
 
 > Global integration: [vault.md](/04-integrations/vault/)  
 > Owner: Solutions architecture / middleware · Consumers: Mobile Docs tab  
-> Behaviour: [../02-specify.md](/05-specs/09-documents/02-specify/) · API: [openapi.yaml](/05-specs/09-documents/05-contracts/openapi.yaml) · ADR: [ADR-030](/01-constitution/constitution/#adr-030--document-vault-api-path) · Entity: [data-model.md §5](/03-data/data-model/)
+> Behaviour: [../02-specify.md](/05-specs/09-documents/02-specify/) · API: [openapi.yaml](/05-specs/09-documents/05-contracts/openapi/) · ADR: [ADR-030](/01-constitution/constitution/#adr-030--document-vault-api-path) · Entity: [data-model.md §5](/03-data/data-model/)
 
 Document **metadata, upload, and download** come from **eMoney Vault** via a replaceable **VaultProvider** port. Feature flags come from Salesforce. Binaries are never stored in middleware long-term. Global contract: [vault.md](/04-integrations/vault/).
 

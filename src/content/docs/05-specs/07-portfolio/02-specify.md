@@ -12,7 +12,7 @@ Stories carry MoSCoW tags; definitions in [specs README](/05-specs/readme/#mosco
 
 Naming: Tab **OnePoint BFG Portfolio**; attribution **Powered by Orion**. Flags `portfolio_enabled` / `portfolio_ytd_realized_gl`. Allocation scope `portfolio_orion` only.
 
-Contracts: [OpenAPI](/05-specs/07-portfolio/05-contracts/openapi.yaml) is the machine-readable API source; this document defines behaviour. Salesforce build pack: [salesforce.md](/05-specs/07-portfolio/05-contracts/salesforce/). Global integrations: [salesforce.md](/04-integrations/salesforce/) · [orion.md](/04-integrations/orion/). ---
+Contracts: [OpenAPI](/05-specs/07-portfolio/05-contracts/openapi/) is the machine-readable API source; this document defines behaviour. Salesforce build pack: [salesforce.md](/05-specs/07-portfolio/05-contracts/salesforce/). Global integrations: [salesforce.md](/04-integrations/salesforce/) · [orion.md](/04-integrations/orion/). ---
 
 ## Non-functional requirements
 

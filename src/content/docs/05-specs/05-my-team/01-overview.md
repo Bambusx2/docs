@@ -13,7 +13,7 @@ title: "E05 Your Team — Client Overview"
 | Package version | 1.0.0 |
 | Date | 2026-07-17 |
 | Specify | [02-specify.md](/05-specs/05-my-team/02-specify/) (stories + NFRs) |
-| API contract | [05-contracts/openapi.yaml](/05-specs/05-my-team/05-contracts/openapi.yaml) |
+| API contract | [05-contracts/openapi.yaml](/05-specs/05-my-team/05-contracts/openapi/) |
 | Salesforce contract | [05-contracts/salesforce.md](/05-specs/05-my-team/05-contracts/salesforce/) |
 | Scheduling contract | [05-contracts/scheduling.md](/05-specs/05-my-team/05-contracts/scheduling/) |
 | Calendly (global) | [calendly.md](/04-integrations/calendly/) |
@@ -200,4 +200,4 @@ This pack is part of the locked discovery baseline for build. Domain behaviour i
 
 ---
 
-Related: [Specify](/05-specs/05-my-team/02-specify/) · [OpenAPI](/05-specs/05-my-team/05-contracts/openapi.yaml) · [Salesforce](/05-specs/05-my-team/05-contracts/salesforce/) · [Scheduling](/05-specs/05-my-team/05-contracts/scheduling/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/05-my-team/changelog/)
+Related: [Specify](/05-specs/05-my-team/02-specify/) · [OpenAPI](/05-specs/05-my-team/05-contracts/openapi/) · [Salesforce](/05-specs/05-my-team/05-contracts/salesforce/) · [Scheduling](/05-specs/05-my-team/05-contracts/scheduling/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/05-my-team/changelog/)

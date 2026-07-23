@@ -5,7 +5,7 @@ title: "E07 Portfolio — Salesforce Work Package (Tier A)"
 > Global integration: [salesforce.md](/04-integrations/salesforce/) · [orion.md](/04-integrations/orion/)  
 > Owner: Callaway · Consumers: Middleware  
 > Required before: Portfolio demo (summary, accounts, allocation, holdings, performance)  
-> Behaviour: [../02-specify.md](/05-specs/07-portfolio/02-specify/) · API: [openapi.yaml](/05-specs/07-portfolio/05-contracts/openapi.yaml)
+> Behaviour: [../02-specify.md](/05-specs/07-portfolio/02-specify/) · API: [openapi.yaml](/05-specs/07-portfolio/05-contracts/openapi/)
 
 ---
 

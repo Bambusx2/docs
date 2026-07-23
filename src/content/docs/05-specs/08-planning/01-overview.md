@@ -13,7 +13,7 @@ title: "E08 Planning — Client Overview"
 | Package version | 1.0.0 |
 | Date | 2026-07-17 |
 | Specify | [02-specify.md](/05-specs/08-planning/02-specify/) (stories + NFRs) |
-| API contract | [05-contracts/openapi.yaml](/05-specs/08-planning/05-contracts/openapi.yaml) |
+| API contract | [05-contracts/openapi.yaml](/05-specs/08-planning/05-contracts/openapi/) |
 | Salesforce contract | [05-contracts/salesforce.md](/05-specs/08-planning/05-contracts/salesforce/) |
 | eMoney (global) | [emoney.md](/04-integrations/emoney/) |
 | Depends on | [E07 Portfolio](/05-specs/07-portfolio/01-overview/) *(for NW merge clarity; also [E03](/05-specs/03-configuration/01-overview/))* |
@@ -185,7 +185,7 @@ Complete shared DoD in [specs README](/05-specs/readme/#discovery-definition-of-
 
 - [ ] [02-specify.md](/05-specs/08-planning/02-specify/) **PL-01**–**PL-11** accepted; Won't **PL-12**–**PL-14** acknowledged  
 - [ ] NFRs accepted (latency, `dataAsOf`, no invented values, no credential storage)  
-- [ ] Contracts reviewed — [OpenAPI](/05-specs/08-planning/05-contracts/openapi.yaml), [salesforce.md](/05-specs/08-planning/05-contracts/salesforce/)  
+- [ ] Contracts reviewed — [OpenAPI](/05-specs/08-planning/05-contracts/openapi/), [salesforce.md](/05-specs/08-planning/05-contracts/salesforce/)  
 - [ ] NW formula accepted ([ADR-038](/01-constitution/constitution/#adr-038--net-worth-calculation))  
 - [x] Neopix Planning Figma reviewed   
 - [ ] §8 Paths 1–4 agreed as client demo bar  
@@ -208,4 +208,4 @@ This pack is part of the locked discovery baseline for build. Domain behaviour i
 
 ---
 
-Related: [Specify](/05-specs/08-planning/02-specify/) · [OpenAPI](/05-specs/08-planning/05-contracts/openapi.yaml) · [Salesforce](/05-specs/08-planning/05-contracts/salesforce/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/08-planning/changelog/)
+Related: [Specify](/05-specs/08-planning/02-specify/) · [OpenAPI](/05-specs/08-planning/05-contracts/openapi/) · [Salesforce](/05-specs/08-planning/05-contracts/salesforce/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/08-planning/changelog/)

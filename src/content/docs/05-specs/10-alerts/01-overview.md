@@ -13,7 +13,7 @@ title: "E10 Action Required — Client Overview"
 | Package version | 1.0.0 |
 | Date | 2026-07-17 |
 | Specify | [02-specify.md](/05-specs/10-alerts/02-specify/) (stories + NFRs) |
-| API contract | [05-contracts/openapi.yaml](/05-specs/10-alerts/05-contracts/openapi.yaml) |
+| API contract | [05-contracts/openapi.yaml](/05-specs/10-alerts/05-contracts/openapi/) |
 | Computation contract | [05-contracts/computation.md](/05-specs/10-alerts/05-contracts/computation/) |
 | Depends on | [E04 Home](/05-specs/04-home/01-overview/), [E02 Users](/05-specs/02-users/01-overview/), [E08 Planning](/05-specs/08-planning/01-overview/), [E09 Documents](/05-specs/09-documents/01-overview/) |
 | Unlocks | Soft — Release gate ([E11](/05-specs/11-release/01-overview/)); E2E Action Required demos |
@@ -181,7 +181,7 @@ Complete shared DoD in [specs README](/05-specs/readme/#discovery-definition-of-
 
 - [ ] [02-specify.md](/05-specs/10-alerts/02-specify/) **AR-01**–**AR-05**, **AR-07**–**AR-09** accepted; Should **AR-06** and **AR-10** acknowledged; Won't **AR-11**–**AR-14** acknowledged
 - [ ] NFRs accepted (latency, badge parity, middleware compute, refresh)  
-- [ ] Contracts reviewed — [OpenAPI](/05-specs/10-alerts/05-contracts/openapi.yaml), [computation.md](/05-specs/10-alerts/05-contracts/computation/)  
+- [ ] Contracts reviewed — [OpenAPI](/05-specs/10-alerts/05-contracts/openapi/), [computation.md](/05-specs/10-alerts/05-contracts/computation/)  
 - [x] Neopix Action Required / bell Figma reviewed  + alert copy  
 - [ ] §8 Paths 1–3 agreed as client demo bar  
 - [ ] Open items have owners and blocks-build Y/N  
@@ -205,4 +205,4 @@ This pack is part of the locked discovery baseline for build. Domain behaviour i
 
 ---
 
-Related: [Specify](/05-specs/10-alerts/02-specify/) · [OpenAPI](/05-specs/10-alerts/05-contracts/openapi.yaml) · [Computation](/05-specs/10-alerts/05-contracts/computation/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/10-alerts/changelog/)
+Related: [Specify](/05-specs/10-alerts/02-specify/) · [OpenAPI](/05-specs/10-alerts/05-contracts/openapi/) · [Computation](/05-specs/10-alerts/05-contracts/computation/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/10-alerts/changelog/)

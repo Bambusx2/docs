@@ -4,7 +4,7 @@ title: "E05 Your Team — Scheduling Provider Contract"
 
 > Global integration: [calendly.md](/04-integrations/calendly/)  
 > Owner: Solutions architecture / middleware · Consumers: Mobile (WebView), ops  
-> Behaviour: [../02-specify.md](/05-specs/05-my-team/02-specify/) MT-03 · API: [openapi.yaml](/05-specs/05-my-team/05-contracts/openapi.yaml) · ADR: [ADR-034](/01-constitution/constitution/#adr-034--calendly-depth-in-v1)
+> Behaviour: [../02-specify.md](/05-specs/05-my-team/02-specify/) MT-03 · API: [openapi.yaml](/05-specs/05-my-team/05-contracts/openapi/) · ADR: [ADR-034](/01-constitution/constitution/#adr-034--calendly-depth-in-v1)
 
 This document is the **pack port/adapter handoff** under the global Calendly integration. This delivery’s adapter = **Calendly**. Mobile and OpenAPI stay provider-agnostic.
 

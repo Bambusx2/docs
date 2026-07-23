@@ -12,7 +12,7 @@ title: "E03 Configuration & App Shell — Client Overview"
 | Package version | 1.0.0 |
 | Date | 2026-07-17 |
 | Specify | [02-specify.md](/05-specs/03-configuration/02-specify/) |
-| API contract | [05-contracts/openapi.yaml](/05-specs/03-configuration/05-contracts/openapi.yaml) |
+| API contract | [05-contracts/openapi.yaml](/05-specs/03-configuration/05-contracts/openapi/) |
 | Salesforce contract | [05-contracts/salesforce.md](/05-specs/03-configuration/05-contracts/salesforce/) |
 | Resolution contract | [05-contracts/resolution.md](/05-specs/03-configuration/05-contracts/resolution/) |
 | Depends on | [E02 Users](/05-specs/02-users/01-overview/) |
@@ -188,4 +188,4 @@ Specify wins on behaviour. Figma is layout authority. See [AGENTS.md](/agents/).
 
 ---
 
-Related: [Specify](/05-specs/03-configuration/02-specify/) · [OpenAPI](/05-specs/03-configuration/05-contracts/openapi.yaml) · [Salesforce](/05-specs/03-configuration/05-contracts/salesforce/) · [Resolution](/05-specs/03-configuration/05-contracts/resolution/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/03-configuration/changelog/)
+Related: [Specify](/05-specs/03-configuration/02-specify/) · [OpenAPI](/05-specs/03-configuration/05-contracts/openapi/) · [Salesforce](/05-specs/03-configuration/05-contracts/salesforce/) · [Resolution](/05-specs/03-configuration/05-contracts/resolution/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/03-configuration/changelog/)

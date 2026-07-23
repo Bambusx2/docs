@@ -1117,7 +1117,7 @@ Consequences — No MFA challenge UX in V1 mobile; security relies on the compen
 
 Context — [ADR-006](#adr-006--all-advisor-and-admin-configuration-in-salesforce) and CFG-02 put client-view preview in a Salesforce LWC iframe. The production client is React Native; a native binary cannot be embedded in Lightning.
 
-Decision — Preview is a Neopix-hosted web client surface. Salesforce obtains a short-lived household-scoped session ([E03 OpenAPI](/05-specs/03-configuration/05-contracts/openapi.yaml)) and iframes `previewUrl`. The web client uses the same `/api/v1` APIs and effective-flag resolution as mobile (E03 NFR-04).
+Decision — Preview is a Neopix-hosted web client surface. Salesforce obtains a short-lived household-scoped session ([E03 OpenAPI](/05-specs/03-configuration/05-contracts/openapi/)) and iframes `previewUrl`. The web client uses the same `/api/v1` APIs and effective-flag resolution as mobile (E03 NFR-04).
 
 Pilot minimum: flag-accurate shell from `/me` + `/home`. Closer screen parity (e.g. RN Web / Expo web) is a follow-on workstream unless OnePoint waives visual parity. Admin device impersonation (AD-03) is not a substitute.
 

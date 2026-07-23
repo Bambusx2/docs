@@ -12,7 +12,7 @@ Stories carry MoSCoW tags; definitions in [specs README](/05-specs/readme/#mosco
 
 Naming: Tab **Docs**; attribution **Powered by eMoney Vault**. Flags `documents_enabled`, `documents_upload`; `documents_docusign` remains false this delivery.
 
-Contracts: [OpenAPI](/05-specs/09-documents/05-contracts/openapi.yaml) is the machine-readable API source; this document defines behaviour. Vault port: [vault.md](/05-specs/09-documents/05-contracts/vault/). Global integration: [vault.md](/04-integrations/vault/). ---
+Contracts: [OpenAPI](/05-specs/09-documents/05-contracts/openapi/) is the machine-readable API source; this document defines behaviour. Vault port: [vault.md](/05-specs/09-documents/05-contracts/vault/). Global integration: [vault.md](/04-integrations/vault/). ---
 
 ## Non-functional requirements
 

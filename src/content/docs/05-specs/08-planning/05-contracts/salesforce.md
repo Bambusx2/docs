@@ -5,7 +5,7 @@ title: "E08 Planning — Salesforce Work Package"
 > Global integration: [salesforce.md](/04-integrations/salesforce/) · [emoney.md](/04-integrations/emoney/)  
 > Owner: Callaway · Consumers: Middleware  
 > Required before: Planning tab demo  
-> Behaviour: [../02-specify.md](/05-specs/08-planning/02-specify/) · API: [openapi.yaml](/05-specs/08-planning/05-contracts/openapi.yaml)
+> Behaviour: [../02-specify.md](/05-specs/08-planning/02-specify/) · API: [openapi.yaml](/05-specs/08-planning/05-contracts/openapi/)
 
 ---
 

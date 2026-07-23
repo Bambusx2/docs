@@ -13,7 +13,7 @@ title: "E02 Users & Identity — Client Overview"
 | Package version | 1.0.0 |
 | Date | 2026-07-17 |
 | Specify | [02-specify.md](/05-specs/02-users/02-specify/) (stories + NFRs) |
-| API contract | [05-contracts/openapi.yaml](/05-specs/02-users/05-contracts/openapi.yaml) |
+| API contract | [05-contracts/openapi.yaml](/05-specs/02-users/05-contracts/openapi/) |
 | Salesforce contract | [05-contracts/salesforce.md](/05-specs/02-users/05-contracts/salesforce/) |
 | Okta (global) | [okta.md](/04-integrations/okta/) |
 | Depends on | [E01 Platform](/05-specs/01-platform/01-overview/) |
@@ -202,7 +202,7 @@ Complete shared DoD in [specs README](/05-specs/readme/#discovery-definition-of-
 - [ ] [02-specify.md](/05-specs/02-users/02-specify/) Must stories + NFRs accepted as acceptance baseline  
 - [ ] Should / Could / Won't MoSCoW in specify index acknowledged  
 - [ ] Salesforce pack Done or scheduled — [salesforce.md](/05-specs/02-users/05-contracts/salesforce/)  
-- [ ] OpenAPI available — [openapi.yaml](/05-specs/02-users/05-contracts/openapi.yaml)  
+- [ ] OpenAPI available — [openapi.yaml](/05-specs/02-users/05-contracts/openapi/)  
 - [ ] Global Okta contract reviewed — [okta.md](/04-integrations/okta/)  
 - [ ] §8 Paths 1–3 agreed as client demo bar  
 - [ ] Open items have owners and blocks-build Y/N  
@@ -225,4 +225,4 @@ This pack is part of the locked discovery baseline for build. Domain behaviour i
 
 ---
 
-Related: [Specify](/05-specs/02-users/02-specify/) · [OpenAPI](/05-specs/02-users/05-contracts/openapi.yaml) · [Salesforce pack](/05-specs/02-users/05-contracts/salesforce/) · [Okta global](/04-integrations/okta/) · [CHANGELOG](/05-specs/02-users/changelog/)
+Related: [Specify](/05-specs/02-users/02-specify/) · [OpenAPI](/05-specs/02-users/05-contracts/openapi/) · [Salesforce pack](/05-specs/02-users/05-contracts/salesforce/) · [Okta global](/04-integrations/okta/) · [CHANGELOG](/05-specs/02-users/changelog/)

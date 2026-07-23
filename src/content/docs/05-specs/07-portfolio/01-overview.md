@@ -13,7 +13,7 @@ title: "E07 Portfolio — Client Overview"
 | Package version | 1.0.0 |
 | Date | 2026-07-17 |
 | Specify | [02-specify.md](/05-specs/07-portfolio/02-specify/) (stories + NFRs) |
-| API contract | [05-contracts/openapi.yaml](/05-specs/07-portfolio/05-contracts/openapi.yaml) |
+| API contract | [05-contracts/openapi.yaml](/05-specs/07-portfolio/05-contracts/openapi/) |
 | Salesforce contract | [05-contracts/salesforce.md](/05-specs/07-portfolio/05-contracts/salesforce/) |
 | Orion (global) | [orion.md](/04-integrations/orion/) |
 | Depends on | [E03 Configuration](/05-specs/03-configuration/01-overview/) *(soft calendar: after E06)* |
@@ -181,7 +181,7 @@ Complete shared DoD in [specs README](/05-specs/readme/#discovery-definition-of-
 
 - [ ] [02-specify.md](/05-specs/07-portfolio/02-specify/) **P-01**–**P-07** accepted; Won't **P-08**–**P-10** acknowledged  
 - [ ] NFRs accepted (latency, `dataAsOf`, no invented values, PII masking)  
-- [ ] Contracts reviewed — [OpenAPI](/05-specs/07-portfolio/05-contracts/openapi.yaml), [salesforce.md](/05-specs/07-portfolio/05-contracts/salesforce/)  
+- [ ] Contracts reviewed — [OpenAPI](/05-specs/07-portfolio/05-contracts/openapi/), [salesforce.md](/05-specs/07-portfolio/05-contracts/salesforce/)  
 - [x] Neopix Portfolio Figma reviewed   
 - [ ] §8 Paths 1–3 agreed as client demo bar  
 - [ ] Open items have owners and blocks-build Y/N  
@@ -204,4 +204,4 @@ This pack is part of the locked discovery baseline for build. Domain behaviour i
 
 ---
 
-Related: [Specify](/05-specs/07-portfolio/02-specify/) · [OpenAPI](/05-specs/07-portfolio/05-contracts/openapi.yaml) · [Salesforce](/05-specs/07-portfolio/05-contracts/salesforce/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/07-portfolio/changelog/)
+Related: [Specify](/05-specs/07-portfolio/02-specify/) · [OpenAPI](/05-specs/07-portfolio/05-contracts/openapi/) · [Salesforce](/05-specs/07-portfolio/05-contracts/salesforce/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/07-portfolio/changelog/)

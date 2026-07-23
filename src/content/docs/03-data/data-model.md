@@ -692,7 +692,7 @@ Workshop 10 / ADR lock: Linking is **institution-first** (search + popular → a
 
 ## 5. Documents
 
-> API: [09-documents/05-contracts/openapi.yaml](/05-specs/09-documents/05-contracts/openapi.yaml) · Global: [integrations/vault.md](/04-integrations/vault/) · Pack port: [vault.md](/05-specs/09-documents/05-contracts/vault/)
+> API: [09-documents/05-contracts/openapi.yaml](/05-specs/09-documents/05-contracts/openapi/) · Global: [integrations/vault.md](/04-integrations/vault/) · Pack port: [vault.md](/05-specs/09-documents/05-contracts/vault/)
 
 ### 5.1 `Document`
 
@@ -762,7 +762,7 @@ Market commentary and firm content. V1: external blog/news feed normalized throu
 | `thumbnail_url` | string(2048) |  | Feed `imageUrl` | |
 | `status` | enum | Yes | Feed `status` | Only `published` served to mobile; `draft` / `archived` skipped |
 
-Mobile contract: [openapi.yaml](/05-specs/06-insights/05-contracts/openapi.yaml). Salesforce is **not** the V1 content store (flag only).
+Mobile contract: [openapi.yaml](/05-specs/06-insights/05-contracts/openapi/). Salesforce is **not** the V1 content store (flag only).
 
 ---
 
@@ -811,13 +811,13 @@ Bookable meeting offer for a team member. **Provider-agnostic** — this deliver
 | `provider` | enum | Yes | Middleware config | `calendly` (this delivery); additional values require adapter + config only |
 | `provider_ref` | string(255) |  | SchedulingProvider | External id for sync/debug — **not** returned to mobile |
 
-Mobile OpenAPI exposes `schedulingUrl` only — never `provider` / `provider_ref` ([openapi.yaml](/05-specs/05-my-team/05-contracts/openapi.yaml)).
+Mobile OpenAPI exposes `schedulingUrl` only — never `provider` / `provider_ref` ([openapi.yaml](/05-specs/05-my-team/05-contracts/openapi/)).
 
 ---
 
 ## 8. Alerts & actions
 
-> API: [10-alerts/05-contracts/openapi.yaml](/05-specs/10-alerts/05-contracts/openapi.yaml) · Computation: [computation.md](/05-specs/10-alerts/05-contracts/computation/)
+> API: [10-alerts/05-contracts/openapi.yaml](/05-specs/10-alerts/05-contracts/openapi/) · Computation: [computation.md](/05-specs/10-alerts/05-contracts/computation/)
 
 ### 8.1 `Alert`
 

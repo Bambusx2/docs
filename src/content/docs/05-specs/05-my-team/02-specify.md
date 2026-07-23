@@ -12,7 +12,7 @@ Stories carry MoSCoW tags; definitions in [specs README](/05-specs/readme/#mosco
 
 Naming: Screen title **Your Team**. API routes use `/team` and flags `team_enabled` / `team_scheduling`. Only **client-facing** Account Team members appear — back-office / operations staff are excluded.
 
-Contracts: [OpenAPI](/05-specs/05-my-team/05-contracts/openapi.yaml) is the machine-readable API source; this document defines behaviour. Salesforce build pack: [salesforce.md](/05-specs/05-my-team/05-contracts/salesforce/). Scheduling port (Calendly adapter): [scheduling.md](/05-specs/05-my-team/05-contracts/scheduling/). Global integration: [calendly.md](/04-integrations/calendly/). ---
+Contracts: [OpenAPI](/05-specs/05-my-team/05-contracts/openapi/) is the machine-readable API source; this document defines behaviour. Salesforce build pack: [salesforce.md](/05-specs/05-my-team/05-contracts/salesforce/). Scheduling port (Calendly adapter): [scheduling.md](/05-specs/05-my-team/05-contracts/scheduling/). Global integration: [calendly.md](/04-integrations/calendly/). ---
 
 ## Non-functional requirements
 
@@ -118,7 +118,7 @@ Expected behavior:
 - Available only when effective flag `team_scheduling` is true. When false: hide **Schedule** on cards and hide the Home **Schedule** quick action; Call/Email from **MT-01** remain when `team_enabled` is true.
 - On each team card, **Schedule** appears only when `schedulingAvailable` is true (≥1 active meeting offer from the SchedulingProvider).
 - Opens a provider-agnostic HTTPS **`schedulingUrl`** in deep-link / in-app WebView ([ADR-034](/01-constitution/constitution/#adr-034--calendly-depth-in-v1)). The adapter is **Calendly** ([scheduling.md](/05-specs/05-my-team/05-contracts/scheduling/)); meeting medium (Zoom vs phone) is configured in the provider, not in OnePoint. Mobile does not call provider APIs or embed provider SDKs.
-- Offers come from `GET /api/v1/team/{memberId}/meeting-types` ([openapi.yaml](/05-specs/05-my-team/05-contracts/openapi.yaml)).
+- Offers come from `GET /api/v1/team/{memberId}/meeting-types` ([openapi.yaml](/05-specs/05-my-team/05-contracts/openapi/)).
 - If a member has **one** active offer → open that `schedulingUrl` directly.
 - If a member has **multiple** active offers → present the scheduling sheet (offer names + durations from the API); choosing an offer opens that URL.
 - Footer displays the `providerAttribution` string returned by the API — not a hardcoded provider id in app logic.

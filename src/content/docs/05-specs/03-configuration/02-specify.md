@@ -10,7 +10,7 @@ title: "E03 Configuration & App Shell — Specification"
 
 Stories carry MoSCoW tags; definitions in [specs README](/05-specs/readme/#moscow). Story bodies follow the index order. Each story is independently deliverable; **Depends on** does not expand acceptance. Client acceptance demo: [01-overview.md §8](/05-specs/03-configuration/01-overview/#8-acceptance-demo).
 
-Contracts: [OpenAPI](/05-specs/03-configuration/05-contracts/openapi.yaml) · Salesforce build: [salesforce.md](/05-specs/03-configuration/05-contracts/salesforce/) · Effective-flag resolution: [resolution.md](/05-specs/03-configuration/05-contracts/resolution/). This document defines behaviour. Domain product behaviour inside gated surfaces is owned by those spec packs. ---
+Contracts: [OpenAPI](/05-specs/03-configuration/05-contracts/openapi/) · Salesforce build: [salesforce.md](/05-specs/03-configuration/05-contracts/salesforce/) · Effective-flag resolution: [resolution.md](/05-specs/03-configuration/05-contracts/resolution/). This document defines behaviour. Domain product behaviour inside gated surfaces is owned by those spec packs. ---
 
 ## Non-functional requirements
 
@@ -48,7 +48,7 @@ So that I am not exposed to capabilities that do not apply to my relationship.
 
 Expected behavior:
 
-- After authentication, middleware returns **effective feature flags** for the active household on `GET /api/v1/me`; also on `GET /api/v1/config` when that route exists (per [openapi.yaml](/05-specs/03-configuration/05-contracts/openapi.yaml)).
+- After authentication, middleware returns **effective feature flags** for the active household on `GET /api/v1/me`; also on `GET /api/v1/config` when that route exists (per [openapi.yaml](/05-specs/03-configuration/05-contracts/openapi/)).
 - Hidden flags **remove** navigation targets, Home teasers, and shortcuts — not empty shells.
 - Effective flags are computed only in middleware ([resolution.md](/05-specs/03-configuration/05-contracts/resolution/)):
 
@@ -94,7 +94,7 @@ Expected behavior:
 - Advisor cannot turn a firm-mandatory feature off — LWC shows locked/hidden controls ([CFG-03](#cfg-03--administer-firm-policy-book-defaults-and-bulk-changes)).
 - Advisor cannot enable a feature that is off at the platform layer.
 - Preview: LWC embeds a client-view iframe to the Neopix-hosted web client using the same APIs and effective flags (NFR-04, NFR-05, [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)). Phased delivery (shell vs RN Web parity) is in ADR-047.
-- Preview auth: short-lived household-scoped token via [openapi.yaml](/05-specs/03-configuration/05-contracts/openapi.yaml); prefer read-only AuthZ.
+- Preview auth: short-lived household-scoped token via [openapi.yaml](/05-specs/03-configuration/05-contracts/openapi/); prefer read-only AuthZ.
 
 Error and edge cases:
 

@@ -10,7 +10,7 @@ title: "E02 Users & Identity — Specification"
 
 Stories carry MoSCoW tags; definitions in [specs README](/05-specs/readme/#moscow). Story bodies follow the index order. Each story is independently deliverable; **Depends on** does not expand acceptance. Client acceptance demo: [01-overview.md §8](/05-specs/02-users/01-overview/#8-acceptance-demo).
 
-Contracts: [OpenAPI](/05-specs/02-users/05-contracts/openapi.yaml) is the machine-readable API source; this document defines behaviour. Salesforce build pack: [salesforce.md](/05-specs/02-users/05-contracts/salesforce/). Global integrations: [okta.md](/04-integrations/okta/) · [salesforce.md](/04-integrations/salesforce/). ---
+Contracts: [OpenAPI](/05-specs/02-users/05-contracts/openapi/) is the machine-readable API source; this document defines behaviour. Salesforce build pack: [salesforce.md](/05-specs/02-users/05-contracts/salesforce/). Global integrations: [okta.md](/04-integrations/okta/) · [salesforce.md](/04-integrations/salesforce/). ---
 
 ## Non-functional requirements
 

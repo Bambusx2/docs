@@ -13,7 +13,7 @@ title: "E09 Documents — Client Overview"
 | Package version | 1.0.0 |
 | Date | 2026-07-17 |
 | Specify | [02-specify.md](/05-specs/09-documents/02-specify/) (stories + NFRs) |
-| API contract | [05-contracts/openapi.yaml](/05-specs/09-documents/05-contracts/openapi.yaml) |
+| API contract | [05-contracts/openapi.yaml](/05-specs/09-documents/05-contracts/openapi/) |
 | Vault contract | [05-contracts/vault.md](/05-specs/09-documents/05-contracts/vault/) |
 | Vault (global) | [vault.md](/04-integrations/vault/) |
 | Depends on | [E03 Configuration](/05-specs/03-configuration/01-overview/) |
@@ -176,7 +176,7 @@ Complete shared DoD in [specs README](/05-specs/readme/#discovery-definition-of-
 
 - [ ] [02-specify.md](/05-specs/09-documents/02-specify/) **DOC-01**–**DOC-07** accepted; Won't **DOC-08**–**DOC-10** acknowledged  
 - [ ] NFRs accepted (latency, short-lived URLs, no middleware binary store, household scope)  
-- [ ] Contracts reviewed — [OpenAPI](/05-specs/09-documents/05-contracts/openapi.yaml), [vault.md](/05-specs/09-documents/05-contracts/vault/)  
+- [ ] Contracts reviewed — [OpenAPI](/05-specs/09-documents/05-contracts/openapi/), [vault.md](/05-specs/09-documents/05-contracts/vault/)  
 - [x] Neopix Docs Figma reviewed   
 - [ ] Interim Sign copy accepted (Neopix + compliance)  
 - [ ] §8 Paths 1–4 agreed as client demo bar  
@@ -200,4 +200,4 @@ This pack is part of the locked discovery baseline for build. Domain behaviour i
 
 ---
 
-Related: [Specify](/05-specs/09-documents/02-specify/) · [OpenAPI](/05-specs/09-documents/05-contracts/openapi.yaml) · [Vault](/05-specs/09-documents/05-contracts/vault/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/09-documents/changelog/)
+Related: [Specify](/05-specs/09-documents/02-specify/) · [OpenAPI](/05-specs/09-documents/05-contracts/openapi/) · [Vault](/05-specs/09-documents/05-contracts/vault/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/09-documents/changelog/)

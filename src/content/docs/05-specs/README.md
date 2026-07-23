@@ -258,15 +258,15 @@ Orientation index for eng and agents. Specify stories remain behaviour SoT.
 | Pack | Primary ADRs | Global integrations | Domain contracts |
 |:---:|---|---|---|
 | E01 | 001, 008, 021 | [azure-hosting](/04-integrations/azure-hosting/) | — |
-| E02 | 007, 013, 026, 046 | [okta](/04-integrations/okta/), [salesforce](/04-integrations/salesforce/) | [openapi](/05-specs/02-users/05-contracts/openapi.yaml), [salesforce](/05-specs/02-users/05-contracts/salesforce/) |
-| E03 | 005, 006, 014, 018, 028, 047 | [salesforce](/04-integrations/salesforce/) | [openapi](/05-specs/03-configuration/05-contracts/openapi.yaml), [salesforce](/05-specs/03-configuration/05-contracts/salesforce/), [resolution](/05-specs/03-configuration/05-contracts/resolution/) |
+| E02 | 007, 013, 026, 046 | [okta](/04-integrations/okta/), [salesforce](/04-integrations/salesforce/) | [openapi](/05-specs/02-users/05-contracts/openapi/), [salesforce](/05-specs/02-users/05-contracts/salesforce/) |
+| E03 | 005, 006, 014, 018, 028, 047 | [salesforce](/04-integrations/salesforce/) | [openapi](/05-specs/03-configuration/05-contracts/openapi/), [salesforce](/05-specs/03-configuration/05-contracts/salesforce/), [resolution](/05-specs/03-configuration/05-contracts/resolution/) |
 | E04 | 015, 029, 045 | — (composite) | DTO: [data-model §12.2](/03-data/data-model/); OpenAPI deferred |
-| E05 | 034 | [calendly](/04-integrations/calendly/), [salesforce](/04-integrations/salesforce/) | [openapi](/05-specs/05-my-team/05-contracts/openapi.yaml), [salesforce](/05-specs/05-my-team/05-contracts/salesforce/), [scheduling](/05-specs/05-my-team/05-contracts/scheduling/) |
-| E06 | 017 | [insights-feed](/04-integrations/insights-feed/) | [openapi](/05-specs/06-insights/05-contracts/openapi.yaml), [feed](/05-specs/06-insights/05-contracts/feed/) |
-| E07 | 003, 009, 010, 024, 026, 033, 037, 044 | [orion](/04-integrations/orion/), [salesforce](/04-integrations/salesforce/) | [openapi](/05-specs/07-portfolio/05-contracts/openapi.yaml), [salesforce](/05-specs/07-portfolio/05-contracts/salesforce/) |
-| E08 | 009, 010, 012, 025, 029, 038, 040, 041, 042, 043 | [emoney](/04-integrations/emoney/), [salesforce](/04-integrations/salesforce/) | [openapi](/05-specs/08-planning/05-contracts/openapi.yaml), [salesforce](/05-specs/08-planning/05-contracts/salesforce/) |
-| E09 | 030 | [vault](/04-integrations/vault/) | [openapi](/05-specs/09-documents/05-contracts/openapi.yaml), [vault](/05-specs/09-documents/05-contracts/vault/) |
-| E10 | 016, 032, 036 | (computed from SF / vault / planning) | [openapi](/05-specs/10-alerts/05-contracts/openapi.yaml), [computation](/05-specs/10-alerts/05-contracts/computation/) |
+| E05 | 034 | [calendly](/04-integrations/calendly/), [salesforce](/04-integrations/salesforce/) | [openapi](/05-specs/05-my-team/05-contracts/openapi/), [salesforce](/05-specs/05-my-team/05-contracts/salesforce/), [scheduling](/05-specs/05-my-team/05-contracts/scheduling/) |
+| E06 | 017 | [insights-feed](/04-integrations/insights-feed/) | [openapi](/05-specs/06-insights/05-contracts/openapi/), [feed](/05-specs/06-insights/05-contracts/feed/) |
+| E07 | 003, 009, 010, 024, 026, 033, 037, 044 | [orion](/04-integrations/orion/), [salesforce](/04-integrations/salesforce/) | [openapi](/05-specs/07-portfolio/05-contracts/openapi/), [salesforce](/05-specs/07-portfolio/05-contracts/salesforce/) |
+| E08 | 009, 010, 012, 025, 029, 038, 040, 041, 042, 043 | [emoney](/04-integrations/emoney/), [salesforce](/04-integrations/salesforce/) | [openapi](/05-specs/08-planning/05-contracts/openapi/), [salesforce](/05-specs/08-planning/05-contracts/salesforce/) |
+| E09 | 030 | [vault](/04-integrations/vault/) | [openapi](/05-specs/09-documents/05-contracts/openapi/), [vault](/05-specs/09-documents/05-contracts/vault/) |
+| E10 | 016, 032, 036 | (computed from SF / vault / planning) | [openapi](/05-specs/10-alerts/05-contracts/openapi/), [computation](/05-specs/10-alerts/05-contracts/computation/) |
 | E11 | 021, 022, 031 | [azure-hosting](/04-integrations/azure-hosting/) | — |
 
 ### Story prefix → specify

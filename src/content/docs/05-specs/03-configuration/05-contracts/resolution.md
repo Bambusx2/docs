@@ -5,7 +5,7 @@ title: "E03 Configuration — Effective Flag Resolution"
 > Purpose: Normative algorithm for merging platform + Salesforce layers into one effective flag map per household.  
 > Global integration: [salesforce.md](/04-integrations/salesforce/) · [ADR-018](/01-constitution/constitution/#adr-018--effective-feature-flag-resolution)  
 > Owner: Solutions architecture / middleware · Consumers: Mobile, Salesforce preview  
-> Behaviour: [../02-specify.md](/05-specs/03-configuration/02-specify/) CFG-01 · API: [openapi.yaml](/05-specs/03-configuration/05-contracts/openapi.yaml) · ADRs: [ADR-005](/01-constitution/constitution/#adr-005--platform-feature-flags-vs-salesforce-configurable-options) · [ADR-014](/01-constitution/constitution/#adr-014--feature-configuration-hierarchy) · [ADR-018](/01-constitution/constitution/#adr-018--effective-feature-flag-resolution) · Overview: [../01-overview.md](/05-specs/03-configuration/01-overview/)
+> Behaviour: [../02-specify.md](/05-specs/03-configuration/02-specify/) CFG-01 · API: [openapi.yaml](/05-specs/03-configuration/05-contracts/openapi/) · ADRs: [ADR-005](/01-constitution/constitution/#adr-005--platform-feature-flags-vs-salesforce-configurable-options) · [ADR-014](/01-constitution/constitution/#adr-014--feature-configuration-hierarchy) · [ADR-018](/01-constitution/constitution/#adr-018--effective-feature-flag-resolution) · Overview: [../01-overview.md](/05-specs/03-configuration/01-overview/)
 
 Mobile never merges layers. Middleware publishes one **effective** map per household.
 

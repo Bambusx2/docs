@@ -4,7 +4,7 @@ title: "E06 Insights — External Feed Contract"
 
 > Global integration: [insights-feed.md](/04-integrations/insights-feed/)  
 > Owner: Solutions architecture / middleware · Consumers: Mobile  
-> Behaviour: [../02-specify.md](/05-specs/06-insights/02-specify/) · API: [openapi.yaml](/05-specs/06-insights/05-contracts/openapi.yaml) · ADR: [ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed) · Entity: [data-model.md §6.1](/03-data/data-model/)
+> Behaviour: [../02-specify.md](/05-specs/06-insights/02-specify/) · API: [openapi.yaml](/05-specs/06-insights/05-contracts/openapi/) · ADR: [ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed) · Entity: [data-model.md §6.1](/03-data/data-model/)
 
 Blog / news entries live in an **external source**. Middleware does not treat Salesforce as the content CMS for this delivery. All sources are adapted into one **standardized feed document**, then into `InsightArticle` for the mobile API. Global contract: [insights-feed.md](/04-integrations/insights-feed/).
 

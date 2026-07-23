@@ -12,7 +12,7 @@ Client-facing label: **Action Required**. Backend entity and API: `Alert`. Pack 
 
 Stories carry MoSCoW tags; definitions in [specs README](/05-specs/readme/#moscow). Story bodies follow the index order. Each story is independently deliverable; **Depends on** does not expand acceptance. Client acceptance demo: [01-overview.md §8](/05-specs/10-alerts/01-overview/#8-acceptance-demo).
 
-Contracts: [OpenAPI](/05-specs/10-alerts/05-contracts/openapi.yaml) is the machine-readable API source; this document defines behaviour. Computation rules: [computation.md](/05-specs/10-alerts/05-contracts/computation/). ---
+Contracts: [OpenAPI](/05-specs/10-alerts/05-contracts/openapi/) is the machine-readable API source; this document defines behaviour. Computation rules: [computation.md](/05-specs/10-alerts/05-contracts/computation/). ---
 
 ## Non-functional requirements
 
@@ -70,7 +70,7 @@ Error and edge cases:
 - No open alerts — badge hidden; not an error.
 
 Integrations
-- `notificationSummary` on `GET /api/v1/me` and `GET /api/v1/home` ([openapi.yaml](/05-specs/10-alerts/05-contracts/openapi.yaml)).
+- `notificationSummary` on `GET /api/v1/me` and `GET /api/v1/home` ([openapi.yaml](/05-specs/10-alerts/05-contracts/openapi/)).
 
 ---
 

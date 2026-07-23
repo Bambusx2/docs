@@ -6,7 +6,7 @@ title: "E03 Configuration — Salesforce Work Package"
 > Global integration: [salesforce.md](/04-integrations/salesforce/)  
 > Owner: Callaway · Consumers: Middleware, advisors, admins  
 > Required before: live flag toggle + preview demos  
-> Behaviour: [../02-specify.md](/05-specs/03-configuration/02-specify/) · API: [openapi.yaml](/05-specs/03-configuration/05-contracts/openapi.yaml) · Resolution: [resolution.md](/05-specs/03-configuration/05-contracts/resolution/) · Overview: [../01-overview.md](/05-specs/03-configuration/01-overview/)
+> Behaviour: [../02-specify.md](/05-specs/03-configuration/02-specify/) · API: [openapi.yaml](/05-specs/03-configuration/05-contracts/openapi/) · Resolution: [resolution.md](/05-specs/03-configuration/05-contracts/resolution/) · Overview: [../01-overview.md](/05-specs/03-configuration/01-overview/)
 
 This file implements the global Salesforce contract for **Configuration**. It does not redefine that global. Invite-to-portal actions remain under [02-users Salesforce pack](/05-specs/02-users/05-contracts/salesforce/).
 

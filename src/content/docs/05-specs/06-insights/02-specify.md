@@ -12,7 +12,7 @@ Stories carry MoSCoW tags; definitions in [specs README](/05-specs/readme/#mosco
 
 Naming: Screen title **Insights & Commentary**. API and flags use `insights` / `insights_enabled`.
 
-Contracts: [OpenAPI](/05-specs/06-insights/05-contracts/openapi.yaml) is the machine-readable API source; this document defines behaviour. External feed is provider-agnostic via a **standardized feed document** mapped by adapters (RSS/Atom or JSON Feed): [feed.md](/05-specs/06-insights/05-contracts/feed/). Global integration: [insights-feed.md](/04-integrations/insights-feed/). ---
+Contracts: [OpenAPI](/05-specs/06-insights/05-contracts/openapi/) is the machine-readable API source; this document defines behaviour. External feed is provider-agnostic via a **standardized feed document** mapped by adapters (RSS/Atom or JSON Feed): [feed.md](/05-specs/06-insights/05-contracts/feed/). Global integration: [insights-feed.md](/04-integrations/insights-feed/). ---
 
 ## Non-functional requirements
 

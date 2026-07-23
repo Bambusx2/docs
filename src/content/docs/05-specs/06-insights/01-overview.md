@@ -13,7 +13,7 @@ title: "E06 Insights & Commentary — Client Overview"
 | Package version | 1.0.0 |
 | Date | 2026-07-17 |
 | Specify | [02-specify.md](/05-specs/06-insights/02-specify/) (stories + NFRs) |
-| API contract | [05-contracts/openapi.yaml](/05-specs/06-insights/05-contracts/openapi.yaml) |
+| API contract | [05-contracts/openapi.yaml](/05-specs/06-insights/05-contracts/openapi/) |
 | Feed contract | [05-contracts/feed.md](/05-specs/06-insights/05-contracts/feed/) |
 | Insights feed (global) | [insights-feed.md](/04-integrations/insights-feed/) |
 | Depends on | [E03 Configuration](/05-specs/03-configuration/01-overview/) |
@@ -168,7 +168,7 @@ Complete shared DoD in [specs README](/05-specs/readme/#discovery-definition-of-
 
 - [ ] [02-specify.md](/05-specs/06-insights/02-specify/) **IC-01**–**IC-02** accepted; Won't **IC-03**–**IC-05** acknowledged  
 - [ ] NFRs accepted (latency, cache TTL, Home isolation)  
-- [ ] Contracts reviewed — [OpenAPI](/05-specs/06-insights/05-contracts/openapi.yaml) + [feed.md](/05-specs/06-insights/05-contracts/feed/)  
+- [ ] Contracts reviewed — [OpenAPI](/05-specs/06-insights/05-contracts/openapi/) + [feed.md](/05-specs/06-insights/05-contracts/feed/)  
 - [ ] Feed URL or fixture strategy agreed  
 - [x] Neopix Insights Figma reviewed   
 - [ ] §8 Paths 1–3 agreed as client demo bar  
@@ -191,4 +191,4 @@ This pack is part of the locked discovery baseline for build. Domain behaviour i
 
 ---
 
-Related: [Specify](/05-specs/06-insights/02-specify/) · [OpenAPI](/05-specs/06-insights/05-contracts/openapi.yaml) · [Feed](/05-specs/06-insights/05-contracts/feed/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/06-insights/changelog/)
+Related: [Specify](/05-specs/06-insights/02-specify/) · [OpenAPI](/05-specs/06-insights/05-contracts/openapi/) · [Feed](/05-specs/06-insights/05-contracts/feed/) · [specs README](/05-specs/readme/) · [CHANGELOG](/05-specs/06-insights/changelog/)

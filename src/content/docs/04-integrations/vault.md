@@ -113,5 +113,5 @@ Document entity: [data-model.md §5.1](/03-data/data-model/). Maps vault documen
 
 | Pack | Contract / notes |
 |---|---|
-| [E09 Documents](/05-specs/09-documents/01-overview/) | [openapi.yaml](/05-specs/09-documents/05-contracts/openapi.yaml) · [vault.md](/05-specs/09-documents/05-contracts/vault/) |
+| [E09 Documents](/05-specs/09-documents/01-overview/) | [openapi.yaml](/05-specs/09-documents/05-contracts/openapi/) · [vault.md](/05-specs/09-documents/05-contracts/vault/) |
 | [E10 Action Required](/05-specs/10-alerts/01-overview/) | May compute signature-pending from vault metadata |

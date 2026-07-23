@@ -5,7 +5,7 @@ title: "E02 Users & Identity — Salesforce Work Package"
 > Purpose: Domain Salesforce build pack for invite, portal status, profile proposals, and permission sets.  
 > Global integration: [salesforce.md](/04-integrations/salesforce/) · [okta.md](/04-integrations/okta/)  
 > Owner: Callaway · Consumers: Middleware, advisors, admins · Required before: live middleware invite integration  
-> Behaviour: [../02-specify.md](/05-specs/02-users/02-specify/) · API: [openapi.yaml](/05-specs/02-users/05-contracts/openapi.yaml) · Overview: [../01-overview.md](/05-specs/02-users/01-overview/)
+> Behaviour: [../02-specify.md](/05-specs/02-users/02-specify/) · API: [openapi.yaml](/05-specs/02-users/05-contracts/openapi/) · Overview: [../01-overview.md](/05-specs/02-users/01-overview/)
 
 This file implements the global Salesforce and Okta contracts for **Users & Identity**. It does not redefine those globals. Invite flow: SF action → middleware → Okta ([okta.md](/04-integrations/okta/)). Field API names marked elsewhere as `(TBD)` must be resolved here before Done.
 

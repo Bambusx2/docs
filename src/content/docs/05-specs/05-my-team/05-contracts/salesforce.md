@@ -5,7 +5,7 @@ title: "E05 Your Team — Salesforce Work Package"
 > Global integration: [salesforce.md](/04-integrations/salesforce/) · [calendly.md](/04-integrations/calendly/)  
 > Owner: Callaway · Consumers: Middleware, mobile  
 > Required before: live team demo (fixtures OK until Done)  
-> Behaviour: [../02-specify.md](/05-specs/05-my-team/02-specify/) · API: [openapi.yaml](/05-specs/05-my-team/05-contracts/openapi.yaml) · Scheduling: [scheduling.md](/05-specs/05-my-team/05-contracts/scheduling/)
+> Behaviour: [../02-specify.md](/05-specs/05-my-team/02-specify/) · API: [openapi.yaml](/05-specs/05-my-team/05-contracts/openapi/) · Scheduling: [scheduling.md](/05-specs/05-my-team/05-contracts/scheduling/)
 
 ---
 

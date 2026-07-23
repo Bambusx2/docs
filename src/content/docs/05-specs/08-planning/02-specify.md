@@ -12,7 +12,7 @@ Stories carry MoSCoW tags; definitions in [specs README](/05-specs/readme/#mosco
 
 Naming: Tab **Planning**; attribution **Powered by eMoney**. Allocation scope `planning_combined`. Flags `planning_enabled`, `planning_overview`, `planning_expenses`, `planning_goals`, `planning_linked_accounts`, `planning_monte_carlo`.
 
-Contracts: [OpenAPI](/05-specs/08-planning/05-contracts/openapi.yaml) is the machine-readable API source; this document defines behaviour. Salesforce build pack: [salesforce.md](/05-specs/08-planning/05-contracts/salesforce/). Global integrations: [salesforce.md](/04-integrations/salesforce/) · [emoney.md](/04-integrations/emoney/). ---
+Contracts: [OpenAPI](/05-specs/08-planning/05-contracts/openapi/) is the machine-readable API source; this document defines behaviour. Salesforce build pack: [salesforce.md](/05-specs/08-planning/05-contracts/salesforce/). Global integrations: [salesforce.md](/04-integrations/salesforce/) · [emoney.md](/04-integrations/emoney/). ---
 
 ## Non-functional requirements
 
