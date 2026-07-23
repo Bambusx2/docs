@@ -48,7 +48,7 @@ Shared defaults for language, hosting, repos, modules, CI, fixtures, and observa
 
 React Native mobile app → .NET middleware on OnePoint Azure. Middleware validates Okta JWTs, enforces tenancy, serves APIs from a Salesforce-projected PostgreSQL read model, and keeps secrets in Key Vault. A sync worker pulls Salesforce off the request path. Okta, vault, insights feed, and Calendly sit behind ports (fixtures until credentials are green — [READY](/ready/)).
 
-Advisor client-view preview is a separate Neopix web surface iframed from Salesforce ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)).
+Advisor client-view preview is a separate Neopix web surface iframed from Salesforce ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)).
 
 Authoritative systems: [architecture](/02-architecture/architecture/). Contracts: [04-integrations](/04-integrations/readme/). Stack defaults: §4.
 
@@ -64,7 +64,7 @@ React Native + TypeScript (product-locked). Expo vs bare open at stack lock; def
 
 ### Advisor preview
 
-Web host + `preview-session` per [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface). Do not treat the native app as satisfying CFG-02. Phasing (shell vs RN Web) is in the ADR; schedule the workstream in the plan.
+Web host + `preview-session` per [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface). Do not treat the native app as satisfying CFG-02. Phasing (shell vs RN Web) is in the ADR; schedule the workstream in the plan.
 
 ### Middleware
 
@@ -138,7 +138,7 @@ Ownership: [azure-hosting](/04-integrations/azure-hosting/) · ADR-008 · ADR-02
 |---|---|
 | `onepoint-middleware` | API, worker, migrations, adapters, preview-session |
 | `onepoint-mobile` | React Native app |
-| Preview web | CFG-02 surface ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)) — placement at stack lock |
+| Preview web | CFG-02 surface ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)) — placement at stack lock |
 | Discovery bundle | Specs — behaviour SoT |
 
 | Layer | Responsibility |
@@ -229,7 +229,7 @@ Confirm or amend §4. Product/trust changes → ADR. Pins → `tech-spec.md`.
 - Compute: Container Apps vs App Service
 - Redis: defer vs now
 - Mobile toolchain: Expo vs bare
-- Preview web approach and host placement ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface))
+- Preview web approach and host placement ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface))
 - APM / log sink; mobile crash tool
 - Network edge: public HTTPS vs Private Link / WAF
 - IaC: Bicep vs Terraform

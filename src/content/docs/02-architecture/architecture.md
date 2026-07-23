@@ -145,7 +145,7 @@ The middleware data plane is designed so the mobile app has **one** trusted API,
 | B | eMoney API (direct) | **Out of SOW** — institution link/relink via eMoney-hosted WebView only; planning display facts arrive through Salesforce |
 | C | Orion holdings feed (API / staging / Redshift) | **Out of SOW** — holdings and performance are consumed only when present in Salesforce Tier A |
 
-If holdings or performance rows are absent in Salesforce, middleware returns an empty list or marks fields `unavailable`. Neopix does not invent figures and does not call Orion Connect to “fill the gap” ([ADR-003](/01-constitution/constitution/#adr-003--no-orion-connect-api-in-neopix-scope), [ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)).
+If holdings or performance rows are absent in Salesforce, middleware returns an empty list or marks fields `unavailable`. Neopix does not invent figures and does not call Orion Connect to “fill the gap” ([ADR-003](/01-constitution/constitution/#adr-003--no-orion-connect-api-in-neopix-scope), [ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)).
 
 ### Daily path
 
@@ -276,7 +276,7 @@ sequenceDiagram
 
 Normative IdP and story detail: [okta.md](/04-integrations/okta/) · [E02 Users](/05-specs/02-users/02-specify/).
 
-Advisor preview. Salesforce LWC calls `POST /api/v1/config/preview-session`, then iframes the returned `previewUrl` (Neopix-hosted web client). Same `/api/v1` APIs and effective flags as the real household; book-scoped only. Detail and delivery phasing: [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface) · [E03](/05-specs/03-configuration/02-specify/).
+Advisor preview. Salesforce LWC calls `POST /api/v1/config/preview-session`, then iframes the returned `previewUrl` (Neopix-hosted web client). Same `/api/v1` APIs and effective flags as the real household; book-scoped only. Detail and delivery phasing: [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface) · [E03](/05-specs/03-configuration/02-specify/).
 
 Login-as-client is for Okta admin principals only (audited `AdminImpersonationSession`, 60-minute idle end). It does not replace advisor LWC preview. No standalone admin SPA ([ADR-006](/01-constitution/constitution/#adr-006--all-advisor-and-admin-configuration-in-salesforce)).
 
@@ -347,7 +347,7 @@ Not every control belongs in discovery. The following are explicitly deferred so
 | Azure SKU choice, WAF, Private Link, and similar network appliances | Phase B tech-spec + OnePoint security review |
 | Certificate pinning policy and formal penetration-test vendor | OnePoint security before store submission / cohort expansion |
 | APM and paging vendor selection | Phase B — **signal obligations in §9.7 still apply** |
-| Firm MFA enrollment and biometric unlock as product gates | Superseding ADR ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery), [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock)) |
+| Firm MFA enrollment and biometric unlock as product gates | Superseding ADR ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile), [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock)) |
 
 ### 9.2 Trust boundaries
 
@@ -370,12 +370,12 @@ flowchart LR
 
 | Control | Obligation |
 |---|---|
-| Client authentication | Okta OIDC authorization code + PKCE; MFA is not enforced for the client app this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery)) |
+| Client authentication | Okta OIDC authorization code + PKCE; MFA is not enforced for the client app this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile)) |
 | JWT validation | Every mobile API call verifies signature, `iss`, `aud`, and `exp`, then maps `sub` to `ClientUser` |
 | Opaque errors | Login, forgot-password, and disabled/removed paths must not enumerate accounts (E02 NFR-07) |
 | Household authorization | Domain APIs are scoped to the authenticated Person Account’s CRM parent tree — no cross-parent access |
 | Account visibility | Household-wide Orion financial accounts under that parent ([ADR-026](/01-constitution/constitution/#adr-026--householding-and-account-privacy)); compensating controls in §9.5 |
-| Advisor preview | Household-scoped preview token; web surface only ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)) |
+| Advisor preview | Household-scoped preview token; web surface only ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)) |
 | Admin access | Distinct Okta admin principals ([okta §6](/04-integrations/okta/#6-claims--role-model)); never provisioned through the client invite path |
 | Salesforce sync user | Read-only ingest; write-back limited to fields listed in E02 and pack contracts (invite, login, legal, profile proposal) |
 
@@ -392,7 +392,7 @@ Impersonation is authorized in middleware after admin JWT validation — it is *
 
 ### 9.5 Compensating controls (Accepted risk ADRs)
 
-MFA off ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery)). This delivery relies on invite-only provisioning, OnePoint-owned Okta password policy, Explicit Off MFA on the client Okta application (an unexpected MFA challenge is treated as misconfiguration — there is no in-app MFA UX), revoke-all on security events (C-26), and opaque authentication errors. Risk acceptance: OnePoint security (with Neopix).
+MFA off ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile)). This delivery relies on invite-only provisioning, OnePoint-owned Okta password policy, Explicit Off MFA on the client Okta application (an unexpected MFA challenge is treated as misconfiguration — there is no in-app MFA UX), revoke-all on security events (C-26), and opaque authentication errors. Risk acceptance: OnePoint security (with Neopix).
 
 Household-wide account visibility ([ADR-026](/01-constitution/constitution/#adr-026--householding-and-account-privacy)). Authorization remains limited to the authenticated person’s CRM parent tree; multi-household / spouse identity switch is Won't (C-22); per-person FAR filtering waits for compliance rules in a later phase; full SSN/TIN never appears on the mobile API. Risk acceptance: OnePoint compliance.
 
@@ -523,7 +523,7 @@ PR CI stays deterministic (mock IdP, fixtures). Staging proves live sandboxes. N
 
 ### 10.8 Usability
 
-Figma is layout authority for shell and screens. Specify owns behaviour, gating, and empty/error/unavailable copy. Shared presentation states from E01 (loading, empty, retryable error) apply across domains. Nav shell follows [ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2) and planning-hidden rules ([ADR-029](/01-constitution/constitution/#adr-029--home-without-emoney)). Advisor configure/preview stays in Salesforce + web preview ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)) — not a second client admin product.
+Figma is layout authority for shell and screens. Specify owns behaviour, gating, and empty/error/unavailable copy. Shared presentation states from E01 (loading, empty, retryable error) apply across domains. Nav shell follows [ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs) and planning-hidden rules ([ADR-029](/01-constitution/constitution/#adr-029--home-without-emoney)). Advisor configure/preview stays in Salesforce + web preview ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)) — not a second client admin product.
 
 ### 10.9 Accessibility
 

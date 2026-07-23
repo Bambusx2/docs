@@ -3,7 +3,7 @@ title: "E10 Action Required — Alert Computation Contract"
 ---
 
 > Owner: Middleware · Consumers: Home, bell badge, `GET /api/v1/alerts`  
-> Behaviour: [../02-specify.md](/05-specs/10-alerts/02-specify/) · API: [openapi.yaml](/05-specs/10-alerts/05-contracts/openapi.yaml) · Entity: [data-model.md §8](/03-data/data-model/) · ADR: [ADR-016](/01-constitution/constitution/#adr-016--v1-action-required-concrete-items-only), [ADR-036](/01-constitution/constitution/#adr-036--alert-persistence-model)
+> Behaviour: [../02-specify.md](/05-specs/10-alerts/02-specify/) · API: [openapi.yaml](/05-specs/10-alerts/05-contracts/openapi.yaml) · Entity: [data-model.md §8](/03-data/data-model/) · ADR: [ADR-016](/01-constitution/constitution/#adr-016--v1-action-required--concrete-items-only), [ADR-036](/01-constitution/constitution/#adr-036--alert-persistence-model)
 
 Alerts are **computed in middleware** from synced upstream data at read time (preferred for Must types). The mobile app never derives alert rules locally.
 

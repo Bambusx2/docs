@@ -20,7 +20,7 @@ Contracts: [OpenAPI](/05-specs/03-configuration/05-contracts/openapi.yaml) · Sa
 | NFR-02 | Salesforce option changes are visible to the client on next app foreground refresh or re-login within **≤ 5 minutes** of successful SF→MW sync (no app-store release). |
 | NFR-03 | Mobile **never** re-implements firm/book/household merge logic — it consumes the middleware **effective** payload only ([ADR-018](/01-constitution/constitution/#adr-018--effective-feature-flag-resolution)). |
 | NFR-04 | Preview sessions use the same effective-flag computation as the real client for that household; preview credentials must not elevate beyond the acting advisor’s book. |
-| NFR-05 | Advisor preview targets a web client surface (LWC iframe). The native store build alone does not satisfy CFG-02 ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)). |
+| NFR-05 | Advisor preview targets a web client surface (LWC iframe). The native store build alone does not satisfy CFG-02 ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)). |
 
 ---
 
@@ -63,7 +63,7 @@ effective = platform_feature_flags (what code supports)
 - Firm-mandatory ON → feature ON regardless of advisor off-toggle ([ADR-014](/01-constitution/constitution/#adr-014--feature-configuration-hierarchy)).
 - New platform capabilities ship **disabled** until explicitly enabled at platform and then Salesforce layers (safe rollout).
 - Salesforce option changes apply on next refresh/login (**NFR-02**) — no store update for option toggles.
-- App shell (bottom tabs + More) and deep-link routing respect the same effective map. Profile remains reachable when `profile_enabled` regardless of 3- vs 4-tab shell ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2)).
+- App shell (bottom tabs + More) and deep-link routing respect the same effective map. Profile remains reachable when `profile_enabled` regardless of 3- vs 4-tab shell ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs)).
 
 Error and edge cases:
 
@@ -93,7 +93,7 @@ Expected behavior:
 - Changes are audited (`updated_by_sf_user_id`, `updated_at`, role).
 - Advisor cannot turn a firm-mandatory feature off — LWC shows locked/hidden controls ([CFG-03](#cfg-03--administer-firm-policy-book-defaults-and-bulk-changes)).
 - Advisor cannot enable a feature that is off at the platform layer.
-- Preview: LWC embeds a client-view iframe to the Neopix-hosted web client using the same APIs and effective flags (NFR-04, NFR-05, [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)). Phased delivery (shell vs RN Web parity) is in ADR-047.
+- Preview: LWC embeds a client-view iframe to the Neopix-hosted web client using the same APIs and effective flags (NFR-04, NFR-05, [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)). Phased delivery (shell vs RN Web parity) is in ADR-047.
 - Preview auth: short-lived household-scoped token via [openapi.yaml](/05-specs/03-configuration/05-contracts/openapi.yaml); prefer read-only AuthZ.
 
 Error and edge cases:
@@ -119,7 +119,7 @@ So that rollout and compliance are controlled without editing every household by
 
 Expected behavior:
 
-- **Firm-mandatory** (`Firm_Feature_Policy__c`, `is_mandatory = true`): always ON in effective flags; advisors cannot override off. Mandatory list is firm-owned ([ADR-028](/01-constitution/constitution/#adr-028--firm-mandatory-configurable-options) — which keys are mandatory is firm-owned; the mechanism is Must).
+- **Firm-mandatory** (`Firm_Feature_Policy__c`, `is_mandatory = true`): always ON in effective flags; advisors cannot override off. Mandatory list is firm-owned ([ADR-028](/01-constitution/constitution/#adr-028--firm-mandatory--toggle-policy) — which keys are mandatory is firm-owned; the mechanism is Must).
 - **Book defaults** (`Advisor_Book_Feature_Defaults__c`): admin-only; keyed by primary advisor User Id. When a **new** household is activated, defaults copy into `Mobile_Feature_Flags__c`; the advisor then overrides per **CFG-02**.
 - **Bulk book toggle** (admin-only): sets the chosen option on all households in the advisor’s book. Firm-mandatory still wins. Locked precedence: bulk write updates household rows; later advisor edits are allowed; bulk does not require wiping audit history.
 - Book transfer: when primary advisor changes, the **new** advisor’s book defaults become the baseline for households that have **no** household-level override recorded; households with existing overrides **keep** those overrides unless an admin runs an explicit “reset to new advisor defaults” action.

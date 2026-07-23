@@ -2,7 +2,7 @@
 title: "Integration — Insights Feed (RSS / website)"
 ---
 
-> ADRs: [ADR-017](/01-constitution/constitution/#adr-017--insights-v1-rss-website-feed) · [ADR-023](/01-constitution/constitution/#adr-023--neopix-sow-vs-client-integration-boundary)  
+> ADRs: [ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed) · [ADR-023](/01-constitution/constitution/#adr-023--neopix-sow-vs-client-integration-boundary)  
 > Entities: [data-model.md §6](/03-data/data-model/) · Pack contract: [E06 feed.md](/05-specs/06-insights/05-contracts/feed/) · Status: [status.md](/04-integrations/status/)
 
 Last updated: July 17, 2026

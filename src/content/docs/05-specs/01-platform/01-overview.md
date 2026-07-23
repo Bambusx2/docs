@@ -39,7 +39,7 @@ Without this gate, invite flows, portfolio reads, and advisor config land on uns
 | Measure | Target | Evidence |
 |---|---|---|
 | Decision lock | Workshops Jun 23 – Jul 14 promoted into Accepted ADRs | [constitution.md](/01-constitution/constitution/) ADR-001…047 (019 superseded); discovery lock 2026-07-17; ADR-047 accepted 2026-07-19 |
-| Design freeze | Phase 1 shell / nav / core screens complete in Figma | Figma OnePoint App UI; [ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2) |
+| Design freeze | Phase 1 shell / nav / core screens complete in Figma | Figma OnePoint App UI; [ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs) |
 | Systems picture | Context, data plane, and ownership understood by client + eng | [architecture.md](/02-architecture/architecture/) |
 | Entity baseline | Middleware entities and known SF mappings documented (TBDs flagged) | [data-model.md](/03-data/data-model/) |
 | App launch | RN app starts on simulator or device to a placeholder Home | Demo path 1 |
@@ -59,7 +59,7 @@ Discovery & decisions
 
 Design
 - Phase 1 Figma design system and screen mocks are layout authority for scaffold and domain packs ([AGENTS.md](/agents/)).
-- Freeze navigation shell rules (including Planning-hidden → prefer 3-tab) per [ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2) and [ADR-029](/01-constitution/constitution/#adr-029--home-without-emoney).
+- Freeze navigation shell rules (including Planning-hidden → prefer 3-tab) per [ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs) and [ADR-029](/01-constitution/constitution/#adr-029--home-without-emoney).
 
 Engineering scaffold
 - Middleware service skeleton hosted on OnePoint Azure `dev` ([ADR-008](/01-constitution/constitution/#adr-008--middleware-on-onepoint-azure)).  

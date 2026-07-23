@@ -76,19 +76,19 @@ Workshop notes inform history; they are not binding after discovery lock.
 | [ADR-013](#adr-013--roles-and-surfaces)                                        | Roles and surfaces                                        | Accepted   |
 | [ADR-014](#adr-014--feature-configuration-hierarchy)                           | Feature configuration hierarchy                           | Accepted   |
 | [ADR-015](#adr-015--home-as-neutral-summary-hub)                               | Home as neutral summary hub                               | Accepted   |
-| [ADR-016](#adr-016--v1-action-required-concrete-items-only)                    | V1 Action Required — concrete items only                  | Accepted   |
-| [ADR-017](#adr-017--insights-v1-rss-website-feed)                              | Insights V1 — RSS/website feed                            | Accepted   |
+| [ADR-016](#adr-016--v1-action-required--concrete-items-only)                    | V1 Action Required — concrete items only                  | Accepted   |
+| [ADR-017](#adr-017--insights-v1--rsswebsite-feed)                              | Insights V1 — RSS/website feed                            | Accepted   |
 | [ADR-018](#adr-018--effective-feature-flag-resolution)                         | Effective feature-flag resolution                         | Accepted   |
 | [ADR-019](#adr-019--holdings-not-in-salesforce-today)                          | Holdings not in Salesforce today                          | Superseded |
 | [ADR-020](#adr-020--emoney-contract-signed-tier-b-candidate)                   | eMoney contract signed (Tier B candidate)                 | Accepted   |
 | [ADR-021](#adr-021--phase-1-target-and-milestones)                             | Phase 1 target and milestones                             | Accepted   |
 | [ADR-022](#adr-022--phase-1-explicit-exclusions)                               | Phase 1 explicit exclusions                               | Accepted   |
 | [ADR-023](#adr-023--neopix-sow-vs-client-integration-boundary)                 | Neopix SOW vs client integration boundary                 | Accepted   |
-| [ADR-024](#adr-024--holdings-source-tier-c)                                    | Holdings / Orion performance source                       | Accepted   |
+| [ADR-024](#adr-024--holdings--orion-performance-source)                                    | Holdings / Orion performance source                       | Accepted   |
 | [ADR-025](#adr-025--tier-b-and-tier-c-in-neopix-sow)                           | Tier B and Tier C in Neopix SOW                           | Accepted   |
 | [ADR-026](#adr-026--householding-and-account-privacy)                          | Householding and account privacy                          | Accepted   |
 | [ADR-027](#adr-027--salesforce-client-entity-mapping)                          | Salesforce Client Entity mapping                          | Accepted   |
-| [ADR-028](#adr-028--firm-mandatory-configurable-options)                       | Firm-mandatory / toggle policy                            | Accepted   |
+| [ADR-028](#adr-028--firm-mandatory--toggle-policy)                       | Firm-mandatory / toggle policy                            | Accepted   |
 | [ADR-029](#adr-029--home-without-emoney)                                       | Home without eMoney                                       | Accepted   |
 | [ADR-030](#adr-030--document-vault-api-path)                                   | Document vault API path                                   | Accepted   |
 | [ADR-031](#adr-031--biometric-unlock)                                          | Biometric unlock                                          | Accepted   |
@@ -103,14 +103,14 @@ Workshop notes inform history; they are not binding after discovery lock.
 | [ADR-040](#adr-040--institution-first-emoney-linking)                          | Institution-first eMoney linking                          | Accepted   |
 | [ADR-041](#adr-041--manual-held-away-account-entry)                            | Manual held-away account entry                            | Accepted   |
 | [ADR-042](#adr-042--account-nickname-write-back)                               | Account nickname write-back                               | Accepted   |
-| [ADR-043](#adr-043--real-estate-zillow-home-value)                             | Real estate / Zillow home value                           | Accepted   |
-| [ADR-044](#adr-044--orion-portal-parity-v1-portfolio)                          | Orion portal parity for V1 Portfolio                      | Accepted   |
-| [ADR-045](#adr-045--nav-shell-v1-vs-v2)                                        | Nav shell V1 vs V2 (3 vs 4 tabs)                          | Accepted   |
-| [ADR-046](#adr-046--mfa-off-for-this-delivery)                                 | MFA off for this delivery (client mobile)                 | Accepted   |
-| [ADR-047](#adr-047--advisor-preview-requires-web-client-surface)               | Advisor preview requires a web-deliverable client surface | Accepted   |
+| [ADR-043](#adr-043--real-estate--zillow-home-value)                             | Real estate / Zillow home value                           | Accepted   |
+| [ADR-044](#adr-044--orion-portal-parity-for-v1-portfolio)                          | Orion portal parity for V1 Portfolio                      | Accepted   |
+| [ADR-045](#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs)                                        | Nav shell V1 vs V2 (3 vs 4 tabs)                          | Accepted   |
+| [ADR-046](#adr-046--mfa-off-for-this-delivery-client-mobile)                                 | MFA off for this delivery (client mobile)                 | Accepted   |
+| [ADR-047](#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)               | Advisor preview requires a web-deliverable client surface | Accepted   |
 
 
- ADR-003 remains Accepted for Neopix calling Orion Connect live; holdings/performance for this delivery are Salesforce Tier A ([ADR-024](#adr-024--holdings-source-tier-c)). Tier B/C out of Neopix V1 SOW ([ADR-025](#adr-025--tier-b-and-tier-c-in-neopix-sow)).  
+ ADR-003 remains Accepted for Neopix calling Orion Connect live; holdings/performance for this delivery are Salesforce Tier A ([ADR-024](#adr-024--holdings--orion-performance-source)). Tier B/C out of Neopix V1 SOW ([ADR-025](#adr-025--tier-b-and-tier-c-in-neopix-sow)).  
  ADR-041: manual account is **Won't** for this delivery ([PL-12](/05-specs/08-planning/02-specify/#pl-12--add-manual-account)); Phase 2 if write-back is proven.
 
 ---
@@ -178,9 +178,9 @@ Consequences — [architecture.md](/02-architecture/architecture/) §2 (Tier A).
 
 Context — Orion Connect API integration is outside Neopix middleware runtime for this delivery.
 
-Decision — Neopix middleware **does not** call Orion Connect API at request time. For this delivery, Orion data reaches mobile via Salesforce Tier A only ([ADR-024](#adr-024--holdings-source-tier-c), [ADR-025](#adr-025--tier-b-and-tier-c-in-neopix-sow)). A staged Orion feed into Neopix requires a change order or superseding ADR.
+Decision — Neopix middleware **does not** call Orion Connect API at request time. For this delivery, Orion data reaches mobile via Salesforce Tier A only ([ADR-024](#adr-024--holdings--orion-performance-source), [ADR-025](#adr-025--tier-b-and-tier-c-in-neopix-sow)). A staged Orion feed into Neopix requires a change order or superseding ADR.
 
-Consequences — [integrations/status.md](/04-integrations/status/) · [orion.md](/04-integrations/orion/). Holdings path: [ADR-024](#adr-024--holdings-source-tier-c).
+Consequences — [integrations/status.md](/04-integrations/status/) · [orion.md](/04-integrations/orion/). Holdings path: [ADR-024](#adr-024--holdings--orion-performance-source).
 
 ---
 
@@ -243,7 +243,7 @@ Context — Avoid a second admin SPA; advisors already work in SF.
 
 Decision — Per-client options, book defaults, bulk admin toggles, client-view preview, and invite action live in **Salesforce LWC**. Preview uses iframe to middleware-hosted client view.
 
-Consequences — [03-configuration/01-overview.md](/05-specs/03-configuration/01-overview/). No separate admin web app. Preview iframe target: [ADR-047](#adr-047--advisor-preview-requires-web-client-surface).
+Consequences — [03-configuration/01-overview.md](/05-specs/03-configuration/01-overview/). No separate admin web app. Preview iframe target: [ADR-047](#adr-047--advisor-preview-requires-a-web-deliverable-client-surface).
 
 ---
 
@@ -390,7 +390,7 @@ Context — Workshop 3 defined who uses which surface.
 
 Decision — Client: Okta → mobile app. Advisor: Salesforce only — per-client options + preview; no mobile login. Administrator: SF bulk toggles + optional **login-as-client** on native app with audit. **No advisor-facing mobile app.**
 
-Consequences — [02-specify.md](/05-specs/02-users/02-specify/), [03-configuration/02-specify.md](/05-specs/03-configuration/02-specify/). Preview surface: [ADR-047](#adr-047--advisor-preview-requires-web-client-surface).
+Consequences — [02-specify.md](/05-specs/02-users/02-specify/), [03-configuration/02-specify.md](/05-specs/03-configuration/02-specify/). Preview surface: [ADR-047](#adr-047--advisor-preview-requires-a-web-deliverable-client-surface).
 
 ---
 
@@ -411,7 +411,7 @@ Context — Who can turn what on for whom.
 
 Decision — (1) Firm mandatory always on. (2) Admin enables across advisor book; new features default off. (3) Advisor per-household overrides only. (4) Book transfer → defaults follow new primary advisor.
 
-Consequences — [03-configuration/02-specify.md](/05-specs/03-configuration/02-specify/) **CFG-03**. Firm-mandatory list: [ADR-028](#adr-028--firm-mandatory-configurable-options).
+Consequences — [03-configuration/02-specify.md](/05-specs/03-configuration/02-specify/) **CFG-03**. Firm-mandatory list: [ADR-028](#adr-028--firm-mandatory--toggle-policy).
 
 ---
 
@@ -514,9 +514,9 @@ Consequences — [03-configuration/02-specify.md](/05-specs/03-configuration/02-
 
 Context — Workshop 6 SF discovery; sandbox holdings empty.
 
-Decision — Position-level holdings were not synced to SF at discovery; account list + summary balances were. Replaced by [ADR-024](#adr-024--holdings-source-tier-c).
+Decision — Position-level holdings were not synced to SF at discovery; account list + summary balances were. Replaced by [ADR-024](#adr-024--holdings--orion-performance-source).
 
-Consequences — See [ADR-024](#adr-024--holdings-source-tier-c). Client owns SF data quality ([ADR-023](#adr-023--neopix-sow-vs-client-integration-boundary)).
+Consequences — See [ADR-024](#adr-024--holdings--orion-performance-source). Client owns SF data quality ([ADR-023](#adr-023--neopix-sow-vs-client-integration-boundary)).
 
 ---
 
@@ -579,7 +579,7 @@ Context — Prevent scope creep from prototype and client wish-list.
 
 Decision — Phase 1 excludes: Orion Connect live from Neopix, DocuSign in-app signing, full Profile/suitability auto-commit edit, advisor mobile app, chat/messaging, journey timeline, money-movement alerts, payments schedule, refer-a-friend (design may proceed; ship later), Jiffy / digital intake, eMoney gauge embeds, full eMoney platform breadth, client analytics, Orion transactions / cost basis. DocuSign this delivery = list + alert only (in-app signing Won't).
 
-Profile: clients propose field changes for staff review/approve — not unrestricted self-edit ([02-users/02-specify.md](/05-specs/02-users/02-specify/) C-07, A-09, C-25 Must; C-08 / AR-06 Should). Portfolio portal extras deferred to [ADR-044](#adr-044--orion-portal-parity-v1-portfolio).
+Profile: clients propose field changes for staff review/approve — not unrestricted self-edit ([02-users/02-specify.md](/05-specs/02-users/02-specify/) C-07, A-09, C-25 Must; C-08 / AR-06 Should). Portfolio portal extras deferred to [ADR-044](#adr-044--orion-portal-parity-for-v1-portfolio).
 
 Consequences — Each specify Out of scope section; Phase 2 in [05-specs/README.md](/05-specs/readme/#phase-2-post-v1) (includes indicative Cost). Client / product analytics: Won't this delivery — obligations and UX implications in [architecture §10.10](/02-architecture/architecture/#1010-product--user-analytics-wont); indicative Cost [P2-06](/05-specs/readme/#phase-2-post-v1). Do not confuse with required ops signals ([architecture §9.7](/02-architecture/architecture/#97-ops-signals-required-vendor-phase-b)).
 
@@ -875,7 +875,7 @@ Consequences — `/me` household graph may list children for future use; UI does
 
 Context — Alerts may be computed at read time or stored. Workshop 8: advisors want custom Action Required items.
 
-Decision — **Virtual compute at read time** for Must/Should alert types this delivery ([computation.md](/05-specs/10-alerts/05-contracts/computation/)). Dismiss state for informational alerts may be stored in middleware. **Advisor-authored** persisted Action Required items are **Won't** until a follow-up ADR ([ADR-016](#adr-016--v1-action-required-concrete-items-only)).
+Decision — **Virtual compute at read time** for Must/Should alert types this delivery ([computation.md](/05-specs/10-alerts/05-contracts/computation/)). Dismiss state for informational alerts may be stored in middleware. **Advisor-authored** persisted Action Required items are **Won't** until a follow-up ADR ([ADR-016](#adr-016--v1-action-required--concrete-items-only)).
 
 Consequences — [10-alerts/01-overview.md](/05-specs/10-alerts/01-overview/).
 
@@ -923,12 +923,12 @@ Decision — Middleware computes net worth for Planning/Home as:
 total_assets  = Σ Orion managed accounts
               + Σ eMoney held-away / external accounts (not under mgmt)
               + insurance cash value (if present)
-              + real estate / home value when synced ([ADR-043](#adr-043--real-estate-zillow-home-value))
+              + real estate / home value when synced ([ADR-043](#adr-043--real-estate--zillow-home-value))
 total_liabilities = eMoney liability figures (mortgages, loans, etc.)
 net_worth = total_assets − total_liabilities
 ```
 
-Do not trust eMoney’s displayed NW totals as the source of truth. Recalculate from accounts + facts synced via SF (Tier A). Home value is included when the eMoney→SF field is present ([ADR-043](#adr-043--real-estate-zillow-home-value)).
+Do not trust eMoney’s displayed NW totals as the source of truth. Recalculate from accounts + facts synced via SF (Tier A). Home value is included when the eMoney→SF field is present ([ADR-043](#adr-043--real-estate--zillow-home-value)).
 
 Consequences — [08-planning/02-specify.md](/05-specs/08-planning/02-specify/) PL-02; [architecture.md §2](/02-architecture/architecture/#2-data-plane); [data-model.md](/03-data/data-model/).
 
@@ -1062,7 +1062,7 @@ Context — Orion portal has richer surfaces (transactions, benchmarks, activity
 
 Decision — Phase 1 Portfolio sticks to prototype scope: household/account summary, YTD (flag-gated), allocation by category and class, managed accounts, account summary / performance / holdings. Orion portal extras (transactions/activities, benchmarks, activity summary, portfolio vs net invested as separate cards) are Won't for this delivery.
 
-Consequences — [07-portfolio/02-specify.md](/05-specs/07-portfolio/02-specify/) Won't **P-08–P-10**; [ADR-022](#adr-022--phase-1-explicit-exclusions); [ADR-024](#adr-024--holdings-source-tier-c).
+Consequences — [07-portfolio/02-specify.md](/05-specs/07-portfolio/02-specify/) Won't **P-08–P-10**; [ADR-022](#adr-022--phase-1-explicit-exclusions); [ADR-024](#adr-024--holdings--orion-performance-source).
 
 ---
 

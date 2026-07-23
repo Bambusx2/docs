@@ -27,7 +27,7 @@ Handoff: Ship Home layout + `GET /api/v1/home` using the composite DTO in [data-
 
 Clients open the app between advisor meetings and need a **single warm landing surface**: who they are with OnePoint, what needs attention, and clear shortcuts into Portfolio, Planning (when enrolled), Docs, Insights, and Team — without leading with investment jargon or vendor brands.
 
-Home must also respect **effective feature flags** and the **Planning-off** experience: when a household has no eMoney plan, net worth and planning teasers must disappear, while Orion portfolio context can remain ([ADR-015](/01-constitution/constitution/#adr-015--home-as-neutral-summary-hub), [ADR-029](/01-constitution/constitution/#adr-029--home-without-emoney), [ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2)).
+Home must also respect **effective feature flags** and the **Planning-off** experience: when a household has no eMoney plan, net worth and planning teasers must disappear, while Orion portfolio context can remain ([ADR-015](/01-constitution/constitution/#adr-015--home-as-neutral-summary-hub), [ADR-029](/01-constitution/constitution/#adr-029--home-without-emoney), [ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs)).
 
 E04 is the **composition layer**. It does not redefine how Team cards, Insights articles, Portfolio allocation, Planning net worth, Documents entry, or Action Required alerts work — those belong to domain packs. Home provides the shell, the composite API, and the wiring contract so those packs can land incrementally without thrashing navigation.
 
@@ -55,7 +55,7 @@ Composition & shell
 - Greeting / identity header consistent with approved mock  
 - Quick-action / shortcut row gated by effective flags (**CFG-01**)  
 - Shared empty, loading, and placeholder states for unwired sections  
-- Navigation chrome per Figma freeze; when Planning is hidden prefer **3-tab** shell ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2))
+- Navigation chrome per Figma freeze; when Planning is hidden prefer **3-tab** shell ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs))
 
 API
 - `GET /api/v1/home` composite DTO per [data-model.md §12.2](/03-data/data-model/) — assemble (or stub) section payloads for wired domains  
@@ -87,8 +87,8 @@ Wiring
 | Tone | Warm, clear, relationship-first — not investments-first or vendor-branded |
 | Flags | Every teaser and shortcut respects effective flags from E03; hidden = removed, not empty |
 | Without planning | Hide NW + planning teasers when `planning_enabled` false; Orion portfolio teaser may remain ([ADR-029](/01-constitution/constitution/#adr-029--home-without-emoney)) |
-| Nav shell | Figma freeze; Planning-off → prefer 3-tab; Profile reachable when `profile_enabled` ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2)) |
-| Action Required | Concrete tasks only on Home ([ADR-016](/01-constitution/constitution/#adr-016--v1-action-required-concrete-items-only)); computation owned by E10 |
+| Nav shell | Figma freeze; Planning-off → prefer 3-tab; Profile reachable when `profile_enabled` ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs)) |
+| Action Required | Concrete tasks only on Home ([ADR-016](/01-constitution/constitution/#adr-016--v1-action-required--concrete-items-only)); computation owned by E10 |
 | UI | Figma is layout authority; this overview does not redefine domain field lists |
 | Data honesty | Placeholders and fixtures must not imply live Orion/eMoney accuracy |
 | Specify | No `02-specify.md` — do not invent Home-only acceptance stories that duplicate domain packs |
@@ -99,7 +99,7 @@ Wiring
 
 | Item | Owner | Needed before |
 |---|---|---|
-| Confirmation of Planning-off / 3-tab preference | — | N — [ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2) / [ADR-029](/01-constitution/constitution/#adr-029--home-without-emoney) Accepted |
+| Confirmation of Planning-off / 3-tab preference | — | N — [ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs) / [ADR-029](/01-constitution/constitution/#adr-029--home-without-emoney) Accepted |
 | Effective-flag fixture or live CFG for demo households | Delivery / Callaway | §8 Paths 2–3 |
 | Domain pack readiness (or stub payloads) for each wired section | Domain owners | §8 Path 4 incremental demos |
 
@@ -122,7 +122,7 @@ Wiring
 | Domain packs slip | Empty-looking Home at fly-in | Placeholders + fixtures; demo shell first; wire Must teasers by priority (Alerts, Portfolio, Planning) |
 | Home invents domain rules | Spec drift | §7 wiring table is normative for ownership; specify wins in domain packs |
 | Flag / Planning-off bugs | Client sees forbidden teasers | CFG-01 + ADR-029 checks in §8 Paths 2–3 |
-| Nav 3 vs 4 tab thrash | Layout rework | Figma freeze ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2)); domains stay in More |
+| Nav 3 vs 4 tab thrash | Layout rework | Figma freeze ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs)); domains stay in More |
 
 ---
 

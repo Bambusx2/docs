@@ -70,7 +70,7 @@ One-line definitions. Depth lives in the linked docs.
 | Advisor | Configures households and invites in Salesforce; no mobile advisor login |
 | Administrator | Firm/book policy in Salesforce; optional audited login-as-client on the native app |
 | LWC | Lightning Web Component — Salesforce UI for advisor/admin config and preview |
-| Advisor preview | LWC iframe of a Neopix-hosted web client for one household — same APIs/flags as mobile ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)) |
+| Advisor preview | LWC iframe of a Neopix-hosted web client for one household — same APIs/flags as mobile ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)) |
 | Impersonation | Admin login-as-client on the native app with middleware audit — not the same as advisor preview |
 | Figma (Phase 1) | Layout authority for build — ownership and change control in [AGENTS.md](/agents/) |
 

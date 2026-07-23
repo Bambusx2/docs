@@ -2,7 +2,7 @@
 title: "Integration — Orion (via Salesforce)"
 ---
 
-> ADRs: [ADR-003](/01-constitution/constitution/#adr-003--no-orion-connect-api-in-neopix-scope) · [ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only) · [ADR-011](/01-constitution/constitution/#adr-011--orion-wins-on-duplicate-account-numbers) · [ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c) · [ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow) · [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-v1-portfolio) · [ADR-023](/01-constitution/constitution/#adr-023--neopix-sow-vs-client-integration-boundary)  
+> ADRs: [ADR-003](/01-constitution/constitution/#adr-003--no-orion-connect-api-in-neopix-scope) · [ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only) · [ADR-011](/01-constitution/constitution/#adr-011--orion-wins-on-duplicate-account-numbers) · [ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source) · [ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow) · [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-for-v1-portfolio) · [ADR-023](/01-constitution/constitution/#adr-023--neopix-sow-vs-client-integration-boundary)  
 > Entities: [data-model.md §3](/03-data/data-model/) · Pack: [E07](/05-specs/07-portfolio/01-overview/) · Status: [status.md](/04-integrations/status/)
 
 Last updated: July 17, 2026
@@ -17,7 +17,7 @@ Purpose: Orion is the system of record for **managed** portfolio AUM. Neopix nev
 
 - Consume SF objects for managed accounts, balances, allocation (`portfolio_orion`), holdings, performance  
 - Dedupe: Orion wins on duplicate account numbers vs eMoney ([ADR-011](/01-constitution/constitution/#adr-011--orion-wins-on-duplicate-account-numbers))  
-- Portfolio UI stick to prototype / agreed surfaces ([ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-v1-portfolio))  
+- Portfolio UI stick to prototype / agreed surfaces ([ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-for-v1-portfolio))  
 
 ### Out of scope (this delivery — Neopix)
 
@@ -67,7 +67,7 @@ flowchart LR
 | Upstream Orion → SF | Client-owned daily job |
 | Middleware | After SF job (~post 7 AM ET) |
 | UI | Portfolio screens show **data as of** |
-| Missing holdings / performance | `unavailable` / empty — never invent ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)) |
+| Missing holdings / performance | `unavailable` / empty — never invent ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)) |
 
 ---
 

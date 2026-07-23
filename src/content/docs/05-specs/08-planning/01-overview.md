@@ -88,7 +88,7 @@ Story MoSCoW tags use definitions in [specs README](/05-specs/readme/#moscow). F
 | Tab label | **Planning** with **Powered by eMoney** attribution |
 | Data reads | Salesforce (eMoney → SF sync); middleware computes net worth and `planning_combined` allocation |
 | Net worth formula | Assets = Orion managed AUM + eMoney held-away/external + insurance **cash value**; Liabilities = eMoney liabilities; Orion wins on duplicate account numbers ([ADR-038](/01-constitution/constitution/#adr-038--net-worth-calculation), [ADR-011](/01-constitution/constitution/#adr-011--orion-wins-on-duplicate-account-numbers)) |
-| Real estate in NW | Include eMoney home/Zillow value when synced ([ADR-043](/01-constitution/constitution/#adr-043--real-estate-zillow-home-value)) |
+| Real estate in NW | Include eMoney home/Zillow value when synced ([ADR-043](/01-constitution/constitution/#adr-043--real-estate--zillow-home-value)) |
 | Allocation taxonomies | `planning_combined` separate from `portfolio_orion` — never merged ([ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes)) |
 | Portfolio vs Planning accounts | Orion-managed accounts on Portfolio only; client-linked accounts on Planning only ([ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only)) |
 | Linking | Institution-first via eMoney WebView ([ADR-040](/01-constitution/constitution/#adr-040--institution-first-emoney-linking)); credentials never stored in mobile (**NFR-04**) |

@@ -36,7 +36,7 @@ Without this pack:
 - Planning and Portfolio taxonomies get mixed or remapped incorrectly  
 - Missing SF holdings/performance gets coerced to zeros and erodes trust  
 
-E07 establishes the managed-asset surface: **Salesforce is the only read path; Orion is attribution and upstream sync, not a live API from Neopix; Portfolio never includes held-away or net worth; allocation scope is `portfolio_orion` only** ([ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane), [ADR-003](/01-constitution/constitution/#adr-003--no-orion-connect-api-in-neopix-scope), [ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only), [ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes), [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-v1-portfolio)).
+E07 establishes the managed-asset surface: **Salesforce is the only read path; Orion is attribution and upstream sync, not a live API from Neopix; Portfolio never includes held-away or net worth; allocation scope is `portfolio_orion` only** ([ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane), [ADR-003](/01-constitution/constitution/#adr-003--no-orion-connect-api-in-neopix-scope), [ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only), [ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes), [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-for-v1-portfolio)).
 
 ---
 
@@ -76,13 +76,13 @@ Story MoSCoW tags use definitions in [specs README](/05-specs/readme/#moscow). F
 | Live Orion Connect from Neopix | [ADR-003](/01-constitution/constitution/#adr-003--no-orion-connect-api-in-neopix-scope) |
 | eMoney / held-away / net worth on Portfolio | [ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only) — owned by [E08](/05-specs/08-planning/01-overview/) |
 | Merging `portfolio_orion` with planning taxonomies | [ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes) |
-| Orion portal extras beyond prototype scope | [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-v1-portfolio) |
+| Orion portal extras beyond prototype scope | [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-for-v1-portfolio) |
 
 ### Product constraints
 
 | Constraint | Detail |
 |---|---|
-| Scope lock | Prototype scope only — [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-v1-portfolio) Accepted; Orion portal extras (transactions, benchmarks, tax lots) are Won't (**P-08**–**P-10**) |
+| Scope lock | Prototype scope only — [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-for-v1-portfolio) Accepted; Orion portal extras (transactions, benchmarks, tax lots) are Won't (**P-08**–**P-10**) |
 | Data source | All Portfolio data from Salesforce (Orion Data Sync / OASP) — [salesforce.md](/05-specs/07-portfolio/05-contracts/salesforce/) |
 | Domain scope | Orion-managed AUM only — not eMoney, not net worth, not held-away ([ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only)) |
 | Allocation taxonomies | `portfolio_orion` separate from planning — never merged ([ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes)) |
@@ -131,7 +131,7 @@ Operational blockers: [status.md](/04-integrations/status/). Missing holdings/pe
 | Category vs class taxonomy gaps | Incomplete allocation UI | Per-dimension `unavailable`; slices are not invented |
 | YTD realized G/L not populated | Misleading zero G/L | Field gated by `portfolio_ytd_realized_gl`; omit when absent ([ADR-033](/01-constitution/constitution/#adr-033--ytd-realized-gainloss-card)) |
 | Mixing Portfolio with Planning taxonomies | Wrong client story | Dual scopes never merged ([ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes)) |
-| Pressure to match full Orion portal | Scope creep | [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-v1-portfolio) locks prototype scope; **P-08**–**P-10** Won't |
+| Pressure to match full Orion portal | Scope creep | [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-for-v1-portfolio) locks prototype scope; **P-08**–**P-10** Won't |
 
 ---
 

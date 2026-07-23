@@ -33,7 +33,7 @@ Purpose: Middleware runs on **OnePoint-owned Azure**. This spec locks ownership,
 |---|---|
 | Azure subscription / runtime | OnePoint |
 | Middleware API + sync worker | Neopix (deployed into OnePoint Azure) |
-| Advisor preview web host (CFG-02 iframe target) | Neopix — [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface) |
+| Advisor preview web host (CFG-02 iframe target) | Neopix — [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface) |
 | Key Vault / secrets | OnePoint (Neopix consumes via Managed Identity) |
 | Middleware application code | Neopix (deployed into OnePoint Azure) |
 | Mobile repo | OnePoint GitHub |
@@ -105,7 +105,7 @@ Promotion and pipeline mechanics: Phase B.
 - CISO preference: Azure ([ADR-008](/01-constitution/constitution/#adr-008--middleware-on-onepoint-azure)).  
 - Daily sync job must be schedulable (~post 7 AM ET).  
 - Mobile talks only to middleware ([ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane)).
-- Advisor LWC preview iframes a Neopix web host ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)); HTTPS + CSP for Salesforce domains.
+- Advisor LWC preview iframes a Neopix web host ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)); HTTPS + CSP for Salesforce domains.
 
 ---
 

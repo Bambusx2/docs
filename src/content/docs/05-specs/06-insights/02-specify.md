@@ -3,7 +3,7 @@ title: "E06 Insights & Commentary — Specification"
 ---
 
 > Scope: Firm market commentary and educational content from an external insights feed — list, detail, Home teaser; same feed for all clients.  
-> Source trail: Requirements draft · RSS research notes · Workshop 4 (external) · [data-model.md §6](/03-data/data-model/) · [ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane) · [ADR-017](/01-constitution/constitution/#adr-017--insights-v1-rss-website-feed)
+> Source trail: Requirements draft · RSS research notes · Workshop 4 (external) · [data-model.md §6](/03-data/data-model/) · [ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane) · [ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed)
 > Spec version: 1.0.0 · Last updated: July 17, 2026  
 > Discovery package: [01-overview.md](/05-specs/06-insights/01-overview/) (constraints, acceptance demo)  
 > Delivery rules: [AGENTS.md](/agents/)
@@ -72,7 +72,7 @@ Error and edge cases:
 - Impersonation — same firm-wide feed as the client.
 
 Salesforce / integrations
-- SF: flag only — `Mobile_Feature_Flags__c.Insights_Enabled__c`. No `Insight__c` object required ([ADR-017](/01-constitution/constitution/#adr-017--insights-v1-rss-website-feed)).
+- SF: flag only — `Mobile_Feature_Flags__c.Insights_Enabled__c`. No `Insight__c` object required ([ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed)).
 - External: firm blog / news source ingested via standardized feed document → `InsightArticle` ([data-model.md §6.1](/03-data/data-model/), [feed.md](/05-specs/06-insights/05-contracts/feed/)). Transport is RSS/Atom or JSON Feed from the website; other CMSes adapt into the same schema without mobile changes.
 
 ---

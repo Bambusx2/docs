@@ -28,7 +28,7 @@ This file wins on stub-vs-wait posture when integrations are yellow. It defers t
 
 Cold start (~20 min): [prd](/product/prd/) → this file → [AGENTS](/agents/) → [05-specs/README](/05-specs/readme/) dependency graph → first pack `02-specify.md` + `05-contracts/`.
 
-First slice: E01 scaffold → E02 mock IdP + `/me` → E03 effective flags → one domain with fixtures (prefer E07 Portfolio or E05 Team). Wire E04 Home as domains land. Treat E11 as a later pilot gate. Schedule CFG-02 preview web in parallel ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)).
+First slice: E01 scaffold → E02 mock IdP + `/me` → E03 effective flags → one domain with fixtures (prefer E07 Portfolio or E05 Team). Wire E04 Home as domains land. Treat E11 as a later pilot gate. Schedule CFG-02 preview web in parallel ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)).
 
 Staffing: Developers and the project manager own delivery. Discovery / architecture consult joins only on the triggers in [§5](#5-delivery-ops-pm-led).
 
@@ -60,10 +60,10 @@ Hard constraints: [AGENTS.md](/agents/).
 | ADR-001 … ADR-047 | Accepted (ADR-019 Superseded) |
 | Tier A ingest | Salesforce only |
 | Tier B / Tier C in Neopix SOW | Out ([ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow)) |
-| Holdings / performance | From SF Tier A ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)); stub if empty |
+| Holdings / performance | From SF Tier A ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)); stub if empty |
 | Document vault | eMoney Vault ([ADR-030](/01-constitution/constitution/#adr-030--document-vault-api-path)); fixture until credentials |
 | MFA / biometrics / OS push | Won't this delivery |
-| Advisor LWC preview | In scope — web client surface ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)) |
+| Advisor LWC preview | In scope — web client surface ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)) |
 | Phase 1 Figma | Complete (layout authority — [AGENTS.md](/agents/)) |
 
 ---
@@ -78,7 +78,7 @@ Hard constraints: [AGENTS.md](/agents/).
 | 4 | One domain | Prefer [E07](/05-specs/07-portfolio/02-specify/) or [E05](/05-specs/05-my-team/02-specify/) | Fixtures / empty / `unavailable` OK |
 | later | E04 Home | [overview](/05-specs/04-home/01-overview/) | Wire as domains land |
 | later | E06 · E08 · E09 · E10 | Pack specify + contracts | Fixture as needed |
-| parallel | CFG-02 preview web | [E03](/05-specs/03-configuration/01-overview/) · [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface) | Track in [status.md](/04-integrations/status/) |
+| parallel | CFG-02 preview web | [E03](/05-specs/03-configuration/01-overview/) · [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface) | Track in [status.md](/04-integrations/status/) |
 | gate | E11 Release | [overview](/05-specs/11-release/01-overview/) | Pilot / store gate |
 
 Pack index: [05-specs/README.md](/05-specs/readme/#pack--adr--contracts).

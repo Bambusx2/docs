@@ -3,7 +3,7 @@ title: "E02 Users & Identity — Specification"
 ---
 
 > Scope: Invite-only client identity — Okta authentication, Salesforce provisioning actions, admin impersonation, identity sync, My Profile hub.  
-> Source trail: Workshops 4, 3, 8 (external) · [data-model.md §1](/03-data/data-model/) · [ADR-007](/01-constitution/constitution/#adr-007--okta-invite-via-middleware) · [ADR-013](/01-constitution/constitution/#adr-013--roles-and-surfaces) · [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery) · [Figma — My Profile](https://www.figma.com/design/peO4G33tKiyu7RebDswKJb/OnePoint-App-UI?node-id=512-8983)
+> Source trail: Workshops 4, 3, 8 (external) · [data-model.md §1](/03-data/data-model/) · [ADR-007](/01-constitution/constitution/#adr-007--okta-invite-via-middleware) · [ADR-013](/01-constitution/constitution/#adr-013--roles-and-surfaces) · [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile) · [Figma — My Profile](https://www.figma.com/design/peO4G33tKiyu7RebDswKJb/OnePoint-App-UI?node-id=512-8983)
 > Spec version: 1.0.0 · Last updated: July 17, 2026  
 > Discovery package: [01-overview.md](/05-specs/02-users/01-overview/) (constraints, acceptance demo)  
 > Delivery rules: [AGENTS.md](/agents/)
@@ -462,7 +462,7 @@ So that I can reach released settings.
 
 Expected behavior:
 
-- When `profile_enabled` is true, My Profile is reachable from the app shell ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2)) and from the gear control on the Personal Information screen.
+- When `profile_enabled` is true, My Profile is reachable from the app shell ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs)) and from the gear control on the Personal Information screen.
 - The hub shows the client’s name, avatar initials when no photo is present, and **Client since** when `Account.CreatedDate` (or mapped equivalent) is available via `/me`.
 - The hub lists only sections for Must, Should, or Could stories that are released: Personal Information, Security, Legal, Log out, and version (when **C-13** ships). Notifications / push preference (**C-10**) and referrals (**C-17**) are Won't this delivery.
 - The Push Notifications toggle row is omitted while **C-10** is Won't.

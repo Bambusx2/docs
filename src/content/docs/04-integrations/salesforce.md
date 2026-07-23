@@ -23,7 +23,7 @@ Purpose: Salesforce is the **default Tier A** data plane for the mobile middlewa
 ### Out of scope (this delivery)
 
 - Mobile calling Salesforce directly ([ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane))  
-- Salesforce as Insights CMS ([ADR-017](/01-constitution/constitution/#adr-017--insights-v1-rss-website-feed))  
+- Salesforce as Insights CMS ([ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed))  
 - Document binary storage in SF ([ADR-030](/01-constitution/constitution/#adr-030--document-vault-api-path))  
 
 ---
@@ -94,7 +94,7 @@ Canonical maps: [data-model.md](/03-data/data-model/). Prefer Callaway sandbox e
 | Portfolio | FA, holdings, performance, allocation rollups | [E07 salesforce.md](/05-specs/07-portfolio/05-contracts/salesforce/) |
 | Planning | `Planning_Overview__c`, goals, expenses, `Linked_Account__c` (+ `Relink_Url__c` TBD) | [E08 salesforce.md](/05-specs/08-planning/05-contracts/salesforce/) |
 
-Holdings: required from SF for Portfolio ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)). If empty → empty list / `unavailable` — do not invent.
+Holdings: required from SF for Portfolio ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)). If empty → empty list / `unavailable` — do not invent.
 
 Effective flags: [E03 resolution.md](/05-specs/03-configuration/05-contracts/resolution/) ([ADR-018](/01-constitution/constitution/#adr-018--effective-feature-flag-resolution)).
 

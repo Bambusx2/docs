@@ -52,7 +52,7 @@ Audit: `LastModifiedById`, `LastModifiedDate`; optional `Updated_By_Role__c` (`a
 | Surface | Role | Story |
 |---|---|---|
 | Per-client options | Advisor (book) | CFG-02 |
-| Client-view preview (iframe → Neopix web `previewUrl`) | Advisor | CFG-02 · [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface) |
+| Client-view preview (iframe → Neopix web `previewUrl`) | Advisor | CFG-02 · [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface) |
 | Firm-mandatory editor | Admin | CFG-03 |
 | Book defaults editor | Admin | CFG-03 |
 | Bulk book toggle | Admin | CFG-03 |
@@ -101,7 +101,7 @@ Eligibility for advisor edit/preview: same book-of-business spirit as invite per
 
 - [ ] Objects + fields deployed to sandbox  
 - [ ] Advisor + admin LWCs usable (CFG-02 / CFG-03)
-- [ ] Preview iframe loads Neopix **web** `previewUrl` (not native app) — [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)
+- [ ] Preview iframe loads Neopix **web** `previewUrl` (not native app) — [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)
 - [ ] Preview URL + service auth agreed with middleware
 - [ ] Permission sets documented and assigned in sandbox  
 - [ ] Sample data covers §6 scenarios  

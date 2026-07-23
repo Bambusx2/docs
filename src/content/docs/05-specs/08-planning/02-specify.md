@@ -87,7 +87,7 @@ Expected behavior:
 - Available when `planning_overview` is true.
 - Returns: **net worth**, **total assets**, **total liabilities**, **dataAsOf**.
 - Optional when present: **net worth YTD change** (amount), **net worth YTD change %** — absent when unavailable.
-- Net worth is middleware-computed from Salesforce inputs per [ADR-038](/01-constitution/constitution/#adr-038--net-worth-calculation): Orion managed AUM + eMoney held-away assets + insurance cash value − eMoney liabilities; Orion wins on duplicate account numbers ([ADR-011](/01-constitution/constitution/#adr-011--orion-wins-on-duplicate-account-numbers)). Include eMoney home/Zillow value when synced ([ADR-043](/01-constitution/constitution/#adr-043--real-estate-zillow-home-value)).
+- Net worth is middleware-computed from Salesforce inputs per [ADR-038](/01-constitution/constitution/#adr-038--net-worth-calculation): Orion managed AUM + eMoney held-away assets + insurance cash value − eMoney liabilities; Orion wins on duplicate account numbers ([ADR-011](/01-constitution/constitution/#adr-011--orion-wins-on-duplicate-account-numbers)). Include eMoney home/Zillow value when synced ([ADR-043](/01-constitution/constitution/#adr-043--real-estate--zillow-home-value)).
 - Does not use eMoney-displayed net worth totals as the source value.
 
 Error and edge cases:

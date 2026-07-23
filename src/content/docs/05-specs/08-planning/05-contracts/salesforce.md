@@ -51,7 +51,7 @@ Inputs from SF:
 - Orion managed FA balances (visible household set)
 - eMoney linked account balances (`feeds_planning` / held-away)
 - Insurance cash value (`Planning_Overview__c.Insurance_Cash_Value__c` TBD — [ADR-038](/01-constitution/constitution/#adr-038--net-worth-calculation))
-- Home / real-estate value when synced (`Planning_Overview__c.Home_Real_Estate_Value__c` TBD — [ADR-043](/01-constitution/constitution/#adr-043--real-estate-zillow-home-value))
+- Home / real-estate value when synced (`Planning_Overview__c.Home_Real_Estate_Value__c` TBD — [ADR-043](/01-constitution/constitution/#adr-043--real-estate--zillow-home-value))
 - eMoney liability totals
 
 Rules:

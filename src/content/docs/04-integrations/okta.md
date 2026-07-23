@@ -2,7 +2,7 @@
 title: "Integration — Okta (Client IdP)"
 ---
 
-> ADRs: [ADR-007](/01-constitution/constitution/#adr-007--okta-invite-via-middleware) · [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery) · [ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane) · [ADR-023](/01-constitution/constitution/#adr-023--neopix-sow-vs-client-integration-boundary)  
+> ADRs: [ADR-007](/01-constitution/constitution/#adr-007--okta-invite-via-middleware) · [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile) · [ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane) · [ADR-023](/01-constitution/constitution/#adr-023--neopix-sow-vs-client-integration-boundary)  
 > Entities: [data-model.md §1 / §13.3](/03-data/data-model/) · Behaviour: [E02 specify](/05-specs/02-users/02-specify/) · Status: [status.md](/04-integrations/status/)
 
 Last updated: July 19, 2026
@@ -18,7 +18,7 @@ Purpose: Okta is the client identity provider. Advisors invite from Salesforce; 
 - Middleware: create user + invite email; map `idp_subject` ↔ `ClientUser`  
 - JWT validation on every mobile API call  
 - Write last-login (and related portal fields) to Salesforce after interactive login  
-- MFA **off** for this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery))  
+- MFA **off** for this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile))  
 
 ### Out of scope (this delivery)
 
@@ -111,7 +111,7 @@ Rules:
 
 Client-owned TBD (config values only): exact Okta group id / claim attribute string in each environment — behaviour above is locked.
 
-MFA: not required for the **client** Okta app this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery)). `mfa_enrolled` may be read for future use; it does **not** gate login this delivery. Unexpected MFA challenge → configuration failure (no app MFA UX).
+MFA: not required for the **client** Okta app this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile)). `mfa_enrolled` may be read for future use; it does **not** gate login this delivery. Unexpected MFA challenge → configuration failure (no app MFA UX).
 ---
 
 ## 7. Failure modes

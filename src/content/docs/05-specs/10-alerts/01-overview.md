@@ -35,7 +35,7 @@ Without this pack:
 - Bell badge drifts from the list clients actually see  
 - Deep links land on the wrong screen or invent tasks  
 
-E10 establishes the attention surface: **middleware computes open alerts from upstream facts; badge count equals the Home list; each type deep-links into the owning pack; OS push and advisor-authored custom tasks are out of scope** ([ADR-016](/01-constitution/constitution/#adr-016--v1-action-required-concrete-items-only), [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope), [ADR-036](/01-constitution/constitution/#adr-036--alert-persistence-model)).
+E10 establishes the attention surface: **middleware computes open alerts from upstream facts; badge count equals the Home list; each type deep-links into the owning pack; OS push and advisor-authored custom tasks are out of scope** ([ADR-016](/01-constitution/constitution/#adr-016--v1-action-required--concrete-items-only), [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope), [ADR-036](/01-constitution/constitution/#adr-036--alert-persistence-model)).
 
 ---
 
@@ -48,7 +48,7 @@ E10 establishes the attention surface: **middleware computes open alerts from up
 | Deep links | Correct domain screen per `alertType` | §8 Path 2 · **AR-03**–**AR-05**, **AR-07** |
 | Resolve | Clears when underlying issue fixed; badge decrements | §8 Path 3 · **AR-08** |
 | Refresh | New alerts after sync / pull-to-refresh | §8 Path 3 · **AR-09** |
-| Concrete only | No marketing placeholders or advisor-authored custom tasks | **NFR-05** · [ADR-016](/01-constitution/constitution/#adr-016--v1-action-required-concrete-items-only) |
+| Concrete only | No marketing placeholders or advisor-authored custom tasks | **NFR-05** · [ADR-016](/01-constitution/constitution/#adr-016--v1-action-required--concrete-items-only) |
 
 ---
 
@@ -80,7 +80,7 @@ Story MoSCoW tags use definitions in [specs README](/05-specs/readme/#moscow). F
 | Advisor activity feed | AR-12 |
 | Money-movement alerts (ACAT, wire) | AR-13 |
 | OS push notifications (APNs/FCM) | **AR-14** · [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope) |
-| Advisor-authored custom Action Required items | [ADR-016](/01-constitution/constitution/#adr-016--v1-action-required-concrete-items-only) / [ADR-036](/01-constitution/constitution/#adr-036--alert-persistence-model) |
+| Advisor-authored custom Action Required items | [ADR-016](/01-constitution/constitution/#adr-016--v1-action-required--concrete-items-only) / [ADR-036](/01-constitution/constitution/#adr-036--alert-persistence-model) |
 | Domain sign / relink / profile UX | Owned by [E09](/05-specs/09-documents/02-specify/), [E08](/05-specs/08-planning/02-specify/), [E02](/05-specs/02-users/02-specify/) |
 
 ### Product constraints
@@ -88,7 +88,7 @@ Story MoSCoW tags use definitions in [specs README](/05-specs/readme/#moscow). F
 | Constraint | Detail |
 |---|---|
 | Client label | **Action Required** (Home section); backend entity `Alert` |
-| Alert set | Concrete tasks only per [ADR-016](/01-constitution/constitution/#adr-016--v1-action-required-concrete-items-only) — no advisor-authored custom tasks until follow-up ADR |
+| Alert set | Concrete tasks only per [ADR-016](/01-constitution/constitution/#adr-016--v1-action-required--concrete-items-only) — no advisor-authored custom tasks until follow-up ADR |
 | Notification surface | In-app bell badge only this delivery ([ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope)) |
 | Bell tap | Navigates to Home scrolled to **Action Required** (same open set as **AR-02**) |
 | Empty state | Badge hidden; Home section shows **You're all caught up** |

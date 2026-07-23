@@ -31,10 +31,18 @@ import { ClientRouter } from 'astro:transitions';
     return document.documentElement.dataset.theme === 'light' ? 'default' : 'dark';
   }
 
+  let mermaidMod;
   async function renderMermaid() {
-    const nodes = document.querySelectorAll('pre.mermaid:not([data-rendered])');
+    // Claim un-rendered diagrams SYNCHRONOUSLY (before any await) so a second
+    // concurrent call — renderMermaid() runs both directly and on
+    // astro:page-load, which also fires on first load — can't grab the same
+    // nodes and double-render them (that races and throws).
+    const nodes = [...document.querySelectorAll('pre.mermaid:not([data-mermaid-claimed])')];
     if (!nodes.length) return;
-    const { default: mermaid } = await import('mermaid');
+    nodes.forEach((el) => el.setAttribute('data-mermaid-claimed', ''));
+
+    if (!mermaidMod) mermaidMod = (await import('mermaid')).default;
+    const mermaid = mermaidMod;
     // suppressErrorRendering: don't let Mermaid inject its "Syntax error" graphic
     // into the page; we handle failures ourselves below.
     mermaid.initialize({
@@ -45,20 +53,20 @@ import { ClientRouter } from 'astro:transitions';
     });
     let n = 0;
     for (const el of nodes) {
-      const source = el.getAttribute('data-mermaid-source') || el.textContent || '';
-      el.setAttribute('data-rendered', 'true');
+      const source = el.textContent || '';
       try {
         const { svg } = await mermaid.render(`mmd-${Date.now()}-${n++}`, source);
         el.innerHTML = svg;
+        el.setAttribute('data-rendered', 'true');
       } catch {
         // Fall back to the raw source in a code block rather than an error graphic.
         el.classList.add('mermaid-error');
         el.textContent = source;
+        el.setAttribute('data-rendered', 'error');
       }
     }
   }
 
-  renderMermaid();
   document.addEventListener('astro:page-load', renderMermaid);
 
   // ---- Collapsible panels: header toggles for the left nav and right TOC ----

@@ -4,7 +4,7 @@ title: "OnePoint Mobile App — Data Model"
 
 > Purpose: Canonical entity definitions for middleware API, Salesforce mapping, and mobile DTOs.  
 > Bundle: [README.md](/readme/) · [READY.md](/ready/) · [AGENTS.md](/agents/)  
-> Architecture: Tier A = Salesforce REST sync → local cache → mobile API. Holdings/performance from SF ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)). Tier B/C direct ingest out of Neopix V1 SOW ([ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow)). NW formula: ADR-038. Dual allocation taxonomies: ADR-010.  
+> Architecture: Tier A = Salesforce REST sync → local cache → mobile API. Holdings/performance from SF ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)). Tier B/C direct ingest out of Neopix V1 SOW ([ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow)). NW formula: ADR-038. Dual allocation taxonomies: ADR-010.  
 > See also: [architecture.md](/02-architecture/architecture/), [constitution.md](/01-constitution/constitution/), [integrations/](/04-integrations/readme/).
 
 Last updated: July 19, 2026 (product folder rename; data classification section)
@@ -81,7 +81,7 @@ Account (parent / CRM household)           ← middleware ClientAccount — clie
        │
        └── FinServ__FinancialAccount__c[]  ← primary owner lookup → Client Entity Account (not Person Account)
             ├── FinServ__FinancialAccountRole__c[] (FAR) — person ↔ FA link; Related Contact often blank today
-            └── FinServ__FinancialHolding__c[] — often absent in sandbox; V1 source of truth is SF Tier A ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)) — missing → empty / unavailable, do not invent
+            └── FinServ__FinancialHolding__c[] — often absent in sandbox; V1 source of truth is SF Tier A ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)) — missing → empty / unavailable, do not invent
 ```
 
 Workshop 6 (OnePoint): To retrieve all financial accounts for a CRM household: **parent Account → all Client Entities → all Financial Accounts**. A given household can have **multiple Client Entities**; each Client Entity groups accounts for an investment purpose and carries an Orion ID.
@@ -217,7 +217,7 @@ Financial Services Cloud (managed package): Contact-level FinServ fields are rea
 | `status` | enum |  | `IdP User.status` \| `SF Account.Mobile_Status__c` | `not_invited`, `invited`, `active`, `disabled`, `removed`; null when not authenticated |
 | `last_login_at` | datetime |  | Middleware | Updated on each successful interactive login |
 | `sf_last_login_at` | datetime |  | `Account.Last_Mobile_Login__c` | **Write-back** to Person Account for advisor visibility ([A-08](/05-specs/02-users/02-specify/)) |
-| `mfa_enrolled` | boolean |  | `IdP User.mfaEnrolled` | Read-only from IdP; MFA not enforced this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery)) |
+| `mfa_enrolled` | boolean |  | `IdP User.mfaEnrolled` | Read-only from IdP; MFA not enforced this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile)) |
 | `biometric_enabled` | boolean |  | Mobile (device keychain) | Device-local preference |
 | `is_mobile_user` | boolean | Yes | Middleware (computed) | `true` when `idp_subject` is set |
 | `preferred_name` | string(80) |  | `Account.FinServ__PreferredName__pc` | FSC Contact field `FinServ__PreferredName__c` |
@@ -594,7 +594,7 @@ Household financial plan snapshot — one active row per household.
 | `monte_carlo_downside_pct` | decimal(8,4) |  | `eMoney MonteCarlo.downside` → `SF Planning_Overview__c.Monte_Carlo_Downside_Pct__c` |  |
 | `plan_name` | string(255) |  | `eMoney Plan.name` → `SF Planning_Overview__c.Plan_Name__c` |  |
 | `insurance_cash_value` | decimal(19,4) |  | `SF Planning_Overview__c.Insurance_Cash_Value__c (TBD)` | NW asset input ([ADR-038](/01-constitution/constitution/#adr-038--net-worth-calculation)) — confirm object/field with OnePoint |
-| `home_real_estate_value` | decimal(19,4) |  | `SF Planning_Overview__c.Home_Real_Estate_Value__c (TBD)` | eMoney/Zillow home value when synced ([ADR-043](/01-constitution/constitution/#adr-043--real-estate-zillow-home-value)) |
+| `home_real_estate_value` | decimal(19,4) |  | `SF Planning_Overview__c.Home_Real_Estate_Value__c (TBD)` | eMoney/Zillow home value when synced ([ADR-043](/01-constitution/constitution/#adr-043--real-estate--zillow-home-value)) |
 | `as_of` | datetime | Yes | `eMoney Plan.asOf` → `SF Planning_Overview__c.As_Of__c` |  |
 | `disclaimer_text` | string(512) |  | `SF Planning_Overview__c.Disclaimer_Text__c` |  |
 
@@ -742,7 +742,7 @@ DocuSign signing workflow — out of scope until in-app signing ships ([DOC-08](
 
 ### 6.1 `InsightArticle`
 
-Market commentary and firm content. V1: external blog/news feed normalized through a **standardized feed document** ([06-insights/05-contracts/feed.md](/05-specs/06-insights/05-contracts/feed/); [ADR-017](/01-constitution/constitution/#adr-017--insights-v1-rss-website-feed)). V2: per-client topic preferences + agentic selection.
+Market commentary and firm content. V1: external blog/news feed normalized through a **standardized feed document** ([06-insights/05-contracts/feed.md](/05-specs/06-insights/05-contracts/feed/); [ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed)). V2: per-client topic preferences + agentic selection.
 
 | Attribute | Type | Req | Source | Description |
 |---|---|:---:|---|---|
@@ -974,7 +974,7 @@ Denormalized JSON cache for complex SF payloads (e.g. holdings array, performanc
 | `Household` | `HouseholdFeatureFlags` | 1:1 | `household_id` | Per Orion child household |
 | `Household` | `FinancialAccount` | 1:N | `household_id` | `FinServ__FinancialAccount__c.FinServ__Household__c` → child `Account` |
 | `Custodian` | `FinancialAccount` | 1:N | `custodian_id` | Via `OASP_FSC__Custodian__c` lookup — §3.2 |
-| `FinancialAccount` | `Holding` | 1:N | `financial_account_id` | SF Tier A ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)); empty if not synced |
+| `FinancialAccount` | `Holding` | 1:N | `financial_account_id` | SF Tier A ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)); empty if not synced |
 | `FinancialAccount` | `FinancialAccountRole` | 1:N | `financial_account_id` | Per-person visibility when FAR populated |
 | `FinancialAccount` | `PerformanceDataPoint` | 1:N | `financial_account_id` | Per timeframe |
 | `Household` | `PlanningOverview` | 1:1 | `household_id` | May be on child — confirm with Callaway |
@@ -1055,7 +1055,7 @@ Composite payloads returned by middleware — not separate tables but documented
 | `AdminImpersonationSession` | `Admin_Impersonation_Log__c` | Optional audit — §1.4 |
 | `Custodian` | `OASP_FSC__Custodian__c` | Orion Data Sync for FSC reference data — §3.2 |
 | `FinancialAccount` | `FinServ__FinancialAccount__c` | `FinServ__Household__c` → child `Account`; `OASP_FSC__Custodian__c` — confirm `Household_Organization__c` vs `FinServ__Household__c` |
-| `Holding` | `FinServ__FinancialHolding__c (TBD)` \| OASP equivalent | Child of FA via `FinServ__FinancialAccount__c` (confirm); SF Tier A only ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)) |
+| `Holding` | `FinServ__FinancialHolding__c (TBD)` \| OASP equivalent | Child of FA via `FinServ__FinancialAccount__c` (confirm); SF Tier A only ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)) |
 | `FinancialAccountRole` | `FinServ__FinancialAccountRole__c` | FSC license required in sandbox |
 | `PlanningOverview` | `Planning_Overview__c` | eMoney sync; likely child Account; NW insurance/home TBD fields — §4.1 |
 | `FinancialGoal` | `Financial_Goal__c` | Child of Account |
@@ -1086,7 +1086,7 @@ Observed SF mapping:
 |---|---|---|
 | Child household Accounts under parent | ✓ observed | — |
 | Financial account list | ✓ partial | Field audit |
-| Holdings | SF Tier A required ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)); often absent in sandbox | Empty list / `unavailable` — client owns hydration |
+| Holdings | SF Tier A required ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)); often absent in sandbox | Empty list / `unavailable` — client owns hydration |
 | Allocation donut (portfolio) | SF Orion/OASP rollups | `portfolio_orion` scope; unavailable if missing |
 | Allocation donut (planning) | SF eMoney allocation facts + Orion AUM inputs | `planning_combined` scope; never marry taxonomies |
 
@@ -1105,7 +1105,7 @@ Gap analysis (Neopix): Prototype → SF gap spreadsheet per **child** household 
 | `ClientUser.idp_subject` | `id_token.sub` / `User.id` |
 | `ClientUser` portal role | Derived in middleware: `client` if `sub` maps to invited `ClientUser`; `admin` if Okta admin group / `onepoint_portal_role=admin` ([okta.md §6](/04-integrations/okta/#6-claims--role-model)) |
 | `ClientUser.status` | Portal status from SF write-back / MW — not raw Okta `User.status` alone |
-| `mfa_enrolled` (optional read) | Okta factors if present; **does not gate** login this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery)) |
+| `mfa_enrolled` (optional read) | Okta factors if present; **does not gate** login this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile)) |
 | `ClientInvite.idp_subject` | `User.id` after create |
 | `ClientInvite.idp_invite_ref` | Okta invite/activation id when returned; else `idp_subject` + invite-sent timestamp |
 | `AdminImpersonationSession.admin_idp_subject` | Admin `id_token.sub` (impersonation authorized in middleware — not an Okta act-as claim) |
@@ -1121,7 +1121,7 @@ Modeling questions are tracked as ADRs in [constitution.md](/01-constitution/con
 | Topic | ADR |
 |---|---|
 | Client Entity / household hierarchy | [ADR-027](/01-constitution/constitution/#adr-027--salesforce-client-entity-mapping) — build fallback in place |
-| Holdings source & schema | Accepted SF Tier A — [ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c), [ADR-037](/01-constitution/constitution/#adr-037--holdings-storage-schema); field API names TBD with OnePoint |
+| Holdings source & schema | Accepted SF Tier A — [ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source), [ADR-037](/01-constitution/constitution/#adr-037--holdings-storage-schema); field API names TBD with OnePoint |
 | Householding / privacy | [ADR-026](/01-constitution/constitution/#adr-026--householding-and-account-privacy) — build fallback household-wide |
 | Multi-household switcher | Accepted Won't — [ADR-035](/01-constitution/constitution/#adr-035--multi-household-switcher) |
 | Alert persistence / advisor-authored tasks | [ADR-036](/01-constitution/constitution/#adr-036--alert-persistence-model) |
@@ -1129,7 +1129,7 @@ Modeling questions are tracked as ADRs in [constitution.md](/01-constitution/con
 | Dual allocation taxonomies (never marry) | Accepted — [ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes) |
 | Under-mgmt vs held-away filter | [ADR-011](/01-constitution/constitution/#adr-011--orion-wins-on-duplicate-account-numbers) |
 | Insurance cash value / liabilities objects | map into NW per ADR-038; `Planning_Overview__c.Insurance_Cash_Value__c (TBD)` — §4.1 |
-| Real estate / Zillow home value | Accepted — [ADR-043](/01-constitution/constitution/#adr-043--real-estate-zillow-home-value); `Home_Real_Estate_Value__c (TBD)` — §4.1 |
+| Real estate / Zillow home value | Accepted — [ADR-043](/01-constitution/constitution/#adr-043--real-estate--zillow-home-value); `Home_Real_Estate_Value__c (TBD)` — §4.1 |
 | Expense edit write-back | Accepted Won't — [ADR-039](/01-constitution/constitution/#adr-039--client-expense-edit-path) |
 | Manual held-away / nickname write-back | Accepted Won't — [ADR-041](/01-constitution/constitution/#adr-041--manual-held-away-account-entry), [ADR-042](/01-constitution/constitution/#adr-042--account-nickname-write-back) |
 | Document vault | Accepted eMoney Vault — [ADR-030](/01-constitution/constitution/#adr-030--document-vault-api-path) |
@@ -1137,7 +1137,7 @@ Modeling questions are tracked as ADRs in [constitution.md](/01-constitution/con
 | `liquidity_needs` SF field | Callaway field audit — Must on **C-06**; omit until confirmed |
 | `Linked_Account__c.Relink_Url__c` | Callaway field audit — **PL-09** |
 | Team `Mobile_Client_Facing__c` / `Mobile_Scheduling_Enabled__c` | Callaway deploy — synthetic filter OK until ready |
-| Insights feed | Accepted — [ADR-017](/01-constitution/constitution/#adr-017--insights-v1-rss-website-feed) |
+| Insights feed | Accepted — [ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed) |
 | Client since display | Person Account `CreatedDate` (**C-05**); parent `FinServ__RelationshipStartDate__c` remains firm relationship date on `ClientAccount` |
 
 Do not duplicate open questions here — update the constitution when resolved. Operational blockers: [integrations/status.md](/04-integrations/status/).

@@ -3,7 +3,7 @@ title: "E10 Action Required — Specification"
 ---
 
 > Scope: Bell badge and Home Action Required list for concrete client tasks; middleware-computed alerts with deep links into domain packs.  
-> Source trail: Workshop 3 · Requirements draft (external) · [data-model.md §8](/03-data/data-model/) · [ADR-016](/01-constitution/constitution/#adr-016--v1-action-required-concrete-items-only) · [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope) · [ADR-036](/01-constitution/constitution/#adr-036--alert-persistence-model)
+> Source trail: Workshop 3 · Requirements draft (external) · [data-model.md §8](/03-data/data-model/) · [ADR-016](/01-constitution/constitution/#adr-016--v1-action-required--concrete-items-only) · [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope) · [ADR-036](/01-constitution/constitution/#adr-036--alert-persistence-model)
 > Spec version: 1.0.0 · Last updated: July 17, 2026  
 > Discovery package: [01-overview.md](/05-specs/10-alerts/01-overview/) (constraints, acceptance demo)  
 > Delivery rules: [AGENTS.md](/agents/)

@@ -2,7 +2,7 @@
 title: "Integration — eMoney (Planning via Salesforce + WebView)"
 ---
 
-> ADRs: [ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only) · [ADR-012](/01-constitution/constitution/#adr-012--no-emoney-gauge-embeds) · [ADR-020](/01-constitution/constitution/#adr-020--emoney-contract-signed-tier-b-candidate) · [ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow) · [ADR-038](/01-constitution/constitution/#adr-038--net-worth-calculation) · [ADR-040](/01-constitution/constitution/#adr-040--institution-first-emoney-linking) · [ADR-041](/01-constitution/constitution/#adr-041--manual-held-away-account-entry) · [ADR-042](/01-constitution/constitution/#adr-042--account-nickname-write-back) · [ADR-043](/01-constitution/constitution/#adr-043--real-estate-zillow-home-value) · [ADR-023](/01-constitution/constitution/#adr-023--neopix-sow-vs-client-integration-boundary)  
+> ADRs: [ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only) · [ADR-012](/01-constitution/constitution/#adr-012--no-emoney-gauge-embeds) · [ADR-020](/01-constitution/constitution/#adr-020--emoney-contract-signed-tier-b-candidate) · [ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow) · [ADR-038](/01-constitution/constitution/#adr-038--net-worth-calculation) · [ADR-040](/01-constitution/constitution/#adr-040--institution-first-emoney-linking) · [ADR-041](/01-constitution/constitution/#adr-041--manual-held-away-account-entry) · [ADR-042](/01-constitution/constitution/#adr-042--account-nickname-write-back) · [ADR-043](/01-constitution/constitution/#adr-043--real-estate--zillow-home-value) · [ADR-023](/01-constitution/constitution/#adr-023--neopix-sow-vs-client-integration-boundary)  
 > Entities: [data-model.md §4](/03-data/data-model/) · Pack: [E08](/05-specs/08-planning/01-overview/) · Status: [status.md](/04-integrations/status/)
 
 Last updated: July 17, 2026
@@ -81,7 +81,7 @@ flowchart TB
 | Managed AUM | From Orion via SF — not double-counted from eMoney ([ADR-011](/01-constitution/constitution/#adr-011--orion-wins-on-duplicate-account-numbers)) |
 | Held-away / external | eMoney → SF linked accounts |
 | Allocation | `planning_combined` taxonomy only — never marry Orion classes ([ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes)) |
-| NW | Σ Orion AUM + eMoney external + insurance cash − liabilities (+ home value when synced — [ADR-043](/01-constitution/constitution/#adr-043--real-estate-zillow-home-value)) |
+| NW | Σ Orion AUM + eMoney external + insurance cash − liabilities (+ home value when synced — [ADR-043](/01-constitution/constitution/#adr-043--real-estate--zillow-home-value)) |
 | Expenses | Read-only annual / line items from SF |
 | Monte Carlo | SF-synced eMoney fields only |
 

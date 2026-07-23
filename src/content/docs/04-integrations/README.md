@@ -73,7 +73,7 @@ Status tracker ([status.md](/04-integrations/status/)) is operational only — b
 | [azure-hosting.md](/04-integrations/azure-hosting/) | Azure (+ stores / GitHub) | Middleware host & release prereqs | E01, E11 |
 | [status.md](/04-integrations/status/) | — | Living blockers tracker | All |
 
-Data-source tiers (locked): Tier A = Salesforce. Tier B (direct eMoney API) and Tier C (Orion holdings feed) = **out of Neopix SOW this delivery** ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c), [ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow)).
+Data-source tiers (locked): Tier A = Salesforce. Tier B (direct eMoney API) and Tier C (Orion holdings feed) = **out of Neopix SOW this delivery** ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source), [ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow)).
 
 ---
 

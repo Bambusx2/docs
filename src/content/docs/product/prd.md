@@ -50,7 +50,7 @@ Opportunity (Phase 1). Ship a focused React Native portal that makes OnePoint fe
 | Administrator | Firm and book defaults; optional login-as-client                    | Salesforce (+ audited impersonation) |
 
 
-Detail: [ADR-013](/01-constitution/constitution/#adr-013--roles-and-surfaces). Advisor preview is a web view inside Salesforce, not the native app itself — see [glossary](/product/glossary/) and [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface).
+Detail: [ADR-013](/01-constitution/constitution/#adr-013--roles-and-surfaces). Advisor preview is a web view inside Salesforce, not the native app itself — see [glossary](/product/glossary/) and [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface).
 
 ### 3.2 Who the clients are
 
@@ -102,7 +102,7 @@ Pilot is done when all of the following are true for the agreed pilot cohort (ta
 | 3   | Gated domains                 | Effective flags hide disabled domains; Planning tab absent when not enrolled                                                                                                      |
 | 4   | Real money path               | At least one household shows Portfolio with SF-sourced balances and data as of (empty holdings or `unavailable` OK if SF has no rows — never fabricated)                          |
 | 5   | Planning path (when enrolled) | At least one enrolled household shows NW / planning teasers; non-enrolled households do not                                                                                       |
-| 6   | Advisor control               | Advisor can set household flags and open client-view preview from Salesforce ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)) |
+| 6   | Advisor control               | Advisor can set household flags and open client-view preview from Salesforce ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)) |
 | 7   | Action Required               | At least one concrete alert type demonstrated (signature-pending, broken link, or profile decision) with a deep link into the owning domain                                       |
 | 8   | Honest failure                | Missing SF / vault / feed data surfaces empty or `unavailable` — no invented figures                                                                                              |
 | 9   | Pilot ops                     | TestFlight / Play internal (or agreed distribution) plus a known-limitations list for the cohort                                                                                  |
@@ -137,7 +137,7 @@ Operational blockers that threaten this bar live in [status.md](/04-integrations
 
 ## 6. Product map (client app)
 
-The shell follows the Figma freeze ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2)). When Planning is off, prefer a three-tab shell (no Planning tab). More holds Insights, Your Team, and Profile.
+The shell follows the Figma freeze ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs)). When Planning is off, prefer a three-tab shell (no Planning tab). More holds Insights, Your Team, and Profile.
 
 
 | Domain          | Client sees                                                                                      | Phase 1 intent                                         |

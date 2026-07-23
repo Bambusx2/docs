@@ -36,7 +36,7 @@ Rebuilding a CMS inside Salesforce for this delivery is out of scope and the wro
 - Marketing content stays on the public website only  
 - Packs invent ad-hoc article shapes that break when the transport changes  
 
-E06 establishes the content surface: **the firm website / blog owns publishing; middleware normalizes every source into one feed document then `InsightArticle`; Salesforce stores only the `insights_enabled` flag; the mobile app never scrapes or calls the CMS admin APIs directly** ([ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane), [ADR-017](/01-constitution/constitution/#adr-017--insights-v1-rss-website-feed)).
+E06 establishes the content surface: **the firm website / blog owns publishing; middleware normalizes every source into one feed document then `InsightArticle`; Salesforce stores only the `insights_enabled` flag; the mobile app never scrapes or calls the CMS admin APIs directly** ([ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane), [ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed)).
 
 ---
 
@@ -48,7 +48,7 @@ E06 establishes the content surface: **the firm website / blog owns publishing; 
 | Detail | In-app sanitized HTML when `bodyHtml` present; otherwise WebView of `bodyUrl` | §8 Path 1 · **IC-01** |
 | Home teaser | Up to 2 latest (featured first, then `published_at` desc); **View all** | §8 Path 2 · **IC-02** |
 | Flag gating | More row and Home section omitted when `insights_enabled` false | §8 Path 3 · [CFG-04](/05-specs/03-configuration/02-specify/#cfg-04--publish-the-domain-option-catalog) |
-| Firm-wide catalog | Same articles for every household with the flag on | **IC-01** · [ADR-017](/01-constitution/constitution/#adr-017--insights-v1-rss-website-feed) |
+| Firm-wide catalog | Same articles for every household with the flag on | **IC-01** · [ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed) |
 | No store release for content | New articles appear via middleware feed pull + cache | **NFR-02** · [feed.md](/05-specs/06-insights/05-contracts/feed/) |
 
 ---
@@ -72,7 +72,7 @@ Story MoSCoW tags use definitions in [specs README](/05-specs/readme/#moscow). F
 | Push notifications for new articles | IC-04 |
 | Agentic / AI article selection or ranking | IC-05 |
 | Insights as a bottom navigation tab | Entry is More only |
-| Salesforce `Insight__c` as system of content | [ADR-017](/01-constitution/constitution/#adr-017--insights-v1-rss-website-feed) |
+| Salesforce `Insight__c` as system of content | [ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed) |
 | Client-authored posts or comments | Not in this pack |
 
 ### Product constraints
@@ -81,7 +81,7 @@ Story MoSCoW tags use definitions in [specs README](/05-specs/readme/#moscow). F
 |---|---|
 | Screen title | **Insights & Commentary** (API `/insights`; flag `insights_enabled`) |
 | Entry | More → Insights & Commentary (not a bottom tab) |
-| Content | Firm-wide catalog for all clients ([ADR-017](/01-constitution/constitution/#adr-017--insights-v1-rss-website-feed)) |
+| Content | Firm-wide catalog for all clients ([ADR-017](/01-constitution/constitution/#adr-017--insights-v1--rsswebsite-feed)) |
 | Source | External feed via middleware `InsightsFeedPort`; fixtures OK until URL ready; production never invents market commentary |
 | Detail rendering | Prefer sanitized `bodyHtml` in-app; else in-app WebView of `bodyUrl`; system browser only if WebView cannot load |
 | Home sort | Featured (`is_featured`) first, then `published_at` descending; no filler cards |

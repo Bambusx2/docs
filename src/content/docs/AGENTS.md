@@ -33,14 +33,14 @@ If the product story changes, update the PRD and any affected ADRs / specifies t
 
 1. Mobile → middleware only — no direct Salesforce, Orion, or eMoney API from the app ([ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane)).  
 2. No live Orion Connect in Neopix runtime ([ADR-003](/01-constitution/constitution/#adr-003--no-orion-connect-api-in-neopix-scope)).  
-3. Tier B / Tier C out of Neopix V1 SOW — planning via eMoney→SF + WebView link; holdings via SF Tier A ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c), [ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow)).  
+3. Tier B / Tier C out of Neopix V1 SOW — planning via eMoney→SF + WebView link; holdings via SF Tier A ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source), [ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow)).  
 4. Never invent financial data — missing holdings/performance/allocation → empty list or `unavailable`.  
 5. Dual allocation taxonomies — never marry Orion and eMoney classes ([ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes)).  
 6. Recompute net worth in middleware — do not trust eMoney display totals ([ADR-038](/01-constitution/constitution/#adr-038--net-worth-calculation)).  
 7. Documents via `VaultProvider` → eMoney Vault ([ADR-030](/01-constitution/constitution/#adr-030--document-vault-api-path)); no long-term binaries in middleware.  
 8. Security baseline — [architecture.md §9](/02-architecture/architecture/#9-security-baseline). Do not weaken MFA-off / household-visibility compensating controls.  
-9. Won't this delivery — biometrics, OS push, multi-HH switcher, expense edit, manual held-away create, nickname write-back, MFA ([ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock)–[046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery)).  
-10. Advisor preview is a web client surface (CFG-02 / [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)) — not the native store build inside Salesforce.
+9. Won't this delivery — biometrics, OS push, multi-HH switcher, expense edit, manual held-away create, nickname write-back, MFA ([ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock)–[046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile)).  
+10. Advisor preview is a web client surface (CFG-02 / [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)) — not the native store build inside Salesforce.
 
 ---
 

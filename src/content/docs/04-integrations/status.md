@@ -34,12 +34,12 @@ See [prd.md §5.2](/product/prd/#52-live-vs-fixture-bar-pilot-discipline). Fly-i
 |---|---|---|---|---|---|---|
 | Salesforce | Required | 🟡 In progress | Sandbox refresh; holdings often absent; FSC license | OnePoint | Callaway + Neopix | [salesforce.md](/04-integrations/salesforce/) |
 | Okta | Required | 🟡 In progress | Tenant + invite flow not provisioned | OnePoint | Neopix + Callaway (SF actions) | [okta.md](/04-integrations/okta/) |
-| Orion → SF | Prerequisite | 🟡 In progress | Holdings/performance must land in SF ([ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)) | OnePoint | Callaway (assist) · Neopix (consume / gap report) | [orion.md](/04-integrations/orion/) |
+| Orion → SF | Prerequisite | 🟡 In progress | Holdings/performance must land in SF ([ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)) | OnePoint | Callaway (assist) · Neopix (consume / gap report) | [orion.md](/04-integrations/orion/) |
 | eMoney → SF | Required | 🟡 In progress | Field map + golden client | OnePoint | Callaway (assist) · Neopix (consume) | [emoney.md](/04-integrations/emoney/) |
 | eMoney API (Tier B) | Out of SOW | ⚪ Out of scope | Won't without change order ([ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow)); WebView link only | — | — | [emoney.md](/04-integrations/emoney/) |
 | Orion holdings feed (Tier C) | Out of SOW | ⚪ Out of scope | Holdings via SF Tier A; Tier C Won't without change order | — | — | [orion.md](/04-integrations/orion/) |
 | Middleware SF sync | Required | 🟡 In progress | Tier A path locked; implementation open | — | Neopix | [salesforce.md](/04-integrations/salesforce/) |
-| Advisor preview web | Required (CFG-02) | Not started | Needs web host + `preview-session` ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)) | — | Neopix + Callaway | [E03](/05-specs/03-configuration/01-overview/) |
+| Advisor preview web | Required (CFG-02) | Not started | Needs web host + `preview-session` ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)) | — | Neopix + Callaway | [E03](/05-specs/03-configuration/01-overview/) |
 | Document vault | Required | 🟡 In progress | Path locked (eMoney Vault); credentials pending ([ADR-030](/01-constitution/constitution/#adr-030--document-vault-api-path)) | OnePoint | Neopix | [vault.md](/04-integrations/vault/) |
 | DocuSign (in-app) | Out of SOW | ⚪ Out of scope | In-app signing Won't ([ADR-022](/01-constitution/constitution/#adr-022--phase-1-explicit-exclusions)) | OnePoint | — | [vault.md](/04-integrations/vault/) |
 | Calendly | Required (deep-link) | 🟡 In progress | Depth locked ([ADR-034](/01-constitution/constitution/#adr-034--calendly-depth-in-v1)); adapter / URL map open | OnePoint | Neopix | [calendly.md](/04-integrations/calendly/) |
@@ -61,7 +61,7 @@ Data-source tiers (locked): Tier A = Salesforce. Tier B and Tier C = out of Neop
 |---|---|---|---|
 | SF sandbox (refreshed + test data) | 🟡 In progress | OnePoint / Callaway | Holdings often absent |
 | FSC licenses for delivery sandbox users | 🟡 In progress | Callaway | FAR / Relationships |
-| Holdings / performance in SF | 🟡 In progress | OnePoint | [ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c) |
+| Holdings / performance in SF | 🟡 In progress | OnePoint | [ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source) |
 | Okta non-prod tenant | 🟡 In progress | OnePoint | |
 | Azure subscription for middleware | 🟡 In progress | OnePoint | Host locked; SKU Phase B |
 | Apple / Google developer accounts | 🟡 In progress | OnePoint | Pilot / E11 |
@@ -74,14 +74,14 @@ Data-source tiers (locked): Tier A = Salesforce. Tier B and Tier C = out of Neop
 
 ## Next actions
 
-- [ ] OnePoint: hydrate holdings/performance in SF (or accept `unavailable` UX) — [ADR-024](/01-constitution/constitution/#adr-024--holdings-source-tier-c)  
+- [ ] OnePoint: hydrate holdings/performance in SF (or accept `unavailable` UX) — [ADR-024](/01-constitution/constitution/#adr-024--holdings--orion-performance-source)  
 - [ ] OnePoint: eMoney Vault credentials for middleware  
 - [ ] OnePoint: Insights feed URL  
 - [ ] OnePoint: Okta + Azure tenant access for Neopix  
 - [ ] Callaway: refreshed sandbox + FSC + preference objects  
 - [ ] OnePoint / Callaway: golden client (SF + Orion + eMoney) + eMoney field map  
 - [ ] Neopix: storage/cache model → OnePoint security review  
-- [ ] Neopix: advisor preview web host + `preview-session` (shell MVP) — [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)
+- [ ] Neopix: advisor preview web host + `preview-session` (shell MVP) — [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)
 - [ ] Callaway: LWC iframe → `previewUrl` once host is reachable
 - [ ] Neopix: Calendly adapter or static URL map ([calendly.md](/04-integrations/calendly/))
 

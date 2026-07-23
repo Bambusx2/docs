@@ -50,7 +50,7 @@ Without this pack, every later domain (Portfolio, Planning, Docs) has no trustwo
 | Profile propose → decide | Client submits diffs; staff approve/reject; client sees outcome | §8 Path 3 · C-06, C-07, A-09, C-25 |
 | Last login visible in CRM | Interactive login writes `Last_Mobile_Login__c` | A-08 · C-02 |
 | Impersonation audited | Admin can start/end login-as-client; audit retained | AD-03, AD-04, AD-05 · NFR-06 |
-| No MFA / biometrics this delivery | Login is password/session only | [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery), [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock) · C-21 / C-23 Won't |
+| No MFA / biometrics this delivery | Login is password/session only | [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile), [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock) · C-21 / C-23 Won't |
 
 ---
 
@@ -82,7 +82,7 @@ Admin / platform / support
 
 | Item | Story / ADR |
 |---|---|
-| Client MFA challenge on mobile | **C-21** · [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery) Explicit Off |
+| Client MFA challenge on mobile | **C-21** · [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile) Explicit Off |
 | Biometric unlock | **C-23** · [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock) |
 | OS push delivery | **C-16** · [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope) (in-app bell is Alerts pack) |
 | Push notification preference | **C-10** · [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope) (no OS push this delivery) |
@@ -102,9 +102,9 @@ Figma frames for Refer a Friend and Change Photo are **not** acceptance criteria
 | No self-sign-up | Public registration is unavailable; only invited Person Accounts |
 | Surfaces | Client = React Native + Okta. Advisor/admin config and invite actions = Salesforce LWC ([ADR-013](/01-constitution/constitution/#adr-013--roles-and-surfaces)) |
 | Mobile → middleware only | App never calls Salesforce or Okta management APIs directly ([ADR-001](/01-constitution/constitution/#adr-001--middleware-as-the-only-mobile-data-plane)) |
-| MFA / biometrics | Won't this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery), [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock)) |
+| MFA / biometrics | Won't this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile), [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock)) |
 | Household scope | Session scoped to primary/active permitted household; no in-app switcher ([ADR-035](/01-constitution/constitution/#adr-035--multi-household-switcher)) |
-| Profile gating | `profile_enabled` (and related keys) owned by [CFG-04](/05-specs/03-configuration/02-specify/#cfg-04--publish-the-domain-option-catalog); Profile remains reachable when enabled regardless of 3- vs 4-tab shell ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2)) |
+| Profile gating | `profile_enabled` (and related keys) owned by [CFG-04](/05-specs/03-configuration/02-specify/#cfg-04--publish-the-domain-option-catalog); Profile remains reachable when enabled regardless of 3- vs 4-tab shell ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs)) |
 | PII | Full SSN/TIN never returned to mobile; last-4 only when present (NFR-05) |
 | UI | Figma is layout authority for My Profile; specify owns data and business rules only |
 | Global contracts | [okta.md](/04-integrations/okta/) · [salesforce.md](/04-integrations/salesforce/) — pack contracts implement them |
@@ -130,7 +130,7 @@ Operational readiness: [status.md](/04-integrations/status/). Okta/SF gaps do no
 
 1. Person Account **PersonEmail** is the Okta username and the invite destination.  
 2. Advisors have **no** mobile app login; all advisor identity actions are Salesforce ([ADR-013](/01-constitution/constitution/#adr-013--roles-and-surfaces)).  
-3. Nav shell follows Figma freeze ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2)); Profile stays reachable when `profile_enabled`.  
+3. Nav shell follows Figma freeze ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs)); Profile stays reachable when `profile_enabled`.  
 4. Middleware is system of record for access/refresh tokens, impersonation sessions, and invite funnel metrics.  
 5. E01 scaffold (or agreed fixtures) provides runnable RN app, mock `/me`, and CI before E02 Must integration work.  
 6. Effective feature flags for Profile come from E03 resolution once Configuration lands; until then, fixtures may hard-code `profile_enabled` true for demos.
@@ -198,7 +198,7 @@ Optional (if scheduled): Admin impersonation start/end with audit row (**AD-03**
 
 Complete shared DoD in [specs README](/05-specs/readme/#discovery-definition-of-done), plus:
 
-- [ ] MFA Explicit Off accepted ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery)); biometrics / multi-HH / OS push Won't acknowledged  
+- [ ] MFA Explicit Off accepted ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile)); biometrics / multi-HH / OS push Won't acknowledged  
 - [ ] [02-specify.md](/05-specs/02-users/02-specify/) Must stories + NFRs accepted as acceptance baseline  
 - [ ] Should / Could / Won't MoSCoW in specify index acknowledged  
 - [ ] Salesforce pack Done or scheduled — [salesforce.md](/05-specs/02-users/05-contracts/salesforce/)  

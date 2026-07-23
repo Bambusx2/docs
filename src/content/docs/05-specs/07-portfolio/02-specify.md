@@ -3,7 +3,7 @@ title: "E07 Portfolio — Specification"
 ---
 
 > Scope: OnePoint-managed AUM (Orion) — portfolio summary, asset allocation, accounts, account summary, performance, holdings, Home context.  
-> Source trail: Workshops 6, 7, 10 (external) · [data-model.md §3](/03-data/data-model/) · [ADR-003](/01-constitution/constitution/#adr-003--no-orion-connect-api-in-neopix-scope) · [ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only) · [ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes) · [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-v1-portfolio)
+> Source trail: Workshops 6, 7, 10 (external) · [data-model.md §3](/03-data/data-model/) · [ADR-003](/01-constitution/constitution/#adr-003--no-orion-connect-api-in-neopix-scope) · [ADR-009](/01-constitution/constitution/#adr-009--portfolio-orion-only-planning-emoney-only) · [ADR-010](/01-constitution/constitution/#adr-010--dual-allocation-scopes) · [ADR-044](/01-constitution/constitution/#adr-044--orion-portal-parity-for-v1-portfolio)
 > Spec version: 1.0.0 · Last updated: July 17, 2026  
 > Discovery package: [01-overview.md](/05-specs/07-portfolio/01-overview/) (constraints, acceptance demo)  
 > Delivery rules: [AGENTS.md](/agents/)

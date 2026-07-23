@@ -45,7 +45,7 @@ Without this gate, the fly-in risks unfinished security debt, untested install p
 | QA bar | E2E device paths for Must domains green (or waived with owner) | §8 Path 3 · prior pack §8 bars |
 | Demo | Fly-in script rehearsed on the pilot build | §8 Path 4 |
 | Ops readiness | Pilot runbook + min-version / force-update behaviour documented | §8 Path 1 · Product constraints |
-| Honest scope | No MFA, biometrics, or OS push claimed in pilot | [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery) · [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock) · [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope) |
+| Honest scope | No MFA, biometrics, or OS push claimed in pilot | [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile) · [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock) · [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope) |
 
 ---
 
@@ -73,7 +73,7 @@ Demo
 | Item | Authority / note |
 |---|---|
 | Biometric unlock | [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock) Won't |
-| MFA for this delivery | [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery) Won't |
+| MFA for this delivery | [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile) Won't |
 | OS push notifications (APNs/FCM) | [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope) Won't — badge minimum ([E10](/05-specs/10-alerts/01-overview/)) |
 | New domain features or story changes | Belong in E02–E10 specifies + ADRs — not invented in E11 |
 | Tier B / Tier C integrations | [ADR-025](/01-constitution/constitution/#adr-025--tier-b-and-tier-c-in-neopix-sow) out of Neopix SOW |
@@ -86,7 +86,7 @@ Demo
 |---|---|
 | Role of this pack | Release / pilot gate only — not a substitute for domain specifies |
 | Exit rule | Prior pack Must demo bars met (or explicitly waived with owner) before pilot declare |
-| Auth hardening | MFA / biometrics Won't this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery), [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock)) |
+| Auth hardening | MFA / biometrics Won't this delivery ([ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile), [ADR-031](/01-constitution/constitution/#adr-031--biometric-unlock)) |
 | Push | OS push Won't ([ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope)); Action Required = in-app badge |
 | Hosting | Middleware on OnePoint Azure ([ADR-008](/01-constitution/constitution/#adr-008--middleware-on-onepoint-azure)); [azure-hosting.md](/04-integrations/azure-hosting/) |
 | Store accounts | OnePoint owns App Store / Play accounts; Neopix provides submission support ([architecture.md](/02-architecture/architecture/)) |
@@ -140,7 +140,7 @@ Operational blockers: [status.md](/04-integrations/status/). Integration gaps th
 |---|---|---|
 | All domain packs | Must demo bars feed this gate | [specs README](/05-specs/readme/) dependency graph |
 | Action Required / push | Badge-only; push Won't | [10-alerts/01-overview.md](/05-specs/10-alerts/01-overview/) · [ADR-032](/01-constitution/constitution/#adr-032--push-notifications-scope) |
-| Users / auth | MFA off; min-version / force-update owned here | [02-users/02-specify.md](/05-specs/02-users/02-specify/) · [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery) |
+| Users / auth | MFA off; min-version / force-update owned here | [02-users/02-specify.md](/05-specs/02-users/02-specify/) · [ADR-046](/01-constitution/constitution/#adr-046--mfa-off-for-this-delivery-client-mobile) |
 | Platform foundation | Scaffold precedes release hardening | [01-platform/01-overview.md](/05-specs/01-platform/01-overview/) |
 | Azure hosting | Pilot / prod middleware host | [azure-hosting.md](/04-integrations/azure-hosting/) |
 | Phase B | Deeper CI/CD / NFR tech-spec | [06-engineering/](/06-engineering/readme/) |

@@ -40,7 +40,7 @@ E03 is the control plane: platform ∩ firm policy ∩ book defaults ∩ househo
 | Measure | Target | Evidence |
 |---|---|---|
 | Client gating | Domain off in SF → tab, More row, and Home teaser removed after refresh (not an empty shell) | §8 Path 1 · CFG-01, CFG-02 |
-| Advisor preview | LWC iframe → web client; same effective flags as the real client | §8 Path 2 · CFG-02 · [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface) |
+| Advisor preview | LWC iframe → web client; same effective flags as the real client | §8 Path 2 · CFG-02 · [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface) |
 | Admin policy | Firm-mandatory, book defaults, bulk, and transfer rules work | §8 Path 3 · CFG-03 |
 | Catalog lock | Shared key set; other packs reference keys only | §8 Path 4 · CFG-04 |
 | No store release for toggles | Option changes visible within ≤ 5 minutes of SF→MW sync | NFR-02 |
@@ -56,7 +56,7 @@ Full acceptance criteria: [02-specify.md](/05-specs/03-configuration/02-specify/
 
 - Effective flags on `/me` (and `/config` when present); shell and Home omit disabled targets (CFG-01)
 - Mobile consumes middleware flags only — never re-merges layers (NFR-03)
-- Advisor per-household overrides in Salesforce; client-view preview per CFG-02 / [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)
+- Advisor per-household overrides in Salesforce; client-view preview per CFG-02 / [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)
 - Admin firm-mandatory, book defaults, bulk, and transfer (CFG-03)
 - Domain option catalog for this delivery (CFG-04)
 
@@ -79,7 +79,7 @@ Full acceptance criteria: [02-specify.md](/05-specs/03-configuration/02-specify/
 | Resolution | [resolution.md](/05-specs/03-configuration/05-contracts/resolution/) · [ADR-018](/01-constitution/constitution/#adr-018--effective-feature-flag-resolution) |
 | Hierarchy | Firm → book → household ([ADR-014](/01-constitution/constitution/#adr-014--feature-configuration-hierarchy)) |
 | Firm-mandatory keys | Mechanism ships; no keys mandatory this delivery ([ADR-028](/01-constitution/constitution/#adr-028--firm-mandatory--toggle-policy)) |
-| Nav shell | Figma freeze; prefer 3-tab when Planning hidden ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2)) |
+| Nav shell | Figma freeze; prefer 3-tab when Planning hidden ([ADR-045](/01-constitution/constitution/#adr-045--nav-shell-v1-vs-v2-3-vs-4-tabs)) |
 | DocuSign flag | `documents_docusign` false until in-app signing ships |
 | Advisors | No mobile login ([ADR-013](/01-constitution/constitution/#adr-013--roles-and-surfaces)) |
 
@@ -90,7 +90,7 @@ Full acceptance criteria: [02-specify.md](/05-specs/03-configuration/02-specify/
 | Item | Owner | Needed before |
 |---|---|---|
 | SF objects + LWCs | Callaway | Live flag toggle + preview demos |
-| Preview web host + `preview-session` | Neopix | CFG-02 live preview ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)) |
+| Preview web host + `preview-session` | Neopix | CFG-02 live preview ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)) |
 | Preview URL / token scheme (LWC ↔ MW) | Callaway + Neopix | Live iframe |
 | Sandbox households with known flag matrices | Callaway / OnePoint | §8 Paths 1–3 |
 | Firm-mandatory key list (if any later) | Client compliance | Not required to ship the mechanism |
@@ -115,7 +115,7 @@ Living blockers: [status.md](/04-integrations/status/).
 | Risk | Mitigation |
 |---|---|
 | Firm-mandatory list unpublished | Ship mechanism now; zero mandatory keys ([ADR-028](/01-constitution/constitution/#adr-028--firm-mandatory--toggle-policy)) |
-| Preview under-scheduled | Track as Neopix workstream ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface); [status.md](/04-integrations/status/)) |
+| Preview under-scheduled | Track as Neopix workstream ([ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface); [status.md](/04-integrations/status/)) |
 | Preview token too privileged | Household-scoped; no book elevation (NFR-04) |
 | Packs invent private flag keys | CFG-04 is sole catalog |
 | SF→MW sync lag | NFR-02 ≤ 5 minutes |
@@ -146,7 +146,7 @@ Living blockers: [status.md](/04-integrations/status/).
 ### Path 2 — Preview
 
 1. Advisor opens client-view preview in LWC.  
-2. Preview matches that household’s effective flags (CFG-02, NFR-04/05, [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface)).
+2. Preview matches that household’s effective flags (CFG-02, NFR-04/05, [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface)).
 
 ### Path 3 — Admin
 
@@ -176,7 +176,7 @@ Shared DoD in [specs README](/05-specs/readme/#discovery-definition-of-done), pl
 
 | Item | Owner | Blocks build? |
 |---|---|---|
-| Preview web approach + LWC wiring | Neopix / Callaway | Y for live CFG-02 — see [status.md](/04-integrations/status/) and [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-web-client-surface) |
+| Preview web approach + LWC wiring | Neopix / Callaway | Y for live CFG-02 — see [status.md](/04-integrations/status/) and [ADR-047](/01-constitution/constitution/#adr-047--advisor-preview-requires-a-web-deliverable-client-surface) |
 | Firm-mandatory key list (post-delivery) | Client compliance | N |
 | Sandbox flag matrix households | Callaway / OnePoint | Y for §8 Paths 1–3 live |
 
