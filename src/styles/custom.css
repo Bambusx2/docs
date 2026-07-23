@@ -207,9 +207,17 @@ nav.sidebar summary .group-label {
   font-weight: 600;
 }
 
+/* Give the link "pills" real breathing room — Starlight's default is a tight
+   0.3em vertical pad, which looks cramped on wrapped two-line entries. */
 .sidebar a {
-  border-radius: 0.45rem;
+  border-radius: 0.55rem;
+  padding: 0.5rem 0.7rem;
+  line-height: 1.45;
   transition: background 0.15s ease, color 0.15s ease;
+}
+/* A little vertical rhythm between items so the pills don't touch when active. */
+.sidebar-content ul li + li {
+  margin-top: 0.15rem;
 }
 .sidebar a:hover {
   background: color-mix(in srgb, var(--sl-color-gray-5) 45%, transparent);
